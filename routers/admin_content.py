@@ -16,7 +16,7 @@ MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
 @router.get("")
 @router.get("/")
 async def admin_dashboard(request: Request):
-    return templates.TemplateResponse("admin.html", {"request": request})
+    return templates.TemplateResponse(request, "admin.html", {})
 
 
 # ─── Media Upload (images, audio, video, documents) ───────────────────────────

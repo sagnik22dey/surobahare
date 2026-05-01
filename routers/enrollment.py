@@ -78,6 +78,7 @@ async def admin_enrollments(
 
     enrollments = get_all_enrollments()
     return templates.TemplateResponse(
+        request,
         "admin_enrollments.html",
-        {"request": request, "enrollments": enrollments},
+        {"enrollments": enrollments},
     )

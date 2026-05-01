@@ -56,29 +56,29 @@ def get_content():
 
 @app.get("/")
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "content": get_content()})
+    return templates.TemplateResponse(request, "index.html", {"content": get_content()})
 
 
 @app.get("/about")
 async def about(request: Request):
-    return templates.TemplateResponse("about.html", {"request": request, "content": get_content()})
+    return templates.TemplateResponse(request, "about.html", {"content": get_content()})
 
 
 @app.get("/programs")
 async def programs(request: Request):
-    return templates.TemplateResponse("programs.html", {"request": request, "content": get_content()})
+    return templates.TemplateResponse(request, "programs.html", {"content": get_content()})
 
 
 @app.get("/gallery")
 async def gallery(request: Request):
-    return templates.TemplateResponse("gallery.html", {"request": request, "content": get_content()})
+    return templates.TemplateResponse(request, "gallery.html", {"content": get_content()})
 
 
 @app.get("/contact")
 async def contact(request: Request):
-    return templates.TemplateResponse("contact.html", {"request": request, "content": get_content()})
+    return templates.TemplateResponse(request, "contact.html", {"content": get_content()})
 
 
 @app.get("/thankyou")
 async def thankyou(request: Request):
-    return templates.TemplateResponse("thankyou.html", {"request": request, "content": get_content()})
+    return templates.TemplateResponse(request, "thankyou.html", {"content": get_content()})
