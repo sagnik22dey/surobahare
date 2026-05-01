@@ -235,6 +235,12 @@
         populateTestimonials();
         populateBanner();
         populateMeteor();
+        populateContactInfo();
+        populateFooterInfo();
+        populateAboutPage();
+        populateGalleryPage();
+        populateContactPage();
+        populateThankyouPage();
     }
 
     /* ─── HERO ─────────────────────────────────────────────── */
@@ -838,6 +844,252 @@
         if (!str) return '';
         return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       CONTACT INFO
+    ═══════════════════════════════════════════════════════════ */
+    function populateContactInfo() {
+        const ci = content.contact_info || {};
+        val('ci_phone', ci.phone);
+        val('ci_email', ci.email);
+        val('ci_address_en', ci.address?.en);
+        val('ci_address_bn', ci.address?.bn);
+        val('ci_whatsapp_number', ci.whatsapp_number);
+    }
+
+    window.saveContactInfo = async function () {
+        const btn = document.querySelector('#section-contact_info .adm-btn-primary');
+        if (btn) setSaving(btn, true);
+        try {
+            await apiPut('/contact-info', {
+                phone: document.getElementById('ci_phone').value,
+                email: document.getElementById('ci_email').value,
+                address_en: document.getElementById('ci_address_en').value,
+                address_bn: document.getElementById('ci_address_bn').value,
+                whatsapp_number: document.getElementById('ci_whatsapp_number').value,
+            });
+            showToast('Contact Info saved!', 'success');
+        } catch (err) { showToast(err.message, 'error'); }
+        if (btn) setSaving(btn, false);
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER INFO
+    ═══════════════════════════════════════════════════════════ */
+    function populateFooterInfo() {
+        const fi = content.footer_info || {};
+        val('fi_tagline_en', fi.tagline?.en);
+        val('fi_tagline_bn', fi.tagline?.bn);
+        val('fi_copy_en', fi.copyright?.en);
+        val('fi_copy_bn', fi.copyright?.bn);
+    }
+
+    window.saveFooterInfo = async function () {
+        const btn = document.querySelector('#section-footer_info .adm-btn-primary');
+        if (btn) setSaving(btn, true);
+        try {
+            await apiPut('/footer-info', {
+                tagline_en: document.getElementById('fi_tagline_en')?.value || '',
+                tagline_bn: document.getElementById('fi_tagline_bn')?.value || '',
+                copyright_en: document.getElementById('fi_copy_en').value,
+                copyright_bn: document.getElementById('fi_copy_bn').value,
+            });
+            showToast('Footer saved!', 'success');
+        } catch (err) { showToast(err.message, 'error'); }
+        if (btn) setSaving(btn, false);
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       ABOUT PAGE
+    ═══════════════════════════════════════════════════════════ */
+    function populateAboutPage() {
+        const ap = content.about_page || {};
+        val('ap_h_title_en', ap.hero_title?.en);
+        val('ap_h_title_bn', ap.hero_title?.bn);
+        val('ap_h_sub_en', ap.hero_subtitle?.en);
+        val('ap_h_sub_bn', ap.hero_subtitle?.bn);
+        val('ap_s_title_en', ap.story_title?.en);
+        val('ap_s_title_bn', ap.story_title?.bn);
+        val('ap_s_p1_en', ap.story_p1?.en);
+        val('ap_s_p1_bn', ap.story_p1?.bn);
+        val('ap_s_p2_en', ap.story_p2?.en);
+        val('ap_s_p2_bn', ap.story_p2?.bn);
+        val('ap_s_p3_en', ap.story_p3?.en);
+        val('ap_s_p3_bn', ap.story_p3?.bn);
+    }
+
+    window.saveAboutPage = async function () {
+        const btn = document.querySelector('#section-about_page .adm-btn-primary');
+        if (btn) setSaving(btn, true);
+        try {
+            await apiPut('/about-page', {
+                hero_title_en: document.getElementById('ap_h_title_en').value,
+                hero_title_bn: document.getElementById('ap_h_title_bn').value,
+                hero_subtitle_en: document.getElementById('ap_h_sub_en').value,
+                hero_subtitle_bn: document.getElementById('ap_h_sub_bn').value,
+                story_title_en: document.getElementById('ap_s_title_en').value,
+                story_title_bn: document.getElementById('ap_s_title_bn').value,
+                story_p1_en: document.getElementById('ap_s_p1_en').value,
+                story_p1_bn: document.getElementById('ap_s_p1_bn').value,
+                story_p2_en: document.getElementById('ap_s_p2_en').value,
+                story_p2_bn: document.getElementById('ap_s_p2_bn').value,
+                story_p3_en: document.getElementById('ap_s_p3_en').value,
+                story_p3_bn: document.getElementById('ap_s_p3_bn').value,
+            });
+            showToast('About Page saved!', 'success');
+        } catch (err) { showToast(err.message, 'error'); }
+        if (btn) setSaving(btn, false);
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       GALLERY PAGE
+    ═══════════════════════════════════════════════════════════ */
+    let galleryImagesList = [];
+
+    function populateGalleryPage() {
+        const gp = content.gallery_page || {};
+        val('gp_h_title_en', gp.hero_title?.en);
+        val('gp_h_title_bn', gp.hero_title?.bn);
+        val('gp_h_sub_en', gp.hero_subtitle?.en);
+        val('gp_h_sub_bn', gp.hero_subtitle?.bn);
+        val('gp_s_title_en', gp.story_title?.en);
+        val('gp_s_title_bn', gp.story_title?.bn);
+        val('gp_s_desc_en', gp.story_desc?.en);
+        val('gp_s_desc_bn', gp.story_desc?.bn);
+        galleryImagesList = JSON.parse(JSON.stringify(gp.images || []));
+        renderGalleryImages();
+    }
+
+    function renderGalleryImages() {
+        const container = document.getElementById('gp_images_container');
+        if (!container) return;
+        container.innerHTML = '';
+        galleryImagesList.forEach((img, i) => {
+            const card = document.createElement('div');
+            card.className = 'adm-item-card';
+            card.innerHTML = `
+        <div class="adm-item-card-header">
+          <span class="adm-item-num">${i + 1}</span>
+          <span class="adm-item-title">${esc(img.image_url) || 'New Image'}</span>
+          <div class="adm-item-actions">
+            <label style="cursor:pointer; margin-right: 8px;" title="Visible">
+              <input type="checkbox" onchange="galleryImagesList[${i}].visible=this.checked" ${img.visible !== false ? 'checked' : ''}>
+            </label>
+            <button class="adm-btn adm-btn-sm adm-btn-danger adm-btn-icon" onclick="admRemoveGalleryImage(${i})">
+              <i class="ri-delete-bin-line"></i>
+            </button>
+          </div>
+        </div>
+        <div class="adm-item-body expanded">
+          <div class="adm-form-group">
+            <label class="adm-label">Image URL</label>
+            <div class="adm-image-url-row">
+              <input class="adm-input" id="gp_img_url_${i}" value="${esc(img.image_url || '')}" oninput="galleryImagesList[${i}].image_url=this.value;admUpdateImgPreview('gp_img_prev_${i}',this.value)">
+              <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor:pointer">
+                <i class="ri-upload-2-line"></i>
+                <input type="file" accept="image/*" style="display:none" onchange="admUploadGalleryImg(this,${i})">
+              </label>
+            </div>
+            <img id="gp_img_prev_${i}" src="${esc(img.image_url || '')}" class="adm-image-preview ${img.image_url ? 'visible' : ''}" alt="preview">
+          </div>
+        </div>
+      `;
+            container.appendChild(card);
+        });
+    }
+
+    window.admRemoveGalleryImage = function (i) {
+        confirmAction('Remove this image?', () => { galleryImagesList.splice(i, 1); renderGalleryImages(); });
+    };
+
+    window.admUploadGalleryImg = async function (input, i) {
+        const file = input.files[0];
+        if (!file) return;
+        try {
+            const url = await uploadImage(file);
+            document.getElementById(`gp_img_url_${i}`).value = url;
+            galleryImagesList[i].image_url = url;
+            window.admUpdateImgPreview(`gp_img_prev_${i}`, url);
+            showToast('Image uploaded!', 'success');
+        } catch (err) { showToast(err.message, 'error'); }
+    };
+
+    window.addGalleryImage = function () {
+        galleryImagesList.push({ id: 'img' + Date.now(), image_url: '', visible: true });
+        renderGalleryImages();
+    };
+
+    window.saveGalleryPage = async function () {
+        const btn = document.querySelector('#section-gallery_page .adm-btn-primary');
+        if (btn) setSaving(btn, true);
+        try {
+            await apiPut('/gallery-page', {
+                hero_title_en: document.getElementById('gp_h_title_en').value,
+                hero_title_bn: document.getElementById('gp_h_title_bn').value,
+                hero_subtitle_en: document.getElementById('gp_h_sub_en').value,
+                hero_subtitle_bn: document.getElementById('gp_h_sub_bn').value,
+                story_title_en: document.getElementById('gp_s_title_en').value,
+                story_title_bn: document.getElementById('gp_s_title_bn').value,
+                story_desc_en: document.getElementById('gp_s_desc_en').value,
+                story_desc_bn: document.getElementById('gp_s_desc_bn').value,
+                images: galleryImagesList,
+            });
+            showToast('Gallery Page saved!', 'success');
+        } catch (err) { showToast(err.message, 'error'); }
+        if (btn) setSaving(btn, false);
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       CONTACT PAGE
+    ═══════════════════════════════════════════════════════════ */
+    function populateContactPage() {
+        const cp = content.contact_page || {};
+        val('cp_h_title_en', cp.hero_title?.en);
+        val('cp_h_title_bn', cp.hero_title?.bn);
+        val('cp_h_sub_en', cp.hero_subtitle?.en);
+        val('cp_h_sub_bn', cp.hero_subtitle?.bn);
+    }
+
+    window.saveContactPage = async function () {
+        const btn = document.querySelector('#section-contact_page .adm-btn-primary');
+        if (btn) setSaving(btn, true);
+        try {
+            await apiPut('/contact-page', {
+                hero_title_en: document.getElementById('cp_h_title_en').value,
+                hero_title_bn: document.getElementById('cp_h_title_bn').value,
+                hero_subtitle_en: document.getElementById('cp_h_sub_en').value,
+                hero_subtitle_bn: document.getElementById('cp_h_sub_bn').value,
+            });
+            showToast('Contact Page saved!', 'success');
+        } catch (err) { showToast(err.message, 'error'); }
+        if (btn) setSaving(btn, false);
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       THANK YOU PAGE
+    ═══════════════════════════════════════════════════════════ */
+    function populateThankyouPage() {
+        const tp = content.thankyou_page || {};
+        val('tp_title_en', tp.title?.en);
+        val('tp_title_bn', tp.title?.bn);
+        val('tp_msg_en', tp.message?.en);
+        val('tp_msg_bn', tp.message?.bn);
+    }
+
+    window.saveThankyouPage = async function () {
+        const btn = document.querySelector('#section-thankyou_page .adm-btn-primary');
+        if (btn) setSaving(btn, true);
+        try {
+            await apiPut('/thankyou-page', {
+                title_en: document.getElementById('tp_title_en').value,
+                title_bn: document.getElementById('tp_title_bn').value,
+                message_en: document.getElementById('tp_msg_en').value,
+                message_bn: document.getElementById('tp_msg_bn').value,
+            });
+            showToast('Thank You Page saved!', 'success');
+        } catch (err) { showToast(err.message, 'error'); }
+        if (btn) setSaving(btn, false);
+    };
 
     /* ═══════════════════════════════════════════════════════════
        INIT

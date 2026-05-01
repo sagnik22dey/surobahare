@@ -24,6 +24,7 @@ async def admin_dashboard(request: Request, current_admin: AdminUser = Depends(g
 # ─── Media Upload (images, audio, video, documents) ───────────────────────────
 
 @router.post("/upload-media")
+@router.post("/upload-image")
 async def upload_media(file: UploadFile = File(...), current_admin: AdminUser = Depends(get_current_admin)):
     content = await file.read()
     if len(content) > MAX_UPLOAD_SIZE:
