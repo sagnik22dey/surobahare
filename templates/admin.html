@@ -66,6 +66,7 @@
           <a href="#" class="adm-sidebar-link" data-section="gallery_page"><i class="ri-image-line"></i> Gallery Page</a>
           <a href="#" class="adm-sidebar-link" data-section="contact_page"><i class="ri-contacts-book-line"></i> Contact Page</a>
           <a href="#" class="adm-sidebar-link" data-section="thankyou_page"><i class="ri-thumb-up-line"></i> Thank You Page</a>
+          <a href="#" class="adm-sidebar-link" data-section="music_settings"><i class="ri-music-2-line"></i> Music Settings</a>
 
           <a href="#" class="adm-sidebar-link" data-section="mentor">
             <i class="ri-user-star-line"></i> Meet Your Mentor
@@ -123,6 +124,9 @@
           </button>
           <button class="adm-tab-btn" data-section="banner">
             <i class="ri-notification-badge-line"></i> Banner
+          </button>
+          <button class="adm-tab-btn" data-section="music_settings">
+            <i class="ri-music-2-line"></i> Music
           </button>
         </div>
 
@@ -1205,6 +1209,254 @@
             <div class="adm-save-row">
               <button class="adm-btn adm-btn-primary" onclick="saveThankyouPage()">
                 <i class="ri-save-line"></i> Save Thank You Page
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- CONTACT INFO PANEL -->
+        <div id="contact_info" class="adm-panel">
+          <div class="adm-panel-header">
+            <h2>Contact Info (Global)</h2>
+            <button class="adm-btn adm-btn-primary" onclick="saveContactInfo()">Save Contact Info</button>
+          </div>
+          <div class="adm-card">
+            <div class="adm-form-group">
+              <label class="adm-label">Phone Number</label>
+              <input type="text" class="adm-input" id="ci_phone">
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">Email Address</label>
+              <input type="text" class="adm-input" id="ci_email">
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">Address (English)</label>
+              <input type="text" class="adm-input" id="ci_address_en">
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">Address (Bengali)</label>
+              <input type="text" class="adm-input" id="ci_address_bn">
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">WhatsApp Number (e.g., 917908875949)</label>
+              <input type="text" class="adm-input" id="ci_whatsapp_number">
+            </div>
+          </div>
+        </div>
+
+        <!-- FOOTER INFO PANEL -->
+        <div id="footer_info" class="adm-panel">
+          <div class="adm-panel-header">
+            <h2>Footer Content</h2>
+            <button class="adm-btn adm-btn-primary" onclick="saveFooterInfo()">Save Footer</button>
+          </div>
+          <div class="adm-card">
+            <div class="adm-form-group">
+              <label class="adm-label">Copyright Text (English)</label>
+              <input type="text" class="adm-input" id="fi_copy_en">
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">Copyright Text (Bengali)</label>
+              <input type="text" class="adm-input" id="fi_copy_bn">
+            </div>
+          </div>
+        </div>
+
+        <!-- ABOUT PAGE PANEL -->
+        <div id="about_page" class="adm-panel">
+          <div class="adm-panel-header">
+            <h2>About Page Content</h2>
+            <button class="adm-btn adm-btn-primary" onclick="saveAboutPage()">Save About Page</button>
+          </div>
+          <div class="adm-card">
+            <h3>Hero Section</h3>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Title (EN)</label><input type="text" class="adm-input" id="ap_h_title_en"></div>
+              <div class="adm-form-group"><label class="adm-label">Title (BN)</label><input type="text" class="adm-input" id="ap_h_title_bn"></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Subtitle (EN)</label><textarea class="adm-input" id="ap_h_sub_en" rows="2"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Subtitle (BN)</label><textarea class="adm-input" id="ap_h_sub_bn" rows="2"></textarea></div>
+            </div>
+            <hr>
+            <h3>My Story</h3>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Story Title (EN)</label><input type="text" class="adm-input" id="ap_s_title_en"></div>
+              <div class="adm-form-group"><label class="adm-label">Story Title (BN)</label><input type="text" class="adm-input" id="ap_s_title_bn"></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Paragraph 1 (EN)</label><textarea class="adm-input" id="ap_s_p1_en" rows="4"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Paragraph 1 (BN)</label><textarea class="adm-input" id="ap_s_p1_bn" rows="4"></textarea></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Paragraph 2 (EN)</label><textarea class="adm-input" id="ap_s_p2_en" rows="4"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Paragraph 2 (BN)</label><textarea class="adm-input" id="ap_s_p2_bn" rows="4"></textarea></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Paragraph 3 (EN)</label><textarea class="adm-input" id="ap_s_p3_en" rows="4"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Paragraph 3 (BN)</label><textarea class="adm-input" id="ap_s_p3_bn" rows="4"></textarea></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GALLERY PAGE PANEL -->
+        <div id="gallery_page" class="adm-panel">
+          <div class="adm-panel-header">
+            <h2>Gallery Page Content</h2>
+            <button class="adm-btn adm-btn-primary" onclick="saveGalleryPage()">Save Gallery Page</button>
+          </div>
+          <div class="adm-card">
+            <h3>Hero Section</h3>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Title (EN)</label><input type="text" class="adm-input" id="gp_h_title_en"></div>
+              <div class="adm-form-group"><label class="adm-label">Title (BN)</label><input type="text" class="adm-input" id="gp_h_title_bn"></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Subtitle (EN)</label><textarea class="adm-input" id="gp_h_sub_en" rows="2"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Subtitle (BN)</label><textarea class="adm-input" id="gp_h_sub_bn" rows="2"></textarea></div>
+            </div>
+            <hr>
+            <h3>Story Info</h3>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Story Title (EN)</label><input type="text" class="adm-input" id="gp_s_title_en"></div>
+              <div class="adm-form-group"><label class="adm-label">Story Title (BN)</label><input type="text" class="adm-input" id="gp_s_title_bn"></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Description (EN)</label><textarea class="adm-input" id="gp_s_desc_en" rows="3"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Description (BN)</label><textarea class="adm-input" id="gp_s_desc_bn" rows="3"></textarea></div>
+            </div>
+            <hr>
+            <h3>Images</h3>
+            <div id="gp_images_container"></div>
+            <button class="adm-btn adm-btn-secondary" onclick="addGalleryImage()" style="margin-top: 1rem">+ Add Image</button>
+          </div>
+        </div>
+
+        <!-- CONTACT PAGE PANEL -->
+        <div id="contact_page" class="adm-panel">
+          <div class="adm-panel-header">
+            <h2>Contact Page Content</h2>
+            <button class="adm-btn adm-btn-primary" onclick="saveContactPage()">Save Contact Page</button>
+          </div>
+          <div class="adm-card">
+            <h3>Hero Section</h3>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Title (EN)</label><input type="text" class="adm-input" id="cp_h_title_en"></div>
+              <div class="adm-form-group"><label class="adm-label">Title (BN)</label><input type="text" class="adm-input" id="cp_h_title_bn"></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Subtitle (EN)</label><textarea class="adm-input" id="cp_h_sub_en" rows="2"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Subtitle (BN)</label><textarea class="adm-input" id="cp_h_sub_bn" rows="2"></textarea></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- THANKYOU PAGE PANEL -->
+        <div id="thankyou_page" class="adm-panel">
+          <div class="adm-panel-header">
+            <h2>Thank You Page Content</h2>
+            <button class="adm-btn adm-btn-primary" onclick="saveThankyouPage()">Save Thank You Page</button>
+          </div>
+          <div class="adm-card">
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Title (EN)</label><input type="text" class="adm-input" id="tp_title_en"></div>
+              <div class="adm-form-group"><label class="adm-label">Title (BN)</label><input type="text" class="adm-input" id="tp_title_bn"></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Message (EN)</label><textarea class="adm-input" id="tp_msg_en" rows="3"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Message (BN)</label><textarea class="adm-input" id="tp_msg_bn" rows="3"></textarea></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MUSIC SETTINGS SECTION -->
+        <div class="adm-section" id="section-music_settings">
+          <div class="adm-section-header">
+            <h2><i class="ri-music-2-line"></i> Background Music Settings</h2>
+          </div>
+          <div class="adm-section-body">
+            <p class="adm-help">Leave empty for "No Music", or upload an audio file. Max 50MB.</p>
+            <div class="adm-form-group">
+              <label class="adm-label">Global Default Music URL</label>
+              <div class="adm-image-url-row">
+                <input class="adm-input" id="ms_global_url" placeholder="https://...">
+                <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                  <i class="ri-upload-2-line"></i>
+                  <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_global_url')">
+                </label>
+              </div>
+            </div>
+            <hr>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label">Home Page Music (Overrides default)</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_home_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_home_url')">
+                  </label>
+                </div>
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label">About Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_about_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_about_url')">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label">Programs Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_programs_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_programs_url')">
+                  </label>
+                </div>
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label">Gallery Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_gallery_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_gallery_url')">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label">Contact Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_contact_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_contact_url')">
+                  </label>
+                </div>
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label">Thank You Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_thankyou_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_thankyou_url')">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="adm-save-row">
+              <button class="adm-btn adm-btn-primary" id="musicSettingsSaveBtn">
+                <i class="ri-save-line"></i> Save Music Settings
               </button>
             </div>
           </div>

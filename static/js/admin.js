@@ -241,6 +241,7 @@
         populateGalleryPage();
         populateContactPage();
         populateThankyouPage();
+        populateMusicSettings();
     }
 
     /* ─── HERO ─────────────────────────────────────────────── */
@@ -1089,6 +1090,49 @@
             showToast('Thank You Page saved!', 'success');
         } catch (err) { showToast(err.message, 'error'); }
         if (btn) setSaving(btn, false);
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       MUSIC SETTINGS
+    ═══════════════════════════════════════════════════════════ */
+    function populateMusicSettings() {
+        const ms = content.music_settings || {};
+        val('ms_global_url', ms.global_default_url);
+        val('ms_home_url', ms.home_music_url);
+        val('ms_about_url', ms.about_music_url);
+        val('ms_programs_url', ms.programs_music_url);
+        val('ms_gallery_url', ms.gallery_music_url);
+        val('ms_contact_url', ms.contact_music_url);
+        val('ms_thankyou_url', ms.thankyou_music_url);
+    }
+
+    document.getElementById('musicSettingsSaveBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        setSaving(btn, true);
+        try {
+            await apiPut('/music-settings', {
+                global_default_url: document.getElementById('ms_global_url').value,
+                home_music_url: document.getElementById('ms_home_url').value,
+                about_music_url: document.getElementById('ms_about_url').value,
+                programs_music_url: document.getElementById('ms_programs_url').value,
+                gallery_music_url: document.getElementById('ms_gallery_url').value,
+                contact_music_url: document.getElementById('ms_contact_url').value,
+                thankyou_music_url: document.getElementById('ms_thankyou_url').value,
+            });
+            showToast('Music Settings saved!', 'success');
+        } catch (err) { showToast(err.message, 'error'); }
+        setSaving(btn, false);
+    });
+
+    window.uploadAudioField = async function (input, urlFieldId) {
+        const file = input.files[0];
+        if (!file) return;
+        try {
+            // Reusing uploadImage endpoint which accepts any file to S3
+            const url = await uploadImage(file); 
+            document.getElementById(urlFieldId).value = url;
+            showToast('Audio uploaded!', 'success');
+        } catch (err) { showToast(err.message, 'error'); }
     };
 
     /* ═══════════════════════════════════════════════════════════
