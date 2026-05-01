@@ -9,6 +9,7 @@ from database import engine, SessionLocal
 from models import Base, SiteContent
 from routers import enrollment
 from routers import admin_content
+from routers import auth
 from storage import load_content
 
 load_dotenv()
@@ -33,11 +34,37 @@ def _seed_from_json():
     finally:
         db.close()
 
+def _seed_admin_user():
+    """Seed the default AdminUser if none exists."""
+    from models import AdminUser
+    import bcrypt
+    db = SessionLocal()
+    try:
+        if db.query(AdminUser).count() == 0:
+            username = os.getenv("ADMIN_USER", "surobahare")
+            password = os.getenv("ADMIN_PASSWORD", "surobahare@123")
+            recovery_code = os.getenv("ADMIN_RECOVERY_CODE", "RECOVERY123")
+            
+            salt = bcrypt.gensalt()
+            hashed = bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
+            
+            admin = AdminUser(
+                username=username,
+                password_hash=hashed,
+                recovery_code=recovery_code
+            )
+            db.add(admin)
+            db.commit()
+            print(f"[startup] Seeded default AdminUser: {username}")
+    finally:
+        db.close()
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     _seed_from_json()
+    _seed_admin_user()
     yield
 
 
@@ -47,6 +74,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 app.include_router(enrollment.router)
+app.include_router(auth.router)
 app.include_router(admin_content.router)
 
 

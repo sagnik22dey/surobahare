@@ -5,16 +5,19 @@ Academy{% endblock %} {% block content %}
   <div class="thankyou-card">
     <div class="thankyou-icon">🎶</div>
 
-    <h1 data-en="Thank You for Enrolling!" data-bn="ভর্তির জন্য ধন্যবাদ!">
-      Thank You for Enrolling!
+    <h1
+      data-en="{{ content.get('thankyou_page', {}).get('title', {}).get('en', 'Thank You!') }}"
+      data-bn="{{ content.get('thankyou_page', {}).get('title', {}).get('bn', 'ধন্যবাদ!') }}"
+    >
+      {{ content.get('thankyou_page', {}).get('title', {}).get('en', 'Thank You!') }}
     </h1>
 
     <p
       style="font-size: 1.05rem; margin-bottom: 0.8rem"
-      data-en="We've received your details successfully."
-      data-bn="আমরা সফলভাবে আপনার তথ্য পেয়েছি।"
+      data-en="{{ content.get('thankyou_page', {}).get('message', {}).get('en', 'Your enrollment form has been successfully submitted. We will contact you soon with further details.') }}"
+      data-bn="{{ content.get('thankyou_page', {}).get('message', {}).get('bn', 'আপনার ভর্তির ফর্ম সফলভাবে জমা দেওয়া হয়েছে। আমরা আরও বিশদ বিবরণ সহ শীঘ্রই আপনার সাথে যোগাযোগ করব।') }}"
     >
-      We've received your details successfully.
+      {{ content.get('thankyou_page', {}).get('message', {}).get('en', 'Your enrollment form has been successfully submitted. We will contact you soon with further details.') }}
     </p>
 
     <p

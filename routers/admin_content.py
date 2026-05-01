@@ -1,5 +1,7 @@
 from typing import Any, Dict, List, Optional
-from fastapi import APIRouter, HTTPException, UploadFile, File, Request
+from fastapi import APIRouter, HTTPException, UploadFile, File, Request, Depends
+from models import AdminUser
+from routers.auth import get_current_admin
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from storage import load_content, save_section
@@ -15,14 +17,14 @@ MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
 
 @router.get("")
 @router.get("/")
-async def admin_dashboard(request: Request):
+async def admin_dashboard(request: Request, current_admin: AdminUser = Depends(get_current_admin)):
     return templates.TemplateResponse(request, "admin.html", {})
 
 
 # ─── Media Upload (images, audio, video, documents) ───────────────────────────
 
 @router.post("/upload-media")
-async def upload_media(file: UploadFile = File(...)):
+async def upload_media(file: UploadFile = File(...), current_admin: AdminUser = Depends(get_current_admin)):
     content = await file.read()
     if len(content) > MAX_UPLOAD_SIZE:
         raise HTTPException(status_code=400, detail="File too large. Max size is 50 MB.")
@@ -36,7 +38,7 @@ async def upload_media(file: UploadFile = File(...)):
 # ─── Full Content Get ─────────────────────────────────────────────────────────
 
 @router.get("/content")
-async def get_content():
+async def get_content_api(current_admin: AdminUser = Depends(get_current_admin)):
     return load_content()
 
 
@@ -61,7 +63,7 @@ class HeroUpdate(BaseModel):
 
 
 @router.put("/hero")
-async def update_hero(data: HeroUpdate):
+async def update_hero(data: HeroUpdate, current_admin: AdminUser = Depends(get_current_admin)):
     content = load_content()
     h = content.setdefault("hero", {})
     if data.badge_en is not None: h.setdefault("badge", {})["en"] = data.badge_en
@@ -100,7 +102,7 @@ class MentorUpdate(BaseModel):
 
 
 @router.put("/mentor")
-async def update_mentor(data: MentorUpdate):
+async def update_mentor(data: MentorUpdate, current_admin: AdminUser = Depends(get_current_admin)):
     content = load_content()
     m = content.setdefault("about_snapshot", {})
     if data.title_en is not None: m.setdefault("title", {})["en"] = data.title_en
@@ -139,7 +141,7 @@ class ProgramsUpdate(BaseModel):
 
 
 @router.put("/programs")
-async def update_programs(data: ProgramsUpdate):
+async def update_programs(data: ProgramsUpdate, current_admin: AdminUser = Depends(get_current_admin)):
     content = load_content()
     pt = content.setdefault("programs_teaser", {})
     if data.title_en is not None: pt.setdefault("title", {})["en"] = data.title_en
@@ -181,7 +183,7 @@ class TeachingApproachUpdate(BaseModel):
 
 
 @router.put("/teaching-approach")
-async def update_teaching_approach(data: TeachingApproachUpdate):
+async def update_teaching_approach(data: TeachingApproachUpdate, current_admin: AdminUser = Depends(get_current_admin)):
     content = load_content()
     ta = content.setdefault("teaching_approach", {})
     if data.title_en is not None: ta.setdefault("title", {})["en"] = data.title_en
@@ -223,7 +225,7 @@ class TestimonialsUpdate(BaseModel):
 
 
 @router.put("/testimonials")
-async def update_testimonials(data: TestimonialsUpdate):
+async def update_testimonials(data: TestimonialsUpdate, current_admin: AdminUser = Depends(get_current_admin)):
     content = load_content()
     t = content.setdefault("testimonials", {})
     if data.title_en is not None: t.setdefault("title", {})["en"] = data.title_en
@@ -268,7 +270,7 @@ class AdmissionsBannerUpdate(BaseModel):
 
 
 @router.put("/admissions-banner")
-async def update_admissions_banner(data: AdmissionsBannerUpdate):
+async def update_admissions_banner(data: AdmissionsBannerUpdate, current_admin: AdminUser = Depends(get_current_admin)):
     content = load_content()
     ab = content.setdefault("admissions_banner", {})
     if data.visible is not None: ab["visible"] = data.visible
@@ -306,7 +308,7 @@ class MeteorHighlightsUpdate(BaseModel):
 
 
 @router.put("/meteor-highlights")
-async def update_meteor_highlights(data: MeteorHighlightsUpdate):
+async def update_meteor_highlights(data: MeteorHighlightsUpdate, current_admin: AdminUser = Depends(get_current_admin)):
     content = load_content()
     mh = content.setdefault("meteor_highlights", {})
     if data.title_en is not None: mh.setdefault("title", {})["en"] = data.title_en
@@ -323,3 +325,159 @@ async def update_meteor_highlights(data: MeteorHighlightsUpdate):
         ]
     save_section("meteor_highlights", mh)
     return {"status": "ok", "section": "meteor_highlights"}
+
+
+# ─── CONTACT INFO ─────────────────────────────────────────────────────────────
+
+class ContactInfoUpdate(BaseModel):
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    address_en: Optional[str] = None
+    address_bn: Optional[str] = None
+    whatsapp_number: Optional[str] = None
+
+@router.put("/contact-info")
+async def update_contact_info(data: ContactInfoUpdate, current_admin: AdminUser = Depends(get_current_admin)):
+    content = load_content()
+    ci = content.setdefault("contact_info", {})
+    if data.phone is not None: ci["phone"] = data.phone
+    if data.email is not None: ci["email"] = data.email
+    if data.address_en is not None: ci.setdefault("address", {})["en"] = data.address_en
+    if data.address_bn is not None: ci.setdefault("address", {})["bn"] = data.address_bn
+    if data.whatsapp_number is not None: ci["whatsapp_number"] = data.whatsapp_number
+    save_section("contact_info", ci)
+    return {"status": "ok", "section": "contact_info"}
+
+
+# ─── FOOTER INFO ──────────────────────────────────────────────────────────────
+
+class FooterInfoUpdate(BaseModel):
+    tagline_en: Optional[str] = None
+    tagline_bn: Optional[str] = None
+    copyright_en: Optional[str] = None
+    copyright_bn: Optional[str] = None
+
+@router.put("/footer-info")
+async def update_footer_info(data: FooterInfoUpdate, current_admin: AdminUser = Depends(get_current_admin)):
+    content = load_content()
+    fi = content.setdefault("footer_info", {})
+    if data.tagline_en is not None: fi.setdefault("tagline", {})["en"] = data.tagline_en
+    if data.tagline_bn is not None: fi.setdefault("tagline", {})["bn"] = data.tagline_bn
+    if data.copyright_en is not None: fi.setdefault("copyright", {})["en"] = data.copyright_en
+    if data.copyright_bn is not None: fi.setdefault("copyright", {})["bn"] = data.copyright_bn
+    save_section("footer_info", fi)
+    return {"status": "ok", "section": "footer_info"}
+
+
+# ─── ABOUT PAGE ───────────────────────────────────────────────────────────────
+
+class AboutPageUpdate(BaseModel):
+    hero_title_en: Optional[str] = None
+    hero_title_bn: Optional[str] = None
+    hero_subtitle_en: Optional[str] = None
+    hero_subtitle_bn: Optional[str] = None
+    story_title_en: Optional[str] = None
+    story_title_bn: Optional[str] = None
+    story_p1_en: Optional[str] = None
+    story_p1_bn: Optional[str] = None
+    story_p2_en: Optional[str] = None
+    story_p2_bn: Optional[str] = None
+    story_p3_en: Optional[str] = None
+    story_p3_bn: Optional[str] = None
+
+@router.put("/about-page")
+async def update_about_page(data: AboutPageUpdate, current_admin: AdminUser = Depends(get_current_admin)):
+    content = load_content()
+    ap = content.setdefault("about_page", {})
+    if data.hero_title_en is not None: ap.setdefault("hero_title", {})["en"] = data.hero_title_en
+    if data.hero_title_bn is not None: ap.setdefault("hero_title", {})["bn"] = data.hero_title_bn
+    if data.hero_subtitle_en is not None: ap.setdefault("hero_subtitle", {})["en"] = data.hero_subtitle_en
+    if data.hero_subtitle_bn is not None: ap.setdefault("hero_subtitle", {})["bn"] = data.hero_subtitle_bn
+    if data.story_title_en is not None: ap.setdefault("story_title", {})["en"] = data.story_title_en
+    if data.story_title_bn is not None: ap.setdefault("story_title", {})["bn"] = data.story_title_bn
+    if data.story_p1_en is not None: ap.setdefault("story_p1", {})["en"] = data.story_p1_en
+    if data.story_p1_bn is not None: ap.setdefault("story_p1", {})["bn"] = data.story_p1_bn
+    if data.story_p2_en is not None: ap.setdefault("story_p2", {})["en"] = data.story_p2_en
+    if data.story_p2_bn is not None: ap.setdefault("story_p2", {})["bn"] = data.story_p2_bn
+    if data.story_p3_en is not None: ap.setdefault("story_p3", {})["en"] = data.story_p3_en
+    if data.story_p3_bn is not None: ap.setdefault("story_p3", {})["bn"] = data.story_p3_bn
+    save_section("about_page", ap)
+    return {"status": "ok", "section": "about_page"}
+
+
+# ─── GALLERY PAGE ─────────────────────────────────────────────────────────────
+
+class GalleryItem(BaseModel):
+    id: Optional[str] = None
+    image_url: str
+
+class GalleryPageUpdate(BaseModel):
+    hero_title_en: Optional[str] = None
+    hero_title_bn: Optional[str] = None
+    hero_subtitle_en: Optional[str] = None
+    hero_subtitle_bn: Optional[str] = None
+    story_title_en: Optional[str] = None
+    story_title_bn: Optional[str] = None
+    story_desc_en: Optional[str] = None
+    story_desc_bn: Optional[str] = None
+    images: Optional[List[GalleryItem]] = None
+
+@router.put("/gallery-page")
+async def update_gallery_page(data: GalleryPageUpdate, current_admin: AdminUser = Depends(get_current_admin)):
+    content = load_content()
+    gp = content.setdefault("gallery_page", {})
+    if data.hero_title_en is not None: gp.setdefault("hero_title", {})["en"] = data.hero_title_en
+    if data.hero_title_bn is not None: gp.setdefault("hero_title", {})["bn"] = data.hero_title_bn
+    if data.hero_subtitle_en is not None: gp.setdefault("hero_subtitle", {})["en"] = data.hero_subtitle_en
+    if data.hero_subtitle_bn is not None: gp.setdefault("hero_subtitle", {})["bn"] = data.hero_subtitle_bn
+    if data.story_title_en is not None: gp.setdefault("story_title", {})["en"] = data.story_title_en
+    if data.story_title_bn is not None: gp.setdefault("story_title", {})["bn"] = data.story_title_bn
+    if data.story_desc_en is not None: gp.setdefault("story_desc", {})["en"] = data.story_desc_en
+    if data.story_desc_bn is not None: gp.setdefault("story_desc", {})["bn"] = data.story_desc_bn
+    if data.images is not None:
+        gp["images"] = [
+            {"id": item.id or f"img{i+1}", "image_url": item.image_url}
+            for i, item in enumerate(data.images)
+        ]
+    save_section("gallery_page", gp)
+    return {"status": "ok", "section": "gallery_page"}
+
+
+# ─── CONTACT PAGE ─────────────────────────────────────────────────────────────
+
+class ContactPageUpdate(BaseModel):
+    hero_title_en: Optional[str] = None
+    hero_title_bn: Optional[str] = None
+    hero_subtitle_en: Optional[str] = None
+    hero_subtitle_bn: Optional[str] = None
+
+@router.put("/contact-page")
+async def update_contact_page(data: ContactPageUpdate, current_admin: AdminUser = Depends(get_current_admin)):
+    content = load_content()
+    cp = content.setdefault("contact_page", {})
+    if data.hero_title_en is not None: cp.setdefault("hero_title", {})["en"] = data.hero_title_en
+    if data.hero_title_bn is not None: cp.setdefault("hero_title", {})["bn"] = data.hero_title_bn
+    if data.hero_subtitle_en is not None: cp.setdefault("hero_subtitle", {})["en"] = data.hero_subtitle_en
+    if data.hero_subtitle_bn is not None: cp.setdefault("hero_subtitle", {})["bn"] = data.hero_subtitle_bn
+    save_section("contact_page", cp)
+    return {"status": "ok", "section": "contact_page"}
+
+
+# ─── THANKYOU PAGE ────────────────────────────────────────────────────────────
+
+class ThankyouPageUpdate(BaseModel):
+    title_en: Optional[str] = None
+    title_bn: Optional[str] = None
+    message_en: Optional[str] = None
+    message_bn: Optional[str] = None
+
+@router.put("/thankyou-page")
+async def update_thankyou_page(data: ThankyouPageUpdate, current_admin: AdminUser = Depends(get_current_admin)):
+    content = load_content()
+    tp = content.setdefault("thankyou_page", {})
+    if data.title_en is not None: tp.setdefault("title", {})["en"] = data.title_en
+    if data.title_bn is not None: tp.setdefault("title", {})["bn"] = data.title_bn
+    if data.message_en is not None: tp.setdefault("message", {})["en"] = data.message_en
+    if data.message_bn is not None: tp.setdefault("message", {})["bn"] = data.message_bn
+    save_section("thankyou_page", tp)
+    return {"status": "ok", "section": "thankyou_page"}

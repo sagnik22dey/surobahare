@@ -104,30 +104,30 @@
           <h4 data-en="Contact" data-bn="যোগাযোগ">Contact</h4>
           <p>
             <i class="ri-phone-line"></i>
-            <span data-en="(Add your number)" data-bn="(আপনার নম্বর)"
-              >(Add your number)</span
+            <span data-en="{{ content.get('contact_info', {}).get('phone', '(Add your number)') }}" data-bn="{{ content.get('contact_info', {}).get('phone', '(আপনার নম্বর)') }}"
+              >{{ content.get('contact_info', {}).get('phone', '(Add your number)') }}</span
             >
           </p>
           <p>
             <i class="ri-mail-line"></i>
-            <span data-en="(Add your email)" data-bn="(আপনার ইমেইল)"
-              >(Add your email)</span
+            <span data-en="{{ content.get('contact_info', {}).get('email', '(Add your email)') }}" data-bn="{{ content.get('contact_info', {}).get('email', '(আপনার ইমেইল)') }}"
+              >{{ content.get('contact_info', {}).get('email', '(Add your email)') }}</span
             >
           </p>
           <p>
             <i class="ri-map-pin-line"></i>
-            <span data-en="Kolkata, West Bengal" data-bn="কলকাতা, পশ্চিমবঙ্গ"
-              >Kolkata, West Bengal</span
+            <span data-en="{{ content.get('contact_info', {}).get('address', {}).get('en', 'Kolkata, West Bengal') }}" data-bn="{{ content.get('contact_info', {}).get('address', {}).get('bn', 'কলকাতা, পশ্চিমবঙ্গ') }}"
+              >{{ content.get('contact_info', {}).get('address', {}).get('en', 'Kolkata, West Bengal') }}</span
             >
           </p>
         </div>
       </div>
       <div class="footer-bottom">
         <p
-          data-en="© 2026 Sur-O-Bahare. All Rights Reserved."
-          data-bn="© ২০২৬ সুর-ও-বাহারে। সমস্ত অধিকার সংরক্ষিত।"
+          data-en="{{ content.get('footer_info', {}).get('copyright', {}).get('en', '© 2026 Sur-O-Bahare. All Rights Reserved.') }}"
+          data-bn="{{ content.get('footer_info', {}).get('copyright', {}).get('bn', '© ২০২৬ সুর-ও-বাহারে। সমস্ত অধিকার সংরক্ষিত।') }}"
         >
-          © 2026 Sur-O-Bahare. All Rights Reserved.
+          {{ content.get('footer_info', {}).get('copyright', {}).get('en', '© 2026 Sur-O-Bahare. All Rights Reserved.') }}
         </p>
         <p
           data-en="Designed with passion for music and learning."

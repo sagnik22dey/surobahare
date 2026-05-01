@@ -4,14 +4,14 @@ endblock %} {% block content %}
 <!-- ===== PAGE HERO ===== -->
 <section class="page-hero">
   <div class="container">
-    <h1 data-en="About Samayita Dey" data-bn="সমাইতা দে সম্পর্কে">
-      About Samayita Dey
+    <h1 data-en="{{ content.get('about_page', {}).get('hero_title', {}).get('en', 'About The Mentor') }}" data-bn="{{ content.get('about_page', {}).get('hero_title', {}).get('bn', 'মেন্টর সম্পর্কে') }}">
+      {{ content.get('about_page', {}).get('hero_title', {}).get('en', 'About The Mentor') }}
     </h1>
     <p
-      data-en="Vocal Music Mentor &amp; Founder of Sur-O-Bahare"
-      data-bn="কণ্ঠসঙ্গীত প্রশিক্ষক ও সুর-ও-বাহারের প্রতিষ্ঠাতা"
+      data-en="{{ content.get('about_page', {}).get('hero_subtitle', {}).get('en', 'Learn about the journey, passion, and vision behind Sur-O-Bahare.') }}"
+      data-bn="{{ content.get('about_page', {}).get('hero_subtitle', {}).get('bn', 'সুর-ও-বাহারে-এর পেছনের যাত্রা, আবেগ এবং দৃষ্টিভঙ্গি সম্পর্কে জানুন।') }}"
     >
-      Vocal Music Mentor &amp; Founder of Sur-O-Bahare
+      {{ content.get('about_page', {}).get('hero_subtitle', {}).get('en', 'Learn about the journey, passion, and vision behind Sur-O-Bahare.') }}
     </p>
   </div>
 </section>

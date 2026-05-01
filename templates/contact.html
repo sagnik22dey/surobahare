@@ -4,14 +4,14 @@ Academy{% endblock %} {% block content %}
 <!-- ===== PAGE HERO ===== -->
 <section class="page-hero">
   <div class="container">
-    <h1 data-en="Enroll Your Child" data-bn="আপনার সন্তানকে ভর্তি করুন">
-      Enroll Your Child
+    <h1 data-en="{{ content.get('contact_page', {}).get('hero_title', {}).get('en', 'Enroll Your Child') }}" data-bn="{{ content.get('contact_page', {}).get('hero_title', {}).get('bn', 'আপনার সন্তানকে ভর্তি করুন') }}">
+      {{ content.get('contact_page', {}).get('hero_title', {}).get('en', 'Enroll Your Child') }}
     </h1>
     <p
-      data-en="Fill in the form below and we'll get in touch with you shortly"
-      data-bn="নিচের ফর্মটি পূরণ করুন এবং আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব"
+      data-en="{{ content.get('contact_page', {}).get('hero_subtitle', {}).get('en', 'Fill in the form below and we''ll get in touch with you shortly') }}"
+      data-bn="{{ content.get('contact_page', {}).get('hero_subtitle', {}).get('bn', 'নিচের ফর্মটি পূরণ করুন এবং আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব') }}"
     >
-      Fill in the form below and we'll get in touch with you shortly
+      {{ content.get('contact_page', {}).get('hero_subtitle', {}).get('en', 'Fill in the form below and we''ll get in touch with you shortly') }}
     </p>
   </div>
 </section>
@@ -338,8 +338,8 @@ Academy{% endblock %} {% block content %}
             <i class="ri-phone-line"></i>
             <div>
               <strong data-en="Phone" data-bn="ফোন">Phone</strong>
-              <p data-en="(Add your number)" data-bn="(আপনার নম্বর যোগ করুন)">
-                (Add your number)
+              <p data-en="{{ content.get('contact_info', {}).get('phone', '(Add your number)') }}" data-bn="{{ content.get('contact_info', {}).get('phone', '(আপনার নম্বর যোগ করুন)') }}">
+                {{ content.get('contact_info', {}).get('phone', '(Add your number)') }}
               </p>
             </div>
           </div>
@@ -348,8 +348,8 @@ Academy{% endblock %} {% block content %}
             <i class="ri-mail-line"></i>
             <div>
               <strong data-en="Email" data-bn="ইমেইল">Email</strong>
-              <p data-en="(Add your email)" data-bn="(আপনার ইমেইল যোগ করুন)">
-                (Add your email)
+              <p data-en="{{ content.get('contact_info', {}).get('email', '(Add your email)') }}" data-bn="{{ content.get('contact_info', {}).get('email', '(আপনার ইমেইল যোগ করুন)') }}">
+                {{ content.get('contact_info', {}).get('email', '(Add your email)') }}
               </p>
             </div>
           </div>
@@ -358,15 +358,15 @@ Academy{% endblock %} {% block content %}
             <i class="ri-map-pin-line"></i>
             <div>
               <strong data-en="Location" data-bn="অবস্থান">Location</strong>
-              <p data-en="Kolkata, West Bengal" data-bn="কলকাতা, পশ্চিমবঙ্গ">
-                Kolkata, West Bengal
+              <p data-en="{{ content.get('contact_info', {}).get('address', {}).get('en', 'Kolkata, West Bengal') }}" data-bn="{{ content.get('contact_info', {}).get('address', {}).get('bn', 'কলকাতা, পশ্চিমবঙ্গ') }}">
+                {{ content.get('contact_info', {}).get('address', {}).get('en', 'Kolkata, West Bengal') }}
               </p>
             </div>
           </div>
 
           <div style="margin-top: 1.6rem">
             <a
-              href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27m%20interested%20in%20enrolling%20at%20Sur-O-Bahare"
+              href="https://wa.me/{{ content.get('contact_info', {}).get('whatsapp_number', '910000000000') }}?text=Hi%2C%20I%27m%20interested%20in%20enrolling%20at%20Sur-O-Bahare"
               target="_blank"
               rel="noopener"
               class="btn btn-whatsapp"

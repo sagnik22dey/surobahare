@@ -4,14 +4,14 @@ Academy{% endblock %} {% block content %}
 <!-- ===== PAGE HERO ===== -->
 <section class="page-hero">
   <div class="container">
-    <h1 data-en="Student Journey" data-bn="শিক্ষার্থীর যাত্রা">
-      Student Journey
+    <h1 data-en="{{ content.get('gallery_page', {}).get('hero_title', {}).get('en', 'Our Musical Journey') }}" data-bn="{{ content.get('gallery_page', {}).get('hero_title', {}).get('bn', 'আমাদের সঙ্গীত যাত্রা') }}">
+      {{ content.get('gallery_page', {}).get('hero_title', {}).get('en', 'Our Musical Journey') }}
     </h1>
     <p
-      data-en="A glimpse into our musical journey — moments of learning, growth, and joy"
-      data-bn="আমাদের সঙ্গীত যাত্রার একটি ঝলক — শেখা, বেড়ে ওঠা এবং আনন্দের মুহূর্ত"
+      data-en="{{ content.get('gallery_page', {}).get('hero_subtitle', {}).get('en', 'Glimpses of performances, practice sessions, and joyful moments at Sur-O-Bahare.') }}"
+      data-bn="{{ content.get('gallery_page', {}).get('hero_subtitle', {}).get('bn', 'সুর-ও-বাহারে-এর পারফরম্যান্স, অনুশীলনের সেশন এবং আনন্দদায়ক মুহূর্তের ঝলক।') }}"
     >
-      A glimpse into our musical journey — moments of learning, growth, and joy
+      {{ content.get('gallery_page', {}).get('hero_subtitle', {}).get('en', 'Glimpses of performances, practice sessions, and joyful moments at Sur-O-Bahare.') }}
     </p>
   </div>
 </section>
@@ -20,39 +20,46 @@ Academy{% endblock %} {% block content %}
 <section class="section">
   <div class="container">
     <div class="section-header fade-in">
-      <h2 data-en="Photo Gallery" data-bn="ফটো গ্যালারি">Photo Gallery</h2>
+      <h2 data-en="{{ content.get('gallery_page', {}).get('story_title', {}).get('en', 'Moments We Cherish') }}" data-bn="{{ content.get('gallery_page', {}).get('story_title', {}).get('bn', 'যে মুহূর্তগুলো আমরা লালন করি') }}">
+        {{ content.get('gallery_page', {}).get('story_title', {}).get('en', 'Moments We Cherish') }}
+      </h2>
       <p
-        data-en="Capturing moments of confidence, creativity, and musical growth"
-        data-bn="আত্মবিশ্বাস, সৃজনশীলতা এবং সঙ্গীত বিকাশের মুহূর্তগুলি ধারণ করা"
+        data-en="{{ content.get('gallery_page', {}).get('story_desc', {}).get('en', 'Every picture tells a story of dedication, rhythm, and the pure joy of making music together.') }}"
+        data-bn="{{ content.get('gallery_page', {}).get('story_desc', {}).get('bn', 'প্রতিটি ছবি উৎসর্গ, তাল এবং একসাথে গান করার বিশুদ্ধ আনন্দের গল্প বলে।') }}"
       >
-        Capturing moments of confidence, creativity, and musical growth
+        {{ content.get('gallery_page', {}).get('story_desc', {}).get('en', 'Every picture tells a story of dedication, rhythm, and the pure joy of making music together.') }}
       </p>
     </div>
 
     <div class="gallery-grid">
-      <div class="gallery-item fade-in">
-        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=800&auto=format&fit=crop" alt="Student performance">
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?q=80&w=800&auto=format&fit=crop" alt="Piano learning">
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="https://images.unsplash.com/photo-1460036521480-c4b50f6a6c11?q=80&w=800&auto=format&fit=crop" alt="Singing practice">
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=800&auto=format&fit=crop" alt="Music camp">
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop" alt="DJ performance">
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="https://images.unsplash.com/photo-1528629297340-d1d466945dc5?q=80&w=800&auto=format&fit=crop" alt="Studio recording">
-      </div>
+      {% set gallery_images = content.get('gallery_page', {}).get('images', []) %}
+      {% if gallery_images %}
+        {% for img in gallery_images %}
+        <div class="gallery-item">
+          <img src="{{ img.image_url }}" alt="Gallery Image">
+        </div>
+        {% endfor %}
+      {% else %}
+        <!-- Placeholder Images -->
+        <div class="gallery-item">
+          <img src="/static/images/placeholders/gallery-1.jpg" alt="Performance" />
+        </div>
+        <div class="gallery-item">
+          <img src="/static/images/placeholders/gallery-2.jpg" alt="Practice Session" />
+        </div>
+        <div class="gallery-item">
+          <img src="/static/images/placeholders/gallery-3.jpg" alt="Group Singing" />
+        </div>
+        <div class="gallery-item">
+          <img src="/static/images/placeholders/gallery-4.jpg" alt="Annual Event" />
+        </div>
+        <div class="gallery-item">
+          <img src="/static/images/placeholders/gallery-5.jpg" alt="Student Portrait" />
+        </div>
+        <div class="gallery-item">
+          <img src="/static/images/placeholders/gallery-6.jpg" alt="Awards Ceremony" />
+        </div>
+      {% endif %}
     </div>
 
     <!-- Journey Description -->

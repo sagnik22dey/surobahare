@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password — Sur-O-Bahare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <style>
+        .auth-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: var(--adm-bg);
+            padding: 2rem;
+        }
+        .auth-card {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 450px;
+        }
+        .auth-brand {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .auth-brand img {
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+        .auth-brand h1 {
+            font-size: 1.5rem;
+            color: var(--adm-text);
+        }
+        .auth-alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .auth-alert.error {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+        .auth-alert.success {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+        .auth-links {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .auth-links a {
+            color: var(--adm-primary);
+            text-decoration: none;
+        }
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--adm-border);
+            margin-bottom: 1.5rem;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-family: inherit;
+            font-weight: 500;
+            color: var(--adm-secondary);
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            color: var(--adm-primary);
+            border-bottom-color: var(--adm-primary);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-brand">
+                <img src="/static/images/suro-bahare-logo.png" alt="Sur-O-Bahare">
+                <h1>Reset Password</h1>
+            </div>
+            
+            {% if error %}
+            <div class="auth-alert error">{{ error }}</div>
+            {% endif %}
+            
+            {% if success %}
+            <div class="auth-alert success">{{ success }}</div>
+            <div class="auth-links" style="margin-top: 0;">
+                <a href="/admin/login" class="adm-btn adm-btn-primary" style="display: inline-block; width: 100%; color: white;">Go to Login</a>
+            </div>
+            {% else %}
+
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab('old_password')">Use Old Password</button>
+                <button class="tab-btn" onclick="switchTab('recovery_code')">Use Recovery Code</button>
+            </div>
+
+            <form action="/admin/forgot-password" method="POST">
+                <input type="hidden" id="method_input" name="method" value="old_password">
+                
+                <div class="adm-form-group">
+                    <label class="adm-label" for="username">Username</label>
+                    <input type="text" class="adm-input" id="username" name="username" required>
+                </div>
+
+                <!-- Old Password Fields -->
+                <div id="tab_old_password" class="tab-content active">
+                    <div class="adm-form-group">
+                        <label class="adm-label" for="old_password">Current Password</label>
+                        <input type="password" class="adm-input" id="old_password" name="old_password">
+                    </div>
+                </div>
+
+                <!-- Recovery Code Fields -->
+                <div id="tab_recovery_code" class="tab-content">
+                    <div class="adm-form-group">
+                        <label class="adm-label" for="recovery_code">Recovery Code</label>
+                        <input type="text" class="adm-input" id="recovery_code" name="recovery_code">
+                    </div>
+                </div>
+
+                <div class="adm-form-group">
+                    <label class="adm-label" for="new_password">New Password</label>
+                    <input type="password" class="adm-input" id="new_password" name="new_password" required minlength="6">
+                </div>
+                
+                <button type="submit" class="adm-btn adm-btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                    <i class="ri-lock-password-line"></i> Reset Password
+                </button>
+            </form>
+
+            <div class="auth-links">
+                <a href="/admin/login">Back to Login</a>
+            </div>
+            
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById('tab_' + tabId).classList.add('active');
+            document.getElementById('method_input').value = tabId;
+            
+            if (tabId === 'old_password') {
+                document.getElementById('old_password').setAttribute('required', 'required');
+                document.getElementById('recovery_code').removeAttribute('required');
+            } else {
+                document.getElementById('recovery_code').setAttribute('required', 'required');
+                document.getElementById('old_password').removeAttribute('required');
+            }
+        }
+        
+        // Initial setup
+        switchTab('old_password');
+    </script>
+</body>
+</html>
