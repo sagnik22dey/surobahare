@@ -1,13 +1,12 @@
 import os
+import secrets
 import httpx
-from fastapi import APIRouter, Form, Request
+from typing import Optional
+from fastapi import APIRouter, Form, Request, Depends, HTTPException, status
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
-from typing import Optional
-from storage import add_enrollment, get_all_enrollments
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from fastapi import Depends, HTTPException, status
-import secrets
+from storage import add_enrollment, get_all_enrollments
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -35,7 +34,6 @@ async def submit_enrollment(
     }
     add_enrollment(record)
 
-    # WhatsApp notification via CallMeBot (graceful failure)
     try:
         whatsapp_number = os.getenv("ADMIN_WHATSAPP_NUMBER", "")
         api_key = os.getenv("CALLMEBOT_API_KEY", "")

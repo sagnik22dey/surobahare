@@ -1,24 +1,17 @@
-import os
-import uuid
-import shutil
 from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException, UploadFile, File, Request
-from fastapi.responses import JSONResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-from storage import load_content, save_content
+from storage import load_content, save_section
+from bucket import upload_file, validate_and_detect
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 templates = Jinja2Templates(directory="templates")
 
-UPLOAD_DIR = "static/images/uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
-
-ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp", "image/gif"}
-MAX_IMAGE_SIZE = 5 * 1024 * 1024  # 5 MB
+MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
 
 
-# ─── Admin Dashboard Page ────────────────────────────────────────────────────
+# ─── Admin Dashboard Page ─────────────────────────────────────────────────────
 
 @router.get("")
 @router.get("/")
@@ -26,21 +19,17 @@ async def admin_dashboard(request: Request):
     return templates.TemplateResponse("admin.html", {"request": request})
 
 
-# ─── Image Upload ─────────────────────────────────────────────────────────────
+# ─── Media Upload (images, audio, video, documents) ───────────────────────────
 
-@router.post("/upload-image")
-async def upload_image(file: UploadFile = File(...)):
-    if file.content_type not in ALLOWED_IMAGE_TYPES:
-        raise HTTPException(status_code=400, detail="Invalid image type. Use JPEG, PNG, WebP, or GIF.")
+@router.post("/upload-media")
+async def upload_media(file: UploadFile = File(...)):
     content = await file.read()
-    if len(content) > MAX_IMAGE_SIZE:
-        raise HTTPException(status_code=400, detail="Image too large. Max size is 5 MB.")
-    ext = file.filename.rsplit(".", 1)[-1] if "." in file.filename else "jpg"
-    filename = f"{uuid.uuid4().hex}.{ext}"
-    filepath = os.path.join(UPLOAD_DIR, filename)
-    with open(filepath, "wb") as f:
-        f.write(content)
-    url = f"/static/images/uploads/{filename}"
+    if len(content) > MAX_UPLOAD_SIZE:
+        raise HTTPException(status_code=400, detail="File too large. Max size is 50 MB.")
+    try:
+        url = upload_file(content, file.filename or "upload", file.content_type)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
     return {"url": url}
 
 
@@ -90,7 +79,7 @@ async def update_hero(data: HeroUpdate):
     if data.cta_secondary_label_en is not None: h["cta_secondary_label_en"] = data.cta_secondary_label_en
     if data.cta_secondary_label_bn is not None: h["cta_secondary_label_bn"] = data.cta_secondary_label_bn
     if data.cta_secondary_link is not None: h["cta_secondary_link"] = data.cta_secondary_link
-    save_content(content)
+    save_section("hero", h)
     return {"status": "ok", "section": "hero"}
 
 
@@ -125,7 +114,7 @@ async def update_mentor(data: MentorUpdate):
     if data.photo_url is not None: m["mentor_photo_url"] = data.photo_url
     if data.qualifications is not None: m["mentor_qualifications"] = data.qualifications
     if data.link is not None: m["mentor_link"] = data.link
-    save_content(content)
+    save_section("about_snapshot", m)
     return {"status": "ok", "section": "about_snapshot"}
 
 
@@ -158,19 +147,19 @@ async def update_programs(data: ProgramsUpdate):
     if data.subtitle_en is not None: pt.setdefault("subtitle", {})["en"] = data.subtitle_en
     if data.subtitle_bn is not None: pt.setdefault("subtitle", {})["bn"] = data.subtitle_bn
     if data.programs is not None:
-        programs_list = []
-        for i, p in enumerate(data.programs):
-            programs_list.append({
-                "id": p.id or f"p{i+1}",
+        pt["programs"] = [
+            {
+                "id": p.id or f"p{i + 1}",
                 "title_en": p.title_en,
                 "title_bn": p.title_bn,
                 "desc_en": p.desc_en,
                 "desc_bn": p.desc_bn,
                 "image_url": p.image_url or "",
-                "icon": p.icon or "🎵"
-            })
-        pt["programs"] = programs_list
-    save_content(content)
+                "icon": p.icon or "🎵",
+            }
+            for i, p in enumerate(data.programs)
+        ]
+    save_section("programs_teaser", pt)
     return {"status": "ok", "section": "programs_teaser"}
 
 
@@ -200,16 +189,16 @@ async def update_teaching_approach(data: TeachingApproachUpdate):
     if data.subtitle_en is not None: ta.setdefault("subtitle", {})["en"] = data.subtitle_en
     if data.subtitle_bn is not None: ta.setdefault("subtitle", {})["bn"] = data.subtitle_bn
     if data.points is not None:
-        points_list = []
-        for i, p in enumerate(data.points):
-            points_list.append({
-                "id": p.id or f"t{i+1}",
+        ta["points"] = [
+            {
+                "id": p.id or f"t{i + 1}",
                 "icon": p.icon or "ri-checkbox-circle-fill",
                 "en": p.en,
-                "bn": p.bn
-            })
-        ta["points"] = points_list
-    save_content(content)
+                "bn": p.bn,
+            }
+            for i, p in enumerate(data.points)
+        ]
+    save_section("teaching_approach", ta)
     return {"status": "ok", "section": "teaching_approach"}
 
 
@@ -242,19 +231,19 @@ async def update_testimonials(data: TestimonialsUpdate):
     if data.subtitle_en is not None: t.setdefault("subtitle", {})["en"] = data.subtitle_en
     if data.subtitle_bn is not None: t.setdefault("subtitle", {})["bn"] = data.subtitle_bn
     if data.list is not None:
-        tlist = []
-        for i, item in enumerate(data.list):
-            tlist.append({
-                "id": item.id or f"test{i+1}",
+        t["list"] = [
+            {
+                "id": item.id or f"test{i + 1}",
                 "quote_en": item.quote_en,
                 "quote_bn": item.quote_bn,
                 "author_en": item.author_en,
                 "author_bn": item.author_bn,
                 "rating": item.rating or 5,
-                "photo_url": item.photo_url or ""
-            })
-        t["list"] = tlist
-    save_content(content)
+                "photo_url": item.photo_url or "",
+            }
+            for i, item in enumerate(data.list)
+        ]
+    save_section("testimonials", t)
     return {"status": "ok", "section": "testimonials"}
 
 
@@ -297,7 +286,7 @@ async def update_admissions_banner(data: AdmissionsBannerUpdate):
     if data.whatsapp_message is not None: ab["whatsapp_message"] = data.whatsapp_message
     if data.whatsapp_btn_label_en is not None: ab["whatsapp_btn_label_en"] = data.whatsapp_btn_label_en
     if data.whatsapp_btn_label_bn is not None: ab["whatsapp_btn_label_bn"] = data.whatsapp_btn_label_bn
-    save_content(content)
+    save_section("admissions_banner", ab)
     return {"status": "ok", "section": "admissions_banner"}
 
 
@@ -323,14 +312,14 @@ async def update_meteor_highlights(data: MeteorHighlightsUpdate):
     if data.title_en is not None: mh.setdefault("title", {})["en"] = data.title_en
     if data.title_bn is not None: mh.setdefault("title", {})["bn"] = data.title_bn
     if data.items is not None:
-        items_list = []
-        for i, item in enumerate(data.items):
-            items_list.append({
-                "id": item.id or f"h{i+1}",
+        mh["items"] = [
+            {
+                "id": item.id or f"h{i + 1}",
                 "icon": item.icon or "⭐",
                 "label_en": item.label_en,
-                "label_bn": item.label_bn
-            })
-        mh["items"] = items_list
-    save_content(content)
+                "label_bn": item.label_bn,
+            }
+            for i, item in enumerate(data.items)
+        ]
+    save_section("meteor_highlights", mh)
     return {"status": "ok", "section": "meteor_highlights"}

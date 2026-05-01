@@ -1,43 +1,85 @@
-import json
-import os
-from datetime import datetime
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+from sqlalchemy.orm import Session
+from models import SiteContent, Enrollment
+from database import SessionLocal
 
-ENROLLMENTS_FILE = "enrollments.json"
-CONTENT_FILE = "content.json"
+
+def _get_db() -> Session:
+    return SessionLocal()
+
 
 def load_content() -> Dict[str, Any]:
-    if not os.path.exists(CONTENT_FILE):
-        return {}
-    with open(CONTENT_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+    db = _get_db()
+    try:
+        rows = db.query(SiteContent).all()
+        return {row.key: row.value for row in rows}
+    finally:
+        db.close()
+
 
 def save_content(data: Dict[str, Any]) -> None:
-    with open(CONTENT_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    db = _get_db()
+    try:
+        for key, value in data.items():
+            existing = db.query(SiteContent).filter(SiteContent.key == key).first()
+            if existing:
+                existing.value = value
+            else:
+                db.add(SiteContent(key=key, value=value))
+        db.commit()
+    finally:
+        db.close()
 
 
-def _load() -> List[Dict[str, Any]]:
-    if not os.path.exists(ENROLLMENTS_FILE):
-        return []
-    with open(ENROLLMENTS_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+def save_section(key: str, value: Any) -> None:
+    """Upsert a single content section by key."""
+    db = _get_db()
+    try:
+        existing = db.query(SiteContent).filter(SiteContent.key == key).first()
+        if existing:
+            existing.value = value
+        else:
+            db.add(SiteContent(key=key, value=value))
+        db.commit()
+    finally:
+        db.close()
 
 
-def _save(data: List[Dict[str, Any]]) -> None:
-    with open(ENROLLMENTS_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2, default=str)
-
-
-def add_enrollment(record: Dict[str, Any]) -> Dict[str, Any]:
-    data = _load()
-    record["id"] = len(data) + 1
-    record["created_at"] = datetime.now().isoformat()
-    data.append(record)
-    _save(data)
-    return record
+def add_enrollment(record: Dict[str, Any]) -> None:
+    db = _get_db()
+    try:
+        enrollment = Enrollment(
+            parent_name=record["parent_name"],
+            child_name=record["child_name"],
+            child_age=int(record["child_age"]),
+            mobile=record["mobile"],
+            location=record["location"],
+            program_interest=record["program_interest"],
+            heard_from=record.get("heard_from") or None,
+        )
+        db.add(enrollment)
+        db.commit()
+    finally:
+        db.close()
 
 
 def get_all_enrollments() -> List[Dict[str, Any]]:
-    data = _load()
-    return list(reversed(data))
+    db = _get_db()
+    try:
+        rows = db.query(Enrollment).order_by(Enrollment.created_at.desc()).all()
+        return [
+            {
+                "id": r.id,
+                "parent_name": r.parent_name,
+                "child_name": r.child_name,
+                "child_age": r.child_age,
+                "mobile": r.mobile,
+                "location": r.location,
+                "program_interest": r.program_interest,
+                "heard_from": r.heard_from or "",
+                "created_at": r.created_at.isoformat() if r.created_at else "",
+            }
+            for r in rows
+        ]
+    finally:
+        db.close()
