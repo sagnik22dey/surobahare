@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard — Sur-O-Bahare</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/admin.css" />
+  </head>
+  <body class="admin-body">
+    <!-- ═══════════════════════════════════════════════════════════
+     TOP BAR
+═══════════════════════════════════════════════════════════ -->
+    <header class="adm-topbar">
+      <a href="/admin" class="adm-topbar-brand">
+        <img src="/static/images/suro-bahare-logo.png" alt="Sur-O-Bahare" style="height: 30px; width: auto; margin-right: 8px;" />
+        <span>Admin</span>
+      </a>
+      <div class="adm-topbar-actions">
+        <a href="/" target="_blank" class="adm-view-site-btn">
+          <i class="ri-external-link-line"></i>
+          <span>View Site</span>
+        </a>
+        <button class="adm-btn-menu" id="admMenuBtn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════
+     SIDEBAR OVERLAY
+═══════════════════════════════════════════════════════════ -->
+    <div class="adm-sidebar-overlay" id="admSidebarOverlay"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+     LAYOUT
+═══════════════════════════════════════════════════════════ -->
+    <div class="adm-layout">
+      <!-- ── SIDEBAR ── -->
+      <aside class="adm-sidebar" id="admSidebar">
+        <div class="adm-sidebar-header">Content Sections</div>
+        <nav>
+          <a href="#" class="adm-sidebar-link" data-section="hero">
+            <i class="ri-image-2-line"></i> Hero / Banner
+          </a>
+          <a href="#" class="adm-sidebar-link" data-section="meteor">
+            <i class="ri-sparkling-line"></i> Highlights Bar
+          </a>
+          <a href="#" class="adm-sidebar-link" data-section="mentor">
+            <i class="ri-user-star-line"></i> Meet Your Mentor
+          </a>
+          <a href="#" class="adm-sidebar-link" data-section="programs">
+            <i class="ri-book-open-line"></i> Our Programs
+          </a>
+          <a href="#" class="adm-sidebar-link" data-section="approach">
+            <i class="ri-lightbulb-line"></i> Teaching Approach
+          </a>
+          <a href="#" class="adm-sidebar-link" data-section="testimonials">
+            <i class="ri-chat-quote-line"></i> Testimonials
+          </a>
+          <a href="#" class="adm-sidebar-link" data-section="banner">
+            <i class="ri-notification-badge-line"></i> Admissions Banner
+          </a>
+          <hr class="adm-divider" style="margin: 0.4rem 0.8rem" />
+          <a
+            href="/admin/enrollments"
+            class="adm-sidebar-link"
+            style="color: var(--adm-primary)"
+          >
+            <i class="ri-file-list-3-line"></i> View Enrollments
+          </a>
+        </nav>
+      </aside>
+
+      <!-- ── MAIN ── -->
+      <main class="adm-main">
+        <!-- Page Title -->
+        <div class="adm-page-title">
+          <i class="ri-settings-3-line"></i>
+          Content Manager
+        </div>
+
+        <!-- Section Tabs (horizontal scroll on mobile) -->
+        <div class="adm-section-tabs">
+          <button class="adm-tab-btn" data-section="hero">
+            <i class="ri-image-2-line"></i> Hero
+          </button>
+          <button class="adm-tab-btn" data-section="meteor">
+            <i class="ri-sparkling-line"></i> Highlights
+          </button>
+          <button class="adm-tab-btn" data-section="mentor">
+            <i class="ri-user-star-line"></i> Mentor
+          </button>
+          <button class="adm-tab-btn" data-section="programs">
+            <i class="ri-book-open-line"></i> Programs
+          </button>
+          <button class="adm-tab-btn" data-section="approach">
+            <i class="ri-lightbulb-line"></i> Approach
+          </button>
+          <button class="adm-tab-btn" data-section="testimonials">
+            <i class="ri-chat-quote-line"></i> Testimonials
+          </button>
+          <button class="adm-tab-btn" data-section="banner">
+            <i class="ri-notification-badge-line"></i> Banner
+          </button>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════
+         HERO SECTION
+    ══════════════════════════════════════════════════════ -->
+        <div class="adm-section" id="section-hero">
+          <div class="adm-section-header">
+            <h2><i class="ri-image-2-line"></i> Hero / Banner Section</h2>
+          </div>
+          <div class="adm-section-body">
+            <!-- Background Image -->
+            <div class="adm-form-group">
+              <label class="adm-label">Background Image</label>
+              <div class="adm-image-url-row">
+                <input
+                  class="adm-input"
+                  id="hero_bg_url"
+                  placeholder="https://... or upload below"
+                  oninput=""
+                />
+                <label
+                  class="adm-btn adm-btn-secondary adm-btn-sm"
+                  style="cursor: pointer"
+                  title="Upload image"
+                >
+                  <i class="ri-upload-2-line"></i>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style="display: none"
+                    onchange="
+                      (async (f) => {
+                        if (!f) return;
+                        try {
+                          const url = await window.admDoUpload(f);
+                          document.getElementById('hero_bg_url').value = url;
+                          const p = document.getElementById('hero_bg_preview');
+                          p.src = url;
+                          p.classList.add('visible');
+                          window.showAdmToast('Uploaded!', 'success');
+                        } catch (e) {
+                          window.showAdmToast(e.message, 'error');
+                        }
+                      })(this.files[0])
+                    "
+                  />
+                </label>
+              </div>
+              <img
+                id="hero_bg_preview"
+                class="adm-image-preview"
+                alt="Hero background preview"
+              />
+              <p class="adm-help">Recommended: 1920×900px, JPG or WebP</p>
+            </div>
+
+            <hr class="adm-divider" />
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Admission Badge <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_badge_en"
+                  placeholder="🌟 Admissions Open — Limited Seats"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Admission Badge <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_badge_bn"
+                  placeholder="🌟 ভর্তি চলছে — আসন সীমিত"
+                />
+              </div>
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Headline <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_headline_en"
+                  placeholder="Sur-O-Bahare"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Headline <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_headline_bn"
+                  placeholder="সুর-ও-বাহারে"
+                />
+              </div>
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Tagline <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_tagline_en"
+                  placeholder="Nurturing Voices, Building Confidence"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Tagline <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_tagline_bn"
+                  placeholder="কণ্ঠ গড়ি, আত্মবিশ্বাস তৈরি করি"
+                />
+              </div>
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Description <span class="lang-tag">EN</span></label
+                >
+                <textarea
+                  class="adm-textarea"
+                  id="hero_desc_en"
+                  placeholder="Short description…"
+                ></textarea>
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Description <span class="lang-tag bn">BN</span></label
+                >
+                <textarea
+                  class="adm-textarea"
+                  id="hero_desc_bn"
+                  placeholder="সংক্ষিপ্ত বিবরণ…"
+                ></textarea>
+              </div>
+            </div>
+
+            <hr class="adm-divider" />
+            <p
+              style="
+                font-weight: 600;
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+                color: var(--adm-secondary);
+              "
+            >
+              Primary CTA Button
+            </p>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Button Label <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_cta1_label_en"
+                  placeholder="Enroll Now"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Button Label <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_cta1_label_bn"
+                  placeholder="এখনই ভর্তি হন"
+                />
+              </div>
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">Button Link</label>
+              <input
+                class="adm-input"
+                id="hero_cta1_link"
+                placeholder="/contact"
+              />
+            </div>
+
+            <hr class="adm-divider" />
+            <p
+              style="
+                font-weight: 600;
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+                color: var(--adm-secondary);
+              "
+            >
+              Secondary CTA Button
+            </p>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Button Label <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_cta2_label_en"
+                  placeholder="Contact Us"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Button Label <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="hero_cta2_label_bn"
+                  placeholder="যোগাযোগ করুন"
+                />
+              </div>
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">Button Link</label>
+              <input
+                class="adm-input"
+                id="hero_cta2_link"
+                placeholder="/contact#contact-info"
+              />
+            </div>
+
+            <div class="adm-save-row">
+              <button class="adm-btn adm-btn-primary" id="heroSaveBtn">
+                <i class="ri-save-line"></i> Save Hero Section
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════
+         METEOR / HIGHLIGHTS
+    ══════════════════════════════════════════════════════ -->
+        <div class="adm-section" id="section-meteor">
+          <div class="adm-section-header">
+            <h2><i class="ri-sparkling-line"></i> Highlights Bar</h2>
+          </div>
+          <div class="adm-section-body">
+            <p class="adm-help" style="margin-bottom: 1rem">
+              This bar appears below the hero section with key selling points.
+            </p>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Title <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="meteor_title_en"
+                  placeholder="Why Choose Sur-O-Bahare?"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Title <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="meteor_title_bn"
+                  placeholder="কেন সুর-ও-বাহারে বেছে নেবেন?"
+                />
+              </div>
+            </div>
+
+            <hr class="adm-divider" />
+            <div id="meteorListContainer" class="adm-item-list"></div>
+            <button class="adm-add-item-btn" id="addMeteorBtn">
+              <i class="ri-add-circle-line"></i> Add Highlight
+            </button>
+
+            <div class="adm-save-row">
+              <button class="adm-btn adm-btn-primary" id="meteorSaveBtn">
+                <i class="ri-save-line"></i> Save Highlights
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════
+         MENTOR
+    ══════════════════════════════════════════════════════ -->
+        <div class="adm-section" id="section-mentor">
+          <div class="adm-section-header">
+            <h2><i class="ri-user-star-line"></i> Meet Your Mentor Section</h2>
+          </div>
+          <div class="adm-section-body">
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Heading <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="mentor_title_en"
+                  placeholder="Meet Your Mentor"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Heading <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="mentor_title_bn"
+                  placeholder="আপনার শিক্ষকের সাথে পরিচয় হন"
+                />
+              </div>
+            </div>
+
+            <hr class="adm-divider" />
+
+            <div class="adm-form-group">
+              <label class="adm-label">Mentor Photo</label>
+              <div class="adm-image-url-row">
+                <input
+                  class="adm-input"
+                  id="mentor_photo_url"
+                  placeholder="https://... or upload"
+                />
+                <label
+                  class="adm-btn adm-btn-secondary adm-btn-sm"
+                  style="cursor: pointer"
+                >
+                  <i class="ri-upload-2-line"></i>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style="display: none"
+                    onchange="
+                      (async (f) => {
+                        if (!f) return;
+                        try {
+                          const url = await window.admDoUpload(f);
+                          document.getElementById('mentor_photo_url').value =
+                            url;
+                          const p = document.getElementById(
+                            'mentor_photo_preview',
+                          );
+                          p.src = url;
+                          p.classList.add('visible');
+                          window.showAdmToast('Uploaded!', 'success');
+                        } catch (e) {
+                          window.showAdmToast(e.message, 'error');
+                        }
+                      })(this.files[0])
+                    "
+                  />
+                </label>
+              </div>
+              <img
+                id="mentor_photo_preview"
+                class="adm-image-preview"
+                alt="Mentor photo preview"
+                style="
+                  border-radius: 50%;
+                  width: 120px;
+                  height: 120px;
+                  object-fit: cover;
+                "
+              />
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Mentor Name <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="mentor_name_en"
+                  placeholder="Samayita Dey"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Mentor Name <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="mentor_name_bn"
+                  placeholder="সমাইতা দে"
+                />
+              </div>
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Role/Title <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="mentor_role_en"
+                  placeholder="Vocal Music Mentor & Founder"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Role/Title <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="mentor_role_bn"
+                  placeholder="কণ্ঠসঙ্গীত প্রশিক্ষক ও প্রতিষ্ঠাতা"
+                />
+              </div>
+            </div>
+
+            <div class="adm-form-group">
+              <label class="adm-label">Qualifications</label>
+              <input
+                class="adm-input"
+                id="mentor_qualifications"
+                placeholder="Trained in Rabindra Sangeet & Hindustani Classical Music"
+              />
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Bio <span class="lang-tag">EN</span></label
+                >
+                <textarea
+                  class="adm-textarea"
+                  id="mentor_bio_en"
+                  placeholder="Write about the mentor…"
+                ></textarea>
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Bio <span class="lang-tag bn">BN</span></label
+                >
+                <textarea
+                  class="adm-textarea"
+                  id="mentor_bio_bn"
+                  placeholder="প্রশিক্ষক সম্পর্কে লিখুন…"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="adm-form-group">
+              <label class="adm-label">Read More Link</label>
+              <input class="adm-input" id="mentor_link" placeholder="/about" />
+            </div>
+
+            <div class="adm-save-row">
+              <button class="adm-btn adm-btn-primary" id="mentorSaveBtn">
+                <i class="ri-save-line"></i> Save Mentor Section
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════
+         PROGRAMS
+    ══════════════════════════════════════════════════════ -->
+        <div class="adm-section" id="section-programs">
+          <div class="adm-section-header">
+            <h2><i class="ri-book-open-line"></i> Our Programs Section</h2>
+          </div>
+          <div class="adm-section-body">
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Title <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="prog_title_en"
+                  placeholder="Our Programs"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Title <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="prog_title_bn"
+                  placeholder="আমাদের প্রোগ্রাম"
+                />
+              </div>
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Subtitle <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="prog_subtitle_en"
+                  placeholder="Discover the right path…"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Subtitle <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="prog_subtitle_bn"
+                  placeholder="সঠিক পথ খুঁজুন…"
+                />
+              </div>
+            </div>
+
+            <hr class="adm-divider" />
+            <div id="programsListContainer" class="adm-item-list"></div>
+            <button class="adm-add-item-btn" id="addProgramBtn">
+              <i class="ri-add-circle-line"></i> Add Program
+            </button>
+
+            <div class="adm-save-row">
+              <button class="adm-btn adm-btn-primary" id="programsSaveBtn">
+                <i class="ri-save-line"></i> Save Programs
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════
+         TEACHING APPROACH
+    ══════════════════════════════════════════════════════ -->
+        <div class="adm-section" id="section-approach">
+          <div class="adm-section-header">
+            <h2><i class="ri-lightbulb-line"></i> Teaching Approach Section</h2>
+          </div>
+          <div class="adm-section-body">
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Title <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="approach_title_en"
+                  placeholder="Our Teaching Approach"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Title <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="approach_title_bn"
+                  placeholder="আমাদের শিক্ষণ পদ্ধতি"
+                />
+              </div>
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Subtitle <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="approach_subtitle_en"
+                  placeholder="What makes Sur-O-Bahare different"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Subtitle <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="approach_subtitle_bn"
+                  placeholder="সুর-ও-বাহারে কেন আলাদা"
+                />
+              </div>
+            </div>
+
+            <hr class="adm-divider" />
+            <div id="approachListContainer" class="adm-item-list"></div>
+            <button class="adm-add-item-btn" id="addApproachBtn">
+              <i class="ri-add-circle-line"></i> Add Approach Point
+            </button>
+
+            <div class="adm-save-row">
+              <button class="adm-btn adm-btn-primary" id="approachSaveBtn">
+                <i class="ri-save-line"></i> Save Approach
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════
+         TESTIMONIALS
+    ══════════════════════════════════════════════════════ -->
+        <div class="adm-section" id="section-testimonials">
+          <div class="adm-section-header">
+            <h2>
+              <i class="ri-chat-quote-line"></i> What Parents Say (Testimonials)
+            </h2>
+          </div>
+          <div class="adm-section-body">
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Title <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="test_title_en"
+                  placeholder="What Parents Say"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Section Title <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="test_title_bn"
+                  placeholder="অভিভাবকরা কী বলেন"
+                />
+              </div>
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Subtitle <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="test_subtitle_en"
+                  placeholder="Real stories from our musical family"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Subtitle <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="test_subtitle_bn"
+                  placeholder="সত্যিকারের গল্প"
+                />
+              </div>
+            </div>
+
+            <hr class="adm-divider" />
+            <div id="testimonialsListContainer" class="adm-item-list"></div>
+            <button class="adm-add-item-btn" id="addTestimonialBtn">
+              <i class="ri-add-circle-line"></i> Add Testimonial
+            </button>
+
+            <div class="adm-save-row">
+              <button class="adm-btn adm-btn-primary" id="testimonialsSaveBtn">
+                <i class="ri-save-line"></i> Save Testimonials
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════
+         ADMISSIONS BANNER
+    ══════════════════════════════════════════════════════ -->
+        <div class="adm-section" id="section-banner">
+          <div class="adm-section-header">
+            <h2>
+              <i class="ri-notification-badge-line"></i> Admissions Banner /
+              Bottom CTA
+            </h2>
+          </div>
+          <div class="adm-section-body">
+            <!-- Visibility toggle -->
+            <div class="adm-form-group">
+              <label class="adm-label">Banner Visibility</label>
+              <div class="adm-toggle-group">
+                <label class="adm-toggle">
+                  <input type="checkbox" id="banner_visible" />
+                  <span class="adm-toggle-slider"></span>
+                </label>
+                <span class="adm-toggle-label">Show banner on website</span>
+              </div>
+            </div>
+
+            <hr class="adm-divider" />
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Headline <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="banner_title_en"
+                  placeholder="Admissions Open — Limited Seats Available"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Headline <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="banner_title_bn"
+                  placeholder="ভর্তি চলছে — আসন সীমিত"
+                />
+              </div>
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Description <span class="lang-tag">EN</span></label
+                >
+                <textarea
+                  class="adm-textarea"
+                  id="banner_desc_en"
+                  placeholder="Join Sur-O-Bahare and…"
+                ></textarea>
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Description <span class="lang-tag bn">BN</span></label
+                >
+                <textarea
+                  class="adm-textarea"
+                  id="banner_desc_bn"
+                  placeholder="সুর-ও-বাহারে যোগ দিন…"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="adm-form-group">
+              <label class="adm-label">Seat Count / Urgency Text</label>
+              <input
+                class="adm-input"
+                id="banner_seat_count"
+                placeholder="Only 5 seats left"
+              />
+              <p class="adm-help">Displayed prominently on the banner</p>
+            </div>
+
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Urgency Text <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="banner_urgency_en"
+                  placeholder="Limited Seats — Act Fast!"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Urgency Text <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="banner_urgency_bn"
+                  placeholder="আসন সীমিত — দ্রুত যোগাযোগ করুন!"
+                />
+              </div>
+            </div>
+
+            <hr class="adm-divider" />
+            <p
+              style="
+                font-weight: 700;
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+                color: var(--adm-secondary);
+              "
+            >
+              📋 Enroll Button
+            </p>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Button Label <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="banner_enroll_label_en"
+                  placeholder="Enroll Now"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >Button Label <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="banner_enroll_label_bn"
+                  placeholder="এখনই ভর্তি হন"
+                />
+              </div>
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">Enroll Button Link</label>
+              <input
+                class="adm-input"
+                id="banner_enroll_link"
+                placeholder="/contact"
+              />
+            </div>
+
+            <hr class="adm-divider" />
+            <p
+              style="
+                font-weight: 700;
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+                color: var(--adm-secondary);
+              "
+            >
+              💬 WhatsApp Button
+            </p>
+            <div class="adm-form-group">
+              <label class="adm-label">WhatsApp Number</label>
+              <input
+                class="adm-input"
+                id="banner_whatsapp_number"
+                placeholder="91XXXXXXXXXX"
+                type="tel"
+              />
+              <p class="adm-help">
+                Enter with country code, no + or spaces. e.g. 919876543210
+              </p>
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">WhatsApp Pre-filled Message</label>
+              <textarea
+                class="adm-textarea"
+                id="banner_whatsapp_msg"
+                placeholder="Hi, I want to know more about Sur-O-Bahare"
+                style="min-height: 70px"
+              ></textarea>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >WhatsApp Button Label <span class="lang-tag">EN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="banner_whatsapp_label_en"
+                  placeholder="Join via WhatsApp"
+                />
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label"
+                  >WhatsApp Button Label
+                  <span class="lang-tag bn">BN</span></label
+                >
+                <input
+                  class="adm-input"
+                  id="banner_whatsapp_label_bn"
+                  placeholder="হোয়াটসঅ্যাপে যোগ দিন"
+                />
+              </div>
+            </div>
+
+            <div class="adm-save-row">
+              <button class="adm-btn adm-btn-primary" id="bannerSaveBtn">
+                <i class="ri-save-line"></i> Save Banner Section
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+     CONFIRM MODAL
+═══════════════════════════════════════════════════════════ -->
+    <div class="adm-modal-overlay" id="admConfirmModal">
+      <div class="adm-modal">
+        <h3>Confirm Action</h3>
+        <p id="admConfirmMsg">Are you sure?</p>
+        <div class="adm-modal-actions">
+          <button class="adm-btn adm-btn-secondary" id="admConfirmCancel">
+            Cancel
+          </button>
+          <button class="adm-btn adm-btn-danger" id="admConfirmOk">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+     TOAST CONTAINER
+═══════════════════════════════════════════════════════════ -->
+    <div class="adm-toast-container" id="admToastContainer"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+     GLOBAL HELPERS (exposed for inline handlers)
+═══════════════════════════════════════════════════════════ -->
+    <script>
+      window.admDoUpload = async function (file) {
+        const fd = new FormData();
+        fd.append("file", file);
+        const res = await fetch("/admin/upload-image", {
+          method: "POST",
+          body: fd,
+        });
+        if (!res.ok) {
+          const e = await res.json().catch(() => ({ detail: "Upload failed" }));
+          throw new Error(e.detail);
+        }
+        return (await res.json()).url;
+      };
+      window.showAdmToast = function (msg, type) {
+        const tc = document.getElementById("admToastContainer");
+        if (!tc) return;
+        const icons = {
+          success: "ri-checkbox-circle-line",
+          error: "ri-error-warning-line",
+          warning: "ri-alert-line",
+        };
+        const t = document.createElement("div");
+        t.className = `adm-toast ${type}`;
+        t.innerHTML = `<i class="${icons[type] || icons.success}"></i><span>${msg}</span>`;
+        tc.appendChild(t);
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => t.classList.add("show")),
+        );
+        setTimeout(() => {
+          t.classList.remove("show");
+          setTimeout(() => t.remove(), 350);
+        }, 3500);
+      };
+    </script>
+
+    <script src="/static/js/admin.js"></script>
+  </body>
+</html>

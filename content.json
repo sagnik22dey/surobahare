@@ -1,0 +1,230 @@
+{
+  "hero": {
+    "badge": {
+      "en": "🌟 Admissions Open — Limited Seats",
+      "bn": "🌟 ভর্তি চলছে — আসন সীমিত"
+    },
+    "headline": {
+      "en": "Sur-O-Bahare",
+      "bn": "সুর-ও-বাহারে"
+    },
+    "tagline": {
+      "en": "Nurturing Voices, Building Confidence",
+      "bn": "কণ্ঠ গড়ি, আত্মবিশ্বাস তৈরি করি"
+    },
+    "description": {
+      "en": "Unlock your child's musical potential with personalized vocal training, joyful learning, and confidence-building sessions.",
+      "bn": "ব্যক্তিগত কণ্ঠ প্রশিক্ষণ, আনন্দময় শিক্ষা এবং আত্মবিশ্বাস গড়ার মাধ্যমে আপনার সন্তানের সঙ্গীত প্রতিভা বিকশিত করুন।"
+    },
+    "bg_image_url": "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=2070&auto=format&fit=crop",
+    "cta_primary_label_en": "Enroll Now",
+    "cta_primary_label_bn": "এখনই ভর্তি হন",
+    "cta_primary_link": "/contact",
+    "cta_secondary_label_en": "Contact Us",
+    "cta_secondary_label_bn": "যোগাযোগ করুন",
+    "cta_secondary_link": "/contact#contact-info"
+  },
+  "about_snapshot": {
+    "title": {
+      "en": "Meet Your Mentor",
+      "bn": "আপনার শিক্ষকের সাথে পরিচয় হন"
+    },
+    "mentor_name": {
+      "en": "Samayita Dey",
+      "bn": "সমইতা দে"
+    },
+    "mentor_role": {
+      "en": "Vocal Music Mentor & Founder",
+      "bn": "কণ্ঠসঙ্গীত প্রশিক্ষক ও প্রতিষ্ঠাতা"
+    },
+    "mentor_bio": {
+      "en": "With a deep passion for music and teaching, I guide students to discover their unique voice while building confidence and stage presence. Through Sur-O-Bahare, I create a nurturing space where every child feels encouraged to express themselves through music.",
+      "bn": "সঙ্গীত ও শিক্ষার প্রতি গভীর আবেগ নিয়ে আমি শিক্ষার্থীদের তাদের নিজস্ব কণ্ঠস্বর আবিষ্কার করতে সাহায্য করি এবং আত্মবিশ্বাস ও মঞ্চ উপস্থিতি গড়ে তুলি। সুর-ও-বাহারের মাধ্যমে আমি একটি পরিচর্যামূলক পরিবেশ তৈরি করি যেখানে প্রতিটি শিশু সঙ্গীতের মাধ্যমে নিজেকে প্রকাশ করতে উৎসাহিত হয়।"
+    },
+    "mentor_photo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop",
+    "mentor_qualifications": "Trained in Rabindra Sangeet & Hindustani Classical Music",
+    "mentor_link": "/about"
+  },
+  "programs_teaser": {
+    "title": {
+      "en": "Our Programs",
+      "bn": "আমাদের প্রোগ্রাম"
+    },
+    "subtitle": {
+      "en": "Discover the right path for your child's musical journey",
+      "bn": "আপনার সন্তানের সঙ্গীত যাত্রার সঠিক পথ খুঁজুন"
+    },
+    "programs": [
+      {
+        "id": "p1",
+        "title_en": "Vocal Training",
+        "title_bn": "কণ্ঠস্বর প্রশিক্ষণ",
+        "desc_en": "Beginner to advanced pitch, voice control, and expression.",
+        "desc_bn": "শিক্ষানবিস থেকে উন্নত স্তর পর্যন্ত পিচ, কণ্ঠ নিয়ন্ত্রণ এবং অভিব্যক্তি।",
+        "image_url": "https://images.unsplash.com/photo-1528629297340-d1d466945dc5?q=80&w=800&auto=format&fit=crop",
+        "icon": "🎤"
+      },
+      {
+        "id": "p2",
+        "title_en": "Summer Music Camps",
+        "title_bn": "গ্রীষ্মকালীন সঙ্গীত শিবির",
+        "desc_en": "Fun-filled learning combining music, activities, and confidence building.",
+        "desc_bn": "সঙ্গীত, কার্যক্রম এবং আত্মবিশ্বাস গড়ার আনন্দময় শিক্ষার অভিজ্ঞতা।",
+        "image_url": "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=800&auto=format&fit=crop",
+        "icon": "🎵"
+      },
+      {
+        "id": "p3",
+        "title_en": "Classical & Light Music Basics",
+        "title_bn": "শাস্ত্রীয় ও লঘু সঙ্গীত",
+        "desc_en": "Strong foundation in classical and light music understanding.",
+        "desc_bn": "শাস্ত্রীয় ও লঘু সঙ্গীতের দৃঢ় ভিত্তি গড়ে তোলা।",
+        "image_url": "https://images.unsplash.com/photo-1460036521480-c4b50f6a6c11?q=80&w=800&auto=format&fit=crop",
+        "icon": "🎼"
+      },
+      {
+        "id": "p4",
+        "title_en": "Performance Preparation",
+        "title_bn": "মঞ্চ পারফরমেন্স প্রস্তুতি",
+        "desc_en": "Preparing students for stage performances, competitions, and showcases.",
+        "desc_bn": "মঞ্চ পরিবেশনা, প্রতিযোগিতা এবং শোকেসের জন্য শিক্ষার্থীদের প্রস্তুত করা।",
+        "image_url": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=800&auto=format&fit=crop",
+        "icon": "🌟"
+      }
+    ]
+  },
+  "teaching_approach": {
+    "title": {
+      "en": "Our Teaching Approach",
+      "bn": "আমাদের শিক্ষণ পদ্ধতি"
+    },
+    "subtitle": {
+      "en": "What makes Sur-O-Bahare different",
+      "bn": "সুর-ও-বাহারে কেন আলাদা"
+    },
+    "points": [
+      {
+        "id": "t1",
+        "icon": "ri-user-heart-line",
+        "en": "Personalized attention to every student",
+        "bn": "প্রতিটি শিক্ষার্থীর প্রতি ব্যক্তিগত মনোযোগ"
+      },
+      {
+        "id": "t2",
+        "icon": "ri-music-2-line",
+        "en": "Focus on correct pitch and vocal techniques",
+        "bn": "সঠিক পিচ এবং কণ্ঠ কৌশলের উপর মনোযোগ"
+      },
+      {
+        "id": "t3",
+        "icon": "ri-mic-2-line",
+        "en": "Confidence-building through performance practice",
+        "bn": "পারফরমেন্স অনুশীলনের মাধ্যমে আত্মবিশ্বাস গড়া"
+      },
+      {
+        "id": "t4",
+        "icon": "ri-emotion-happy-line",
+        "en": "Fun and engaging learning environment",
+        "bn": "মজাদার এবং আকর্ষণীয় শিক্ষার পরিবেশ"
+      },
+      {
+        "id": "t5",
+        "icon": "ri-lightbulb-line",
+        "en": "Encouraging self-practice and creativity",
+        "bn": "স্ব-অনুশীলন এবং সৃজনশীলতায় উৎসাহিত করা"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": {
+      "en": "What Parents Say",
+      "bn": "অভিভাবকরা কী বলেন"
+    },
+    "subtitle": {
+      "en": "Real stories from our musical family",
+      "bn": "আমাদের সঙ্গীত পরিবার থেকে সত্যিকারের গল্প"
+    },
+    "list": [
+      {
+        "id": "test1",
+        "quote_en": "Within just a few weeks, I could see a huge improvement in my child's confidence. She now performs on stage without any hesitation!",
+        "quote_bn": "মাত্র কয়েক সপ্তাহের মধ্যে আমার সন্তানের আত্মবিশ্বাসে ব্যাপক উন্নতি দেখতে পাচ্ছি। সে এখন কোনো দ্বিধা ছাড়াই মঞ্চে পরিবেশনা করে!",
+        "author_en": "A Parent, Kolkata",
+        "author_bn": "একজন অভিভাবক, কলকাতা",
+        "rating": 5,
+        "photo_url": ""
+      },
+      {
+        "id": "test2",
+        "quote_en": "A very patient and dedicated mentor who truly cares about each student. My son looks forward to every single class.",
+        "quote_bn": "একজন অত্যন্ত ধৈর্যশীল এবং নিবেদিত প্রশিক্ষক যিনি সত্যিই প্রতিটি শিক্ষার্থীর যত্ন নেন। আমার ছেলে প্রতিটি ক্লাসের জন্য অপেক্ষা করে।",
+        "author_en": "A Parent, South Kolkata",
+        "author_bn": "একজন অভিভাবক, দক্ষিণ কলকাতা",
+        "rating": 5,
+        "photo_url": ""
+      },
+      {
+        "id": "test3",
+        "quote_en": "The classes are fun, engaging, and very effective. My daughter has grown so much as a singer and as a person.",
+        "quote_bn": "ক্লাসগুলি মজাদার, আকর্ষণীয় এবং অত্যন্ত কার্যকর। আমার মেয়ে একজন গায়ক হিসেবে এবং একজন মানুষ হিসেবে অনেক বেড়ে উঠেছে।",
+        "author_en": "A Parent, North Kolkata",
+        "author_bn": "একজন অভিভাবক, উত্তর কলকাতা",
+        "rating": 5,
+        "photo_url": ""
+      }
+    ]
+  },
+  "admissions_banner": {
+    "visible": true,
+    "title": {
+      "en": "Admissions Open — Limited Seats Available",
+      "bn": "ভর্তি চলছে — আসন সীমিত"
+    },
+    "description": {
+      "en": "Join Sur-O-Bahare and let your child experience the joy of music in a supportive and inspiring environment.",
+      "bn": "সুর-ও-বাহারে যোগ দিন এবং আপনার সন্তানকে একটি সহায়ক ও অনুপ্রেরণামূলক পরিবেশে সঙ্গীতের আনন্দ অনুভব করতে দিন।"
+    },
+    "urgency_text_en": "Limited Seats Available — Act Fast!",
+    "urgency_text_bn": "আসন সীমিত — দ্রুত যোগাযোগ করুন!",
+    "seat_count": "Only 5 seats left",
+    "enroll_btn_label_en": "Enroll Now",
+    "enroll_btn_label_bn": "এখনই ভর্তি হন",
+    "enroll_btn_link": "/contact",
+    "whatsapp_number": "917908875949",
+    "whatsapp_message": "Hi, I want to know more about Sur-O-Bahare",
+    "whatsapp_btn_label_en": "Join via WhatsApp",
+    "whatsapp_btn_label_bn": "হোয়াটসঅ্যাপে যোগ দিন"
+  },
+  "meteor_highlights": {
+    "title": {
+      "en": "Why Choose Sur-O-Bahare?",
+      "bn": "কেন সুর-ও-বাহারে বেছে নেবেন?"
+    },
+    "items": [
+      {
+        "id": "h1",
+        "icon": "🏆",
+        "label_en": "Expert Mentor",
+        "label_bn": "বিশেষজ্ঞ প্রশিক্ষক"
+      },
+      {
+        "id": "h2",
+        "icon": "❤️",
+        "label_en": "Passion-Driven",
+        "label_bn": "আবেগ-চালিত"
+      },
+      {
+        "id": "h3",
+        "icon": "🎯",
+        "label_en": "Result-Oriented",
+        "label_bn": "ফলাভিমুখী"
+      },
+      {
+        "id": "h4",
+        "icon": "👨‍👩‍👧",
+        "label_en": "Family Environment",
+        "label_bn": "পারিবারিক পরিবেশ"
+      }
+    ]
+  }
+}

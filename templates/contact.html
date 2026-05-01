@@ -1,0 +1,451 @@
+{% extends "base.html" %} {% block title %}Enroll / Contact — Sur-O-Bahare Music
+Academy{% endblock %} {% block content %}
+
+<!-- ===== PAGE HERO ===== -->
+<section class="page-hero">
+  <div class="container">
+    <h1 data-en="Enroll Your Child" data-bn="আপনার সন্তানকে ভর্তি করুন">
+      Enroll Your Child
+    </h1>
+    <p
+      data-en="Fill in the form below and we'll get in touch with you shortly"
+      data-bn="নিচের ফর্মটি পূরণ করুন এবং আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব"
+    >
+      Fill in the form below and we'll get in touch with you shortly
+    </p>
+  </div>
+</section>
+
+<!-- ===== ENROLLMENT FORM + CONTACT INFO ===== -->
+<section class="section">
+  <div class="container">
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: var(--space-lg);
+        align-items: start;
+      "
+    >
+      <!-- ── ENROLLMENT FORM ── -->
+      <div class="form-section fade-in">
+        <h2
+          style="margin-bottom: 0.4rem"
+          data-en="Enrollment Form"
+          data-bn="ভর্তির ফর্ম"
+        >
+          Enrollment Form
+        </h2>
+        <p
+          style="
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+          "
+          data-en="All fields marked with * are required."
+          data-bn="* চিহ্নিত সব ক্ষেত্র পূরণ করা আবশ্যক।"
+        >
+          All fields marked with * are required.
+        </p>
+
+        <form id="enroll-form" method="POST" action="/enroll" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label
+                for="parent_name"
+                data-en="Parent / Guardian Name *"
+                data-bn="অভিভাবকের নাম *"
+                >Parent / Guardian Name *</label
+              >
+              <input
+                type="text"
+                id="parent_name"
+                name="parent_name"
+                required
+                placeholder="Your full name"
+                data-placeholder-en="Your full name"
+                data-placeholder-bn="আপনার পুরো নাম"
+              />
+              <span
+                class="form-error"
+                id="parent_name-error"
+                data-en="Please enter the parent's name."
+                data-bn="অনুগ্রহ করে অভিভাবকের নাম দিন।"
+                >Please enter the parent's name.</span
+              >
+            </div>
+
+            <div class="form-group">
+              <label
+                for="child_name"
+                data-en="Child's Name *"
+                data-bn="শিশুর নাম *"
+                >Child's Name *</label
+              >
+              <input
+                type="text"
+                id="child_name"
+                name="child_name"
+                required
+                placeholder="Child's full name"
+                data-placeholder-en="Child's full name"
+                data-placeholder-bn="শিশুর পুরো নাম"
+              />
+              <span
+                class="form-error"
+                id="child_name-error"
+                data-en="Please enter the child's name."
+                data-bn="অনুগ্রহ করে শিশুর নাম দিন।"
+                >Please enter the child's name.</span
+              >
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label
+                for="child_age"
+                data-en="Child's Age *"
+                data-bn="শিশুর বয়স *"
+                >Child's Age *</label
+              >
+              <input
+                type="number"
+                id="child_age"
+                name="child_age"
+                required
+                min="3"
+                max="25"
+                placeholder="e.g. 8"
+                data-placeholder-en="e.g. 8"
+                data-placeholder-bn="যেমন ৮"
+              />
+              <span
+                class="form-error"
+                id="child_age-error"
+                data-en="Please enter the child's age."
+                data-bn="অনুগ্রহ করে শিশুর বয়স দিন।"
+                >Please enter the child's age.</span
+              >
+            </div>
+
+            <div class="form-group">
+              <label
+                for="mobile"
+                data-en="Mobile Number *"
+                data-bn="মোবাইল নম্বর *"
+                >Mobile Number *</label
+              >
+              <input
+                type="tel"
+                id="mobile"
+                name="mobile"
+                required
+                placeholder="10-digit mobile number"
+                data-placeholder-en="10-digit mobile number"
+                data-placeholder-bn="১০ সংখ্যার মোবাইল নম্বর"
+                pattern="[0-9]{10}"
+                maxlength="10"
+              />
+              <span
+                class="form-error"
+                id="mobile-error"
+                data-en="Please enter a valid 10-digit mobile number."
+                data-bn="অনুগ্রহ করে একটি বৈধ ১০ সংখ্যার মোবাইল নম্বর দিন।"
+                >Please enter a valid 10-digit mobile number.</span
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label
+              for="location"
+              data-en="Location / Area *"
+              data-bn="এলাকা / অবস্থান *"
+              >Location / Area *</label
+            >
+            <input
+              type="text"
+              id="location"
+              name="location"
+              required
+              placeholder="Your neighbourhood or area in Kolkata"
+              data-placeholder-en="Your neighbourhood or area in Kolkata"
+              data-placeholder-bn="কলকাতায় আপনার এলাকা বা পাড়া"
+            />
+            <span
+              class="form-error"
+              id="location-error"
+              data-en="Please enter your location."
+              data-bn="অনুগ্রহ করে আপনার এলাকা দিন।"
+              >Please enter your location.</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label
+              for="program_interest"
+              data-en="Program of Interest *"
+              data-bn="আগ্রহের প্রোগ্রাম *"
+              >Program of Interest *</label
+            >
+            <select id="program_interest" name="program_interest" required>
+              <option
+                value=""
+                data-en="— Select a program —"
+                data-bn="— একটি প্রোগ্রাম বেছে নিন —"
+              >
+                — Select a program —
+              </option>
+              <option
+                value="Vocal Training"
+                data-en="Vocal Training"
+                data-bn="কণ্ঠস্বর প্রশিক্ষণ"
+              >
+                Vocal Training / কণ্ঠস্বর প্রশিক্ষণ
+              </option>
+              <option
+                value="Summer Music Camps"
+                data-en="Summer Music Camps"
+                data-bn="গ্রীষ্মকালীন সঙ্গীত শিবির"
+              >
+                Summer Music Camps / গ্রীষ্মকালীন সঙ্গীত শিবির
+              </option>
+              <option
+                value="Classical & Light Music Basics"
+                data-en="Classical &amp; Light Music Basics"
+                data-bn="শাস্ত্রীয় ও লঘু সঙ্গীত"
+              >
+                Classical &amp; Light Music Basics / শাস্ত্রীয় ও লঘু সঙ্গীত
+              </option>
+              <option
+                value="Performance Preparation"
+                data-en="Performance Preparation"
+                data-bn="মঞ্চ পারফরমেন্স প্রস্তুতি"
+              >
+                Performance Preparation / মঞ্চ পারফরমেন্স প্রস্তুতি
+              </option>
+              <option
+                value="Not sure yet"
+                data-en="Not sure yet"
+                data-bn="এখনো নিশ্চিত নই"
+              >
+                Not sure yet / এখনো নিশ্চিত নই
+              </option>
+            </select>
+            <span
+              class="form-error"
+              id="program_interest-error"
+              data-en="Please select a program."
+              data-bn="অনুগ্রহ করে একটি প্রোগ্রাম বেছে নিন।"
+              >Please select a program.</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label
+              for="heard_from"
+              data-en="How did you hear about us?"
+              data-bn="আমাদের সম্পর্কে কীভাবে জানলেন?"
+              >How did you hear about us?</label
+            >
+            <select id="heard_from" name="heard_from">
+              <option value="" data-en="— Optional —" data-bn="— ঐচ্ছিক —">
+                — Optional —
+              </option>
+              <option
+                value="WhatsApp"
+                data-en="WhatsApp"
+                data-bn="হোয়াটসঅ্যাপ"
+              >
+                WhatsApp
+              </option>
+              <option
+                value="Facebook / Instagram"
+                data-en="Facebook / Instagram"
+                data-bn="ফেসবুক / ইনস্টাগ্রাম"
+              >
+                Facebook / Instagram
+              </option>
+              <option
+                value="Friend or Family"
+                data-en="Friend or Family"
+                data-bn="বন্ধু বা পরিবার"
+              >
+                Friend or Family
+              </option>
+              <option
+                value="Google Search"
+                data-en="Google Search"
+                data-bn="গুগল সার্চ"
+              >
+                Google Search
+              </option>
+              <option
+                value="Local Advertisement"
+                data-en="Local Advertisement"
+                data-bn="স্থানীয় বিজ্ঞাপন"
+              >
+                Local Advertisement
+              </option>
+              <option value="Other" data-en="Other" data-bn="অন্যান্য">
+                Other
+              </option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="
+              width: 100%;
+              justify-content: center;
+              font-size: 1.05rem;
+              padding: 0.9rem;
+            "
+          >
+            <i class="ri-send-plane-line"></i>
+            <span data-en="Submit Enrollment" data-bn="ভর্তির আবেদন জমা দিন"
+              >Submit Enrollment</span
+            >
+          </button>
+        </form>
+      </div>
+
+      <!-- ── CONTACT INFO ── -->
+      <div id="contact-info" class="fade-in">
+        <div class="contact-info-block">
+          <h3 data-en="Contact Information" data-bn="যোগাযোগের তথ্য">
+            Contact Information
+          </h3>
+
+          <div class="contact-info-item">
+            <i class="ri-user-line"></i>
+            <div>
+              <strong data-en="Samayita Dey" data-bn="সমাইতা দে"
+                >Samayita Dey</strong
+              >
+              <p
+                data-en="Vocal Music Mentor &amp; Founder"
+                data-bn="কণ্ঠসঙ্গীত প্রশিক্ষক ও প্রতিষ্ঠাতা"
+              >
+                Vocal Music Mentor &amp; Founder
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <i class="ri-phone-line"></i>
+            <div>
+              <strong data-en="Phone" data-bn="ফোন">Phone</strong>
+              <p data-en="(Add your number)" data-bn="(আপনার নম্বর যোগ করুন)">
+                (Add your number)
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <i class="ri-mail-line"></i>
+            <div>
+              <strong data-en="Email" data-bn="ইমেইল">Email</strong>
+              <p data-en="(Add your email)" data-bn="(আপনার ইমেইল যোগ করুন)">
+                (Add your email)
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <i class="ri-map-pin-line"></i>
+            <div>
+              <strong data-en="Location" data-bn="অবস্থান">Location</strong>
+              <p data-en="Kolkata, West Bengal" data-bn="কলকাতা, পশ্চিমবঙ্গ">
+                Kolkata, West Bengal
+              </p>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.6rem">
+            <a
+              href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27m%20interested%20in%20enrolling%20at%20Sur-O-Bahare"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-whatsapp"
+              style="width: 100%; justify-content: center"
+            >
+              <i class="ri-whatsapp-line"></i>
+              <span
+                data-en="Chat on WhatsApp"
+                data-bn="হোয়াটসঅ্যাপে চ্যাট করুন"
+                >Chat on WhatsApp</span
+              >
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick note -->
+        <div
+          style="
+            background: var(--primary-light);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.4rem;
+            margin-top: 1.6rem;
+          "
+        >
+          <p style="font-size: 0.9rem; color: var(--secondary)">
+            <i class="ri-information-line" style="color: var(--primary)"></i>
+            <strong data-en="What happens next?" data-bn="পরবর্তী কী হবে?">
+              What happens next?</strong
+            >
+          </p>
+          <p
+            style="
+              font-size: 0.85rem;
+              color: var(--text-muted);
+              margin-top: 0.5rem;
+            "
+            data-en="After submitting, Samayita Dey will reach out to you on WhatsApp within 24 hours to discuss the program, schedule, and fees."
+            data-bn="জমা দেওয়ার পরে, সমাইতা দে ২৪ ঘণ্টার মধ্যে প্রোগ্রাম, সময়সূচি এবং ফি নিয়ে আলোচনার জন্য হোয়াটসঅ্যাপে আপনার সাথে যোগাযোগ করবেন।"
+          >
+            After submitting, Samayita Dey will reach out to you on WhatsApp
+            within 24 hours to discuss the program, schedule, and fees.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (max-width: 768px) {
+    .contact-layout {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+
+<script>
+  // Update placeholders on language switch
+  document.addEventListener("DOMContentLoaded", function () {
+    function updatePlaceholders() {
+      const lang = document.documentElement.getAttribute("data-lang") || "en";
+      document.querySelectorAll("[data-placeholder-en]").forEach((el) => {
+        el.placeholder =
+          lang === "bn"
+            ? el.getAttribute("data-placeholder-bn") ||
+              el.getAttribute("data-placeholder-en")
+            : el.getAttribute("data-placeholder-en");
+      });
+    }
+    updatePlaceholders();
+
+    const langToggle = document.getElementById("lang-toggle");
+    if (langToggle) {
+      langToggle.addEventListener("click", () => {
+        setTimeout(updatePlaceholders, 10);
+      });
+    }
+  });
+</script>
+
+{% endblock %}

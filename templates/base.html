@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Sur-O-Bahare Music Academy{% endblock %}</title>
+
+    <!-- Google Fonts: Outfit (English) + Hind Siliguri (Bengali) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Remix Icons CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <!-- Global Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar" id="navbar">
+      <div class="nav-container">
+        <a href="/" class="nav-logo">
+          <img src="/static/images/suro-bahare-logo.png" alt="Sur-O-Bahare" class="logo-image" />
+        </a>
+
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav-links" id="nav-links">
+          <a href="/" data-en="Home" data-bn="হোম">Home</a>
+          <a href="/about" data-en="About" data-bn="পরিচিতি">About</a>
+          <a href="/programs" data-en="Programs" data-bn="প্রোগ্রাম"
+            >Programs</a
+          >
+          <a href="/gallery" data-en="Gallery" data-bn="গ্যালারি">Gallery</a>
+          <a
+            href="/contact"
+            class="nav-enroll"
+            data-en="Enroll"
+            data-bn="ভর্তি হন"
+            >Enroll</a
+          >
+
+          <button
+            class="lang-toggle"
+            id="lang-toggle"
+            aria-label="Toggle language"
+          >
+            <span class="lang-en active">EN</span>
+            <span class="lang-sep">|</span>
+            <span class="lang-bn">বাং</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===== PAGE CONTENT ===== -->
+    <main>{% block content %}{% endblock %}</main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-col">
+          <a href="/" class="footer-logo-link">
+            <img src="/static/images/suro-bahare-logo.png" alt="Sur-O-Bahare" class="footer-logo-image" />
+          </a>
+          <p
+            data-en="Nurturing Voices, Building Confidence"
+            data-bn="কণ্ঠ গড়ি, আত্মবিশ্বাস তৈরি করি"
+          >
+            Nurturing Voices, Building Confidence
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 data-en="Quick Links" data-bn="দ্রুত লিঙ্ক">Quick Links</h4>
+          <ul>
+            <li>
+              <a href="/about" data-en="About" data-bn="পরিচিতি">About</a>
+            </li>
+            <li>
+              <a href="/programs" data-en="Programs" data-bn="প্রোগ্রাম"
+                >Programs</a
+              >
+            </li>
+            <li>
+              <a href="/gallery" data-en="Gallery" data-bn="গ্যালারি"
+                >Gallery</a
+              >
+            </li>
+            <li>
+              <a href="/contact" data-en="Enroll" data-bn="ভর্তি হন">Enroll</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-en="Contact" data-bn="যোগাযোগ">Contact</h4>
+          <p>
+            <i class="ri-phone-line"></i>
+            <span data-en="(Add your number)" data-bn="(আপনার নম্বর)"
+              >(Add your number)</span
+            >
+          </p>
+          <p>
+            <i class="ri-mail-line"></i>
+            <span data-en="(Add your email)" data-bn="(আপনার ইমেইল)"
+              >(Add your email)</span
+            >
+          </p>
+          <p>
+            <i class="ri-map-pin-line"></i>
+            <span data-en="Kolkata, West Bengal" data-bn="কলকাতা, পশ্চিমবঙ্গ"
+              >Kolkata, West Bengal</span
+            >
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p
+          data-en="© 2026 Sur-O-Bahare. All Rights Reserved."
+          data-bn="© ২০২৬ সুর-ও-বাহারে। সমস্ত অধিকার সংরক্ষিত।"
+        >
+          © 2026 Sur-O-Bahare. All Rights Reserved.
+        </p>
+        <p
+          data-en="Designed with passion for music and learning."
+          data-bn="সঙ্গীত ও শিক্ষার প্রতি ভালোবাসায় তৈরি।"
+        >
+          Designed with passion for music and learning.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Main JS -->
+    <script src="/static/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+{% extends "base.html" %} {% block title %}Thank You — Sur-O-Bahare Music
+Academy{% endblock %} {% block content %}
+
+<section class="thankyou-section">
+  <div class="thankyou-card">
+    <div class="thankyou-icon">🎶</div>
+
+    <h1 data-en="Thank You for Enrolling!" data-bn="ভর্তির জন্য ধন্যবাদ!">
+      Thank You for Enrolling!
+    </h1>
+
+    <p
+      style="font-size: 1.05rem; margin-bottom: 0.8rem"
+      data-en="We've received your details successfully."
+      data-bn="আমরা সফলভাবে আপনার তথ্য পেয়েছি।"
+    >
+      We've received your details successfully.
+    </p>
+
+    <p
+      data-en="Samayita Dey will reach out to you on WhatsApp within 24 hours to discuss the program, schedule, and next steps."
+      data-bn="সমাইতা দে ২৪ ঘণ্টার মধ্যে প্রোগ্রাম, সময়সূচি এবং পরবর্তী পদক্ষেপ নিয়ে আলোচনার জন্য হোয়াটসঅ্যাপে আপনার সাথে যোগাযোগ করবেন।"
+    >
+      Samayita Dey will reach out to you on WhatsApp within 24 hours to discuss
+      the program, schedule, and next steps.
+    </p>
+
+    <div
+      style="
+        background: var(--primary-light);
+        border-radius: var(--radius-md);
+        padding: 1.2rem;
+        margin: 1.6rem 0;
+        border-left: 4px solid var(--primary);
+      "
+    >
+      <p
+        style="font-size: 0.9rem; color: var(--secondary)"
+        data-en="🎵 Welcome to the Sur-O-Bahare family! We look forward to nurturing your child's musical journey."
+        data-bn="🎵 সুর-ও-বাহারে পরিবারে আপনাকে স্বাগতম! আমরা আপনার সন্তানের সঙ্গীত যাত্রা গড়ে তুলতে আগ্রহী।"
+      >
+        🎵 Welcome to the Sur-O-Bahare family! We look forward to nurturing your
+        child's musical journey.
+      </p>
+    </div>
+
+    <div class="thankyou-actions">
+      <a href="/" class="btn btn-outline">
+        <i class="ri-home-line"></i>
+        <span data-en="Back to Home" data-bn="হোম পেজে ফিরুন"
+          >Back to Home</span
+        >
+      </a>
+      <a
+        href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20just%20enrolled%20at%20Sur-O-Bahare%21"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-whatsapp"
+      >
+        <i class="ri-whatsapp-line"></i>
+        <span data-en="Join our WhatsApp" data-bn="আমাদের হোয়াটসঅ্যাপে যোগ দিন"
+          >Join our WhatsApp</span
+        >
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

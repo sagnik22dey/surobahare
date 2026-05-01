@@ -1,0 +1,368 @@
+{% extends "base.html" %} {% block title %}Sur-O-Bahare — Nurturing Voices,
+Building Confidence{% endblock %} {% block content %} {% set hero =
+content.get("hero", {}) %} {% set mentor = content.get("about_snapshot", {}) %}
+{% set programs_data = content.get("programs_teaser", {}) %} {% set approach =
+content.get("teaching_approach", {}) %} {% set testimonials =
+content.get("testimonials", {}) %} {% set banner =
+content.get("admissions_banner", {}) %} {% set meteor =
+content.get("meteor_highlights", {}) %}
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+  <img
+    src="{{ hero.get('bg_image_url', 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=2070&auto=format&fit=crop') }}"
+    alt="Music performance"
+    class="hero-bg-image"
+  />
+
+  <div class="container">
+    <div class="hero-content fade-in">
+      <div
+        class="hero-badge"
+        data-en="{{ hero.get('badge', {}).get('en', '🌟 Admissions Open — Limited Seats') }}"
+        data-bn="{{ hero.get('badge', {}).get('bn', '🌟 ভর্তি চলছে — আসন সীমিত') }}"
+      >
+        {{ hero.get('badge', {}).get('en', '🌟 Admissions Open — Limited Seats')
+        }}
+      </div>
+
+      <h1>
+        <span
+          data-en="{{ hero.get('headline', {}).get('en', 'Sur-O-Bahare') }}"
+          data-bn="{{ hero.get('headline', {}).get('bn', 'সুর-ও-বাহারে') }}"
+          >{{ hero.get('headline', {}).get('en', 'Sur-O-Bahare') }}</span
+        >
+      </h1>
+
+      <p
+        class="hero-tagline"
+        data-en="{{ hero.get('tagline', {}).get('en', 'Nurturing Voices, Building Confidence') }}"
+        data-bn="{{ hero.get('tagline', {}).get('bn', 'কণ্ঠ গড়ি, আত্মবিশ্বাস তৈরি করি') }}"
+      >
+        {{ hero.get('tagline', {}).get('en', 'Nurturing Voices, Building
+        Confidence') }}
+      </p>
+
+      <p
+        class="hero-description"
+        data-en="{{ hero.get('description', {}).get('en', '') }}"
+        data-bn="{{ hero.get('description', {}).get('bn', '') }}"
+      >
+        {{ hero.get('description', {}).get('en', '') }}
+      </p>
+
+      <div class="hero-actions">
+        <a
+          href="{{ hero.get('cta_primary_link', '/contact') }}"
+          class="btn btn-primary"
+        >
+          <i class="ri-mic-line"></i>
+          <span
+            data-en="{{ hero.get('cta_primary_label_en', 'Enroll Now') }}"
+            data-bn="{{ hero.get('cta_primary_label_bn', 'এখনই ভর্তি হন') }}"
+            >{{ hero.get('cta_primary_label_en', 'Enroll Now') }}</span
+          >
+        </a>
+        <a
+          href="{{ hero.get('cta_secondary_link', '/contact#contact-info') }}"
+          class="btn btn-secondary"
+        >
+          <i class="ri-phone-line"></i>
+          <span
+            data-en="{{ hero.get('cta_secondary_label_en', 'Contact Us') }}"
+            data-bn="{{ hero.get('cta_secondary_label_bn', 'যোগাযোগ করুন') }}"
+            >{{ hero.get('cta_secondary_label_en', 'Contact Us') }}</span
+          >
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== METEOR / HIGHLIGHTS SECTION ===== -->
+{% if meteor.get("items") %}
+<section
+  class="section meteor-section"
+  style="background: var(--secondary); padding: var(--space-md) 0"
+>
+  <div class="container">
+    <div class="meteor-grid">
+      {% for item in meteor.get("items", []) %}
+      <div class="meteor-item fade-in">
+        <span class="meteor-icon">{{ item.get("icon", "⭐") }}</span>
+        <span
+          class="meteor-label"
+          data-en="{{ item.get('label_en', '') }}"
+          data-bn="{{ item.get('label_bn', '') }}"
+          >{{ item.get("label_en", "") }}</span
+        >
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ===== ABOUT SNAPSHOT / MEET YOUR MENTOR ===== -->
+<section class="section about-snapshot">
+  <div class="container">
+    <div class="about-snapshot-inner">
+      <div class="about-image-wrapper fade-in">
+        <img
+          src="{{ mentor.get('mentor_photo_url', 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop') }}"
+          alt="Mentor teaching"
+        />
+        <div class="mentor-avatar">🎤</div>
+      </div>
+
+      <div class="fade-in">
+        <h2
+          data-en="{{ mentor.get('title', {}).get('en', 'Meet Your Mentor') }}"
+          data-bn="{{ mentor.get('title', {}).get('bn', 'আপনার শিক্ষকের সাথে পরিচয় হন') }}"
+        >
+          {{ mentor.get('title', {}).get('en', 'Meet Your Mentor') }}
+        </h2>
+
+        <h3
+          style="margin-bottom: 0.4rem; color: var(--primary)"
+          data-en="{{ mentor.get('mentor_name', {}).get('en', 'Samayita Dey') }}"
+          data-bn="{{ mentor.get('mentor_name', {}).get('bn', 'সমাইতা দে') }}"
+        >
+          {{ mentor.get('mentor_name', {}).get('en', 'Samayita Dey') }}
+        </h3>
+
+        <p
+          style="color: var(--text-muted); margin-bottom: 0.4rem"
+          data-en="{{ mentor.get('mentor_role', {}).get('en', 'Vocal Music Mentor & Founder') }}"
+          data-bn="{{ mentor.get('mentor_role', {}).get('bn', 'কণ্ঠসঙ্গীত প্রশিক্ষক ও প্রতিষ্ঠাতা') }}"
+        >
+          {{ mentor.get('mentor_role', {}).get('en', 'Vocal Music Mentor &
+          Founder') }}
+        </p>
+
+        {% if mentor.get('mentor_qualifications') %}
+        <p
+          style="
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            font-style: italic;
+          "
+        >
+          {{ mentor.get('mentor_qualifications', '') }}
+        </p>
+        {% endif %}
+
+        <p
+          data-en="{{ mentor.get('mentor_bio', {}).get('en', '') }}"
+          data-bn="{{ mentor.get('mentor_bio', {}).get('bn', '') }}"
+        >
+          {{ mentor.get('mentor_bio', {}).get('en', '') }}
+        </p>
+
+        <a
+          href="{{ mentor.get('mentor_link', '/about') }}"
+          class="btn btn-outline"
+          style="margin-top: 1.6rem"
+        >
+          <span data-en="Read More →" data-bn="আরও পড়ুন →">Read More →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROGRAMS TEASER ===== -->
+<section class="section" style="background: var(--primary-light)">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2
+        data-en="{{ programs_data.get('title', {}).get('en', 'Our Programs') }}"
+        data-bn="{{ programs_data.get('title', {}).get('bn', 'আমাদের প্রোগ্রাম') }}"
+      >
+        {{ programs_data.get('title', {}).get('en', 'Our Programs') }}
+      </h2>
+      <p
+        data-en="{{ programs_data.get('subtitle', {}).get('en', '') }}"
+        data-bn="{{ programs_data.get('subtitle', {}).get('bn', '') }}"
+      >
+        {{ programs_data.get('subtitle', {}).get('en', '') }}
+      </p>
+    </div>
+
+    <div class="programs-grid">
+      {% for prog in programs_data.get("programs", []) %}
+      <div class="card fade-in">
+        <div class="card-img-wrapper">
+          <img
+            src="{{ prog.get('image_url', '') }}"
+            alt="{{ prog.get('title_en', '') }}"
+          />
+        </div>
+        <h3
+          data-en="{{ prog.get('title_en', '') }}"
+          data-bn="{{ prog.get('title_bn', '') }}"
+        >
+          {{ prog.get('title_en', '') }}
+        </h3>
+        <p
+          data-en="{{ prog.get('desc_en', '') }}"
+          data-bn="{{ prog.get('desc_bn', '') }}"
+        >
+          {{ prog.get('desc_en', '') }}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div style="text-align: center; margin-top: 2.4rem" class="fade-in">
+      <a href="/programs" class="btn btn-outline">
+        <span data-en="View All Programs →" data-bn="সব প্রোগ্রাম দেখুন →"
+          >View All Programs →</span
+        >
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEACHING APPROACH ===== -->
+<section class="section" style="background: var(--white)">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2
+        data-en="{{ approach.get('title', {}).get('en', 'Our Teaching Approach') }}"
+        data-bn="{{ approach.get('title', {}).get('bn', 'আমাদের শিক্ষণ পদ্ধতি') }}"
+      >
+        {{ approach.get('title', {}).get('en', 'Our Teaching Approach') }}
+      </h2>
+      <p
+        data-en="{{ approach.get('subtitle', {}).get('en', '') }}"
+        data-bn="{{ approach.get('subtitle', {}).get('bn', '') }}"
+      >
+        {{ approach.get('subtitle', {}).get('en', '') }}
+      </p>
+    </div>
+
+    <ul class="approach-list">
+      {% for point in approach.get("points", []) %}
+      <li class="approach-item fade-in">
+        <i class="ri-checkbox-circle-fill"></i>
+        <span
+          data-en="{{ point.get('en', '') }}"
+          data-bn="{{ point.get('bn', '') }}"
+          >{{ point.get('en', '') }}</span
+        >
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="section testimonials">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2
+        data-en="{{ testimonials.get('title', {}).get('en', 'What Parents Say') }}"
+        data-bn="{{ testimonials.get('title', {}).get('bn', 'অভিভাবকরা কী বলেন') }}"
+      >
+        {{ testimonials.get('title', {}).get('en', 'What Parents Say') }}
+      </h2>
+      <p
+        data-en="{{ testimonials.get('subtitle', {}).get('en', '') }}"
+        data-bn="{{ testimonials.get('subtitle', {}).get('bn', '') }}"
+      >
+        {{ testimonials.get('subtitle', {}).get('en', '') }}
+      </p>
+    </div>
+
+    <div class="testimonials-grid">
+      {% for t in testimonials.get("list", []) %}
+      <div class="testimonial-card fade-in">
+        {% if t.get('photo_url') %}
+        <img
+          src="{{ t.get('photo_url') }}"
+          alt="{{ t.get('author_en', '') }}"
+          class="testimonial-photo"
+        />
+        {% endif %}
+        <div class="testimonial-stars">
+          {% for i in range(t.get('rating', 5)) %}★{% endfor %}
+        </div>
+        <p
+          data-en="{{ t.get('quote_en', '') }}"
+          data-bn="{{ t.get('quote_bn', '') }}"
+        >
+          "{{ t.get('quote_en', '') }}"
+        </p>
+        <cite
+          data-en="— {{ t.get('author_en', '') }}"
+          data-bn="— {{ t.get('author_bn', '') }}"
+          >— {{ t.get('author_en', '') }}</cite
+        >
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ===== ADMISSIONS BANNER ===== -->
+{% if banner.get("visible", true) %}
+<section class="cta-banner">
+  <div class="container">
+    <h2
+      data-en="{{ banner.get('title', {}).get('en', 'Admissions Open — Limited Seats Available') }}"
+      data-bn="{{ banner.get('title', {}).get('bn', 'ভর্তি চলছে — আসন সীমিত') }}"
+    >
+      {{ banner.get('title', {}).get('en', 'Admissions Open — Limited Seats
+      Available') }}
+    </h2>
+    {% if banner.get('seat_count') %}
+    <p
+      class="banner-urgency"
+      style="
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 0.4rem;
+        color: #fff;
+        opacity: 0.9;
+      "
+    >
+      {{ banner.get('seat_count', '') }}
+    </p>
+    {% endif %}
+    <p
+      data-en="{{ banner.get('description', {}).get('en', '') }}"
+      data-bn="{{ banner.get('description', {}).get('bn', '') }}"
+    >
+      {{ banner.get('description', {}).get('en', '') }}
+    </p>
+    <div class="cta-banner-actions">
+      <a
+        href="{{ banner.get('enroll_btn_link', '/contact') }}"
+        class="btn btn-secondary"
+      >
+        <i class="ri-mic-line"></i>
+        <span
+          data-en="{{ banner.get('enroll_btn_label_en', 'Enroll Now') }}"
+          data-bn="{{ banner.get('enroll_btn_label_bn', 'এখনই ভর্তি হন') }}"
+          >{{ banner.get('enroll_btn_label_en', 'Enroll Now') }}</span
+        >
+      </a>
+      <a
+        href="https://wa.me/{{ banner.get('whatsapp_number', '91XXXXXXXXXX') }}?text={{ banner.get('whatsapp_message', 'Hi, I want to know more about Sur-O-Bahare') | urlencode }}"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-whatsapp"
+      >
+        <i class="ri-whatsapp-line"></i>
+        <span
+          data-en="{{ banner.get('whatsapp_btn_label_en', 'Join via WhatsApp') }}"
+          data-bn="{{ banner.get('whatsapp_btn_label_bn', 'হোয়াটসঅ্যাপে যোগ দিন') }}"
+          >{{ banner.get('whatsapp_btn_label_en', 'Join via WhatsApp') }}</span
+        >
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %} {% endblock %}

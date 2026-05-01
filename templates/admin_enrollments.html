@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Enrollment Records | Sur-O-Bahare</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        background: #f4f6f9;
+        font-family: "Hind Siliguri", sans-serif;
+      }
+      .admin-topbar {
+        background: #1a5276;
+        color: #fff;
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .admin-topbar h1 {
+        font-size: 1.2rem;
+        color: #fff;
+        margin: 0;
+      }
+      .admin-topbar span {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .admin-body {
+        padding: 2rem;
+      }
+      .stat-row {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+      .stat-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 1.2rem 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        text-align: center;
+        min-width: 140px;
+        border-top: 4px solid #e8631a;
+      }
+      .stat-card .stat-num {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #1a5276;
+      }
+      .stat-card .stat-label {
+        font-size: 0.85rem;
+        color: #7f8c8d;
+        margin-top: 4px;
+      }
+      .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: #7f8c8d;
+      }
+      .empty-state i {
+        font-size: 3rem;
+        color: #ccc;
+        display: block;
+        margin-bottom: 1rem;
+      }
+      .badge {
+        display: inline-block;
+        background: #fdebd0;
+        color: #e8631a;
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 999px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Admin Top Bar -->
+    <div class="admin-topbar">
+      <h1>🎶 Sur-O-Bahare — Admin Panel</h1>
+      <span
+        >Enrollment Records &nbsp;|&nbsp;
+        <a href="/" style="color: #f4a26a">← Back to Site</a></span
+      >
+    </div>
+
+    <div class="admin-body">
+      <!-- Stats -->
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-num">{{ enrollments | length }}</div>
+          <div class="stat-label">Total Enrollments</div>
+        </div>
+      </div>
+
+      <!-- Admin Table -->
+      <div class="admin-header">
+        <h2 style="color: #1a5276; margin: 0">All Enrollment Submissions</h2>
+        <span class="badge">Newest First</span>
+      </div>
+
+      <div style="margin-top: 1rem">
+        {% if enrollments %}
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date & Time</th>
+                <th>Parent Name</th>
+                <th>Child Name</th>
+                <th>Age</th>
+                <th>Mobile</th>
+                <th>Location</th>
+                <th>Program</th>
+                <th>Heard From</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for e in enrollments %}
+              <tr>
+                <td>{{ e.id }}</td>
+                <td style="white-space: nowrap; color: #7f8c8d">
+                  {{ e.created_at[:16] if e.created_at else '—' }}
+                </td>
+                <td><strong>{{ e.parent_name }}</strong></td>
+                <td>{{ e.child_name }}</td>
+                <td>{{ e.child_age }}</td>
+                <td>
+                  <a
+                    href="https://wa.me/91{{ e.mobile }}"
+                    target="_blank"
+                    style="color: #25d366; font-weight: 600"
+                  >
+                    <i class="ri-whatsapp-line"></i> {{ e.mobile }}
+                  </a>
+                </td>
+                <td>{{ e.location }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    style="background: #e8f8f5; color: #1a5276"
+                    >{{ e.program_interest }}</span
+                  >
+                </td>
+                <td>{{ e.heard_from or '—' }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+          <i class="ri-inbox-line"></i>
+          <p>No enrollment submissions yet.</p>
+          <p style="font-size: 0.9rem">
+            When parents submit the enrollment form, their details will appear
+            here.
+          </p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
