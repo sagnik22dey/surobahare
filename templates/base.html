@@ -138,6 +138,37 @@
       </div>
     </footer>
 
+    <!-- ===== AUDIO PLAYER ===== -->
+    {% set ms = content.get('music_settings', {}) %}
+    {% if ms %}
+      {% set url_path = request.url.path %}
+      {% set music_url = '' %}
+      {% if url_path == '/' and ms.get('home_music_url') %}
+        {% set music_url = ms.get('home_music_url') %}
+      {% elif url_path == '/about' and ms.get('about_music_url') %}
+        {% set music_url = ms.get('about_music_url') %}
+      {% elif url_path == '/programs' and ms.get('programs_music_url') %}
+        {% set music_url = ms.get('programs_music_url') %}
+      {% elif url_path == '/gallery' and ms.get('gallery_music_url') %}
+        {% set music_url = ms.get('gallery_music_url') %}
+      {% elif url_path == '/contact' and ms.get('contact_music_url') %}
+        {% set music_url = ms.get('contact_music_url') %}
+      {% elif url_path == '/thankyou' and ms.get('thankyou_music_url') %}
+        {% set music_url = ms.get('thankyou_music_url') %}
+      {% elif ms.get('global_default_url') %}
+        {% set music_url = ms.get('global_default_url') %}
+      {% endif %}
+
+      {% if music_url %}
+      <audio id="bg-audio" loop preload="auto">
+        <source src="{{ music_url }}" type="audio/mpeg">
+      </audio>
+      <button id="music-toggle-btn" class="music-toggle-btn" aria-label="Toggle Background Music">
+        <i class="ri-volume-up-line" id="music-icon"></i>
+      </button>
+      {% endif %}
+    {% endif %}
+
     <!-- Main JS -->
     <script src="/static/js/main.js"></script>
   </body>

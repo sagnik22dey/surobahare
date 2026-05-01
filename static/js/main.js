@@ -139,4 +139,51 @@
         });
     }
 
+    /* ── 6. BACKGROUND MUSIC ── */
+    const bgAudio = document.getElementById('bg-audio');
+    const musicToggleBtn = document.getElementById('music-toggle-btn');
+    const musicIcon = document.getElementById('music-icon');
+
+    if (bgAudio && musicToggleBtn) {
+        // Check local storage for preference
+        const isMuted = localStorage.getItem('sob_music_muted') === 'true';
+
+        // Set initial state
+        if (!isMuted) {
+            bgAudio.muted = false;
+            // Try to autoplay
+            const playPromise = bgAudio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // Autoplay was prevented by browser. Show as muted.
+                    console.warn('Autoplay prevented by browser');
+                    bgAudio.muted = true;
+                    musicToggleBtn.classList.add('muted');
+                    musicIcon.className = 'ri-volume-mute-line';
+                });
+            }
+        } else {
+            bgAudio.muted = true;
+            musicToggleBtn.classList.add('muted');
+            musicIcon.className = 'ri-volume-mute-line';
+        }
+
+        // Toggle button logic
+        musicToggleBtn.addEventListener('click', () => {
+            if (bgAudio.muted || bgAudio.paused) {
+                bgAudio.muted = false;
+                bgAudio.play();
+                musicToggleBtn.classList.remove('muted');
+                musicIcon.className = 'ri-volume-up-line';
+                localStorage.setItem('sob_music_muted', 'false');
+            } else {
+                bgAudio.muted = true;
+                bgAudio.pause();
+                musicToggleBtn.classList.add('muted');
+                musicIcon.className = 'ri-volume-mute-line';
+                localStorage.setItem('sob_music_muted', 'true');
+            }
+        });
+    }
+
 })();

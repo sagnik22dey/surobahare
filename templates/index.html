@@ -88,6 +88,7 @@ content.get("meteor_highlights", {}) %}
   <div class="container">
     <div class="meteor-grid">
       {% for item in meteor.get("items", []) %}
+      {% if item.get("visible", True) %}
       <div class="meteor-item fade-in">
         <span class="meteor-icon">{{ item.get("icon", "⭐") }}</span>
         <span
@@ -97,6 +98,7 @@ content.get("meteor_highlights", {}) %}
           >{{ item.get("label_en", "") }}</span
         >
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>
@@ -192,6 +194,7 @@ content.get("meteor_highlights", {}) %}
 
     <div class="programs-grid">
       {% for prog in programs_data.get("programs", []) %}
+      {% if prog.get("visible", True) %}
       <div class="card fade-in">
         <div class="card-img-wrapper">
           <img
@@ -212,6 +215,7 @@ content.get("meteor_highlights", {}) %}
           {{ prog.get('desc_en', '') }}
         </p>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
 
@@ -245,6 +249,7 @@ content.get("meteor_highlights", {}) %}
 
     <ul class="approach-list">
       {% for point in approach.get("points", []) %}
+      {% if point.get("visible", True) %}
       <li class="approach-item fade-in">
         <i class="ri-checkbox-circle-fill"></i>
         <span
@@ -253,6 +258,7 @@ content.get("meteor_highlights", {}) %}
           >{{ point.get('en', '') }}</span
         >
       </li>
+      {% endif %}
       {% endfor %}
     </ul>
   </div>
@@ -278,6 +284,7 @@ content.get("meteor_highlights", {}) %}
 
     <div class="testimonials-grid">
       {% for t in testimonials.get("list", []) %}
+      {% if t.get("visible", True) %}
       <div class="testimonial-card fade-in">
         {% if t.get('photo_url') %}
         <img
@@ -301,6 +308,7 @@ content.get("meteor_highlights", {}) %}
           >— {{ t.get('author_en', '') }}</cite
         >
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>

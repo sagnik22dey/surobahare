@@ -358,6 +358,9 @@
         <span class="adm-item-num">${i + 1}</span>
         <span class="adm-item-title">${prog.title_en || 'New Program'}</span>
         <div class="adm-item-actions">
+          <label style="cursor:pointer; margin-right: 8px;" title="Visible">
+            <input type="checkbox" onchange="programsList[${i}].visible=this.checked" ${prog.visible !== false ? 'checked' : ''}>
+          </label>
           <div class="adm-item-reorder-btns">
             <button onclick="admMoveItem('programs',${i},-1)" title="Move up"><i class="ri-arrow-up-s-line"></i></button>
             <button onclick="admMoveItem('programs',${i},1)" title="Move down"><i class="ri-arrow-down-s-line"></i></button>
@@ -458,7 +461,7 @@
     };
 
     document.getElementById('addProgramBtn')?.addEventListener('click', () => {
-        programsList.push({ id: 'p' + Date.now(), title_en: '', title_bn: '', desc_en: '', desc_bn: '', image_url: '', icon: '🎵' });
+        programsList.push({ id: 'p' + Date.now(), title_en: '', title_bn: '', desc_en: '', desc_bn: '', image_url: '', icon: '🎵', visible: true });
         renderProgramsList();
         setTimeout(() => {
             const cards = document.querySelectorAll('#programsListContainer .adm-item-card');
@@ -509,6 +512,9 @@
           <span class="adm-item-num">${i + 1}</span>
           <span class="adm-item-title">${esc(point.en) || 'New Point'}</span>
           <div class="adm-item-actions">
+            <label style="cursor:pointer; margin-right: 8px;" title="Visible">
+              <input type="checkbox" onchange="approachList[${i}].visible=this.checked" ${point.visible !== false ? 'checked' : ''}>
+            </label>
             <div class="adm-item-reorder-btns">
               <button onclick="admMoveItem('approach',${i},-1)"><i class="ri-arrow-up-s-line"></i></button>
               <button onclick="admMoveItem('approach',${i},1)"><i class="ri-arrow-down-s-line"></i></button>
@@ -543,7 +549,7 @@
     };
 
     document.getElementById('addApproachBtn')?.addEventListener('click', () => {
-        approachList.push({ id: 't' + Date.now(), icon: 'ri-checkbox-circle-fill', en: '', bn: '' });
+        approachList.push({ id: 't' + Date.now(), icon: 'ri-checkbox-circle-fill', en: '', bn: '', visible: true });
         renderApproachList();
         setTimeout(() => {
             const cards = document.querySelectorAll('#approachListContainer .adm-item-card');
@@ -595,6 +601,9 @@
           <span class="adm-item-num">${i + 1}</span>
           <span class="adm-item-title">${esc(t.author_en) || 'New Testimonial'}</span>
           <div class="adm-item-actions">
+            <label style="cursor:pointer; margin-right: 8px;" title="Visible">
+              <input type="checkbox" onchange="testimonialsList[${i}].visible=this.checked" ${t.visible !== false ? 'checked' : ''}>
+            </label>
             <div class="adm-item-reorder-btns">
               <button onclick="admMoveItem('testimonials',${i},-1)"><i class="ri-arrow-up-s-line"></i></button>
               <button onclick="admMoveItem('testimonials',${i},1)"><i class="ri-arrow-down-s-line"></i></button>
@@ -655,7 +664,7 @@
     };
 
     document.getElementById('addTestimonialBtn')?.addEventListener('click', () => {
-        testimonialsList.push({ id: 'test' + Date.now(), quote_en: '', quote_bn: '', author_en: '', author_bn: '', rating: 5, photo_url: '' });
+        testimonialsList.push({ id: 'test' + Date.now(), quote_en: '', quote_bn: '', author_en: '', author_bn: '', rating: 5, photo_url: '', visible: true });
         renderTestimonialsList();
         setTimeout(() => {
             const cards = document.querySelectorAll('#testimonialsListContainer .adm-item-card');
@@ -750,6 +759,9 @@
           <span class="adm-item-num">${i + 1}</span>
           <span class="adm-item-title">${item.icon || '⭐'} ${esc(item.label_en) || 'New Highlight'}</span>
           <div class="adm-item-actions">
+            <label style="cursor:pointer; margin-right: 8px;" title="Visible">
+              <input type="checkbox" onchange="meteorList[${i}].visible=this.checked" ${item.visible !== false ? 'checked' : ''}>
+            </label>
             <div class="adm-item-reorder-btns">
               <button onclick="admMoveItem('meteor',${i},-1)"><i class="ri-arrow-up-s-line"></i></button>
               <button onclick="admMoveItem('meteor',${i},1)"><i class="ri-arrow-down-s-line"></i></button>
@@ -784,7 +796,7 @@
     };
 
     document.getElementById('addMeteorBtn')?.addEventListener('click', () => {
-        meteorList.push({ id: 'h' + Date.now(), icon: '⭐', label_en: '', label_bn: '' });
+        meteorList.push({ id: 'h' + Date.now(), icon: '⭐', label_en: '', label_bn: '', visible: true });
         renderMeteorList();
         setTimeout(() => {
             const cards = document.querySelectorAll('#meteorListContainer .adm-item-card');

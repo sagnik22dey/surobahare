@@ -35,9 +35,11 @@ Academy{% endblock %} {% block content %}
       {% set gallery_images = content.get('gallery_page', {}).get('images', []) %}
       {% if gallery_images %}
         {% for img in gallery_images %}
+        {% if img.get("visible", True) %}
         <div class="gallery-item">
           <img src="{{ img.image_url }}" alt="Gallery Image">
         </div>
+        {% endif %}
         {% endfor %}
       {% else %}
         <!-- Placeholder Images -->

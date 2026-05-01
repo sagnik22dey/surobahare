@@ -13,6 +13,7 @@ def patch_admin_html():
           <a href="#" class="adm-sidebar-link" data-section="gallery_page"><i class="ri-image-line"></i> Gallery Page</a>
           <a href="#" class="adm-sidebar-link" data-section="contact_page"><i class="ri-contacts-book-line"></i> Contact Page</a>
           <a href="#" class="adm-sidebar-link" data-section="thankyou_page"><i class="ri-thumb-up-line"></i> Thank You Page</a>
+          <a href="#" class="adm-sidebar-link" data-section="music_settings"><i class="ri-music-2-line"></i> Background Music</a>
 """
     if "data-section=\"contact_info\"" not in content:
         # Find where to insert in sidebar
@@ -175,6 +176,94 @@ def patch_admin_html():
             </div>
           </div>
         </div>
+
+        <!-- MUSIC SETTINGS PANEL -->
+        <div id="music_settings" class="adm-panel">
+          <div class="adm-panel-header">
+            <h2>Background Music Settings</h2>
+            <button class="adm-btn adm-btn-primary" onclick="saveMusicSettings()">Save Music</button>
+          </div>
+          <div class="adm-card">
+            <p class="adm-help">Leave empty for "No Music", or upload an audio file. Max 50MB.</p>
+            <div class="adm-form-group">
+              <label class="adm-label">Global Default Music URL</label>
+              <div class="adm-image-url-row">
+                <input class="adm-input" id="ms_global_url" placeholder="https://...">
+                <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                  <i class="ri-upload-2-line"></i>
+                  <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_global_url')">
+                </label>
+              </div>
+            </div>
+            <hr>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label">Home Page Music (Overrides default)</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_home_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_home_url')">
+                  </label>
+                </div>
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label">About Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_about_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_about_url')">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label">Programs Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_programs_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_programs_url')">
+                  </label>
+                </div>
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label">Gallery Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_gallery_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_gallery_url')">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group">
+                <label class="adm-label">Contact Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_contact_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_contact_url')">
+                  </label>
+                </div>
+              </div>
+              <div class="adm-form-group">
+                <label class="adm-label">Thank You Page Music</label>
+                <div class="adm-image-url-row">
+                  <input class="adm-input" id="ms_thankyou_url" placeholder="Optional...">
+                  <label class="adm-btn adm-btn-secondary adm-btn-sm" style="cursor: pointer">
+                    <i class="ri-upload-2-line"></i>
+                    <input type="file" accept="audio/*" style="display: none" onchange="uploadAudioField(this, 'ms_thankyou_url')">
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 """
     if "id=\"contact_info\" class=\"adm-panel\"" not in content:
         # Find where to insert panels
@@ -267,14 +356,17 @@ def patch_admin_html():
         const container = document.getElementById('gp_images_container');
         container.innerHTML = '';
         const images = gp.images || [];
-        images.forEach(img => addGalleryImageUI(img.id, img.image_url));
+        images.forEach(img => addGalleryImageUI(img.id, img.image_url, img.visible));
       }
-      function addGalleryImageUI(id, url) {
+      function addGalleryImageUI(id, url, visible = true) {
         const div = document.createElement('div');
         div.className = 'adm-list-item';
         div.innerHTML = `
           <input type="hidden" class="gp_img_id" value="${id || ''}">
-          <div class="adm-grid-1" style="grid-template-columns: 1fr auto auto;">
+          <div class="adm-grid-1" style="grid-template-columns: auto 1fr auto auto; align-items:center;">
+            <label style="cursor:pointer;" title="Visible">
+              <input type="checkbox" class="gp_img_visible" ${visible ? 'checked' : ''}>
+            </label>
             <input type="text" class="adm-input gp_img_url" value="${url || ''}" placeholder="Image URL">
             <button class="adm-btn adm-btn-secondary" onclick="document.getElementById('gp_img_upload_${id}').click()"><i class="ri-upload-2-line"></i></button>
             <input type="file" id="gp_img_upload_${id}" style="display:none;" onchange="uploadImageGallery(this, this.previousElementSibling.previousElementSibling)">
@@ -284,7 +376,7 @@ def patch_admin_html():
         document.getElementById('gp_images_container').appendChild(div);
       }
       function addGalleryImage() {
-        addGalleryImageUI('img_' + Date.now(), '');
+        addGalleryImageUI('img_' + Date.now(), '', true);
       }
       async function uploadImageGallery(fileInput, urlInput) {
         if (!fileInput.files.length) return;
@@ -301,6 +393,7 @@ def patch_admin_html():
         document.querySelectorAll('#gp_images_container .adm-list-item').forEach(el => {
           images.push({
             id: el.querySelector('.gp_img_id').value,
+            visible: el.querySelector('.gp_img_visible').checked,
             image_url: el.querySelector('.gp_img_url').value
           });
         });
@@ -350,6 +443,39 @@ def patch_admin_html():
           message_bn: document.getElementById('tp_msg_bn').value
         });
       }
+
+      // --- MUSIC SETTINGS ---
+      function renderMusicSettings() {
+        const ms = g_content.music_settings || {};
+        document.getElementById('ms_global_url').value = ms.global_default_url || '';
+        document.getElementById('ms_home_url').value = ms.home_music_url || '';
+        document.getElementById('ms_about_url').value = ms.about_music_url || '';
+        document.getElementById('ms_programs_url').value = ms.programs_music_url || '';
+        document.getElementById('ms_gallery_url').value = ms.gallery_music_url || '';
+        document.getElementById('ms_contact_url').value = ms.contact_music_url || '';
+        document.getElementById('ms_thankyou_url').value = ms.thankyou_music_url || '';
+      }
+      async function uploadAudioField(fileInput, targetId) {
+        if (!fileInput.files.length) return;
+        try {
+          const url = await uploadMedia(fileInput.files[0]);
+          document.getElementById(targetId).value = url;
+          showToast('Audio uploaded', 'success');
+        } catch (e) {
+          showToast(e.message, 'error');
+        }
+      }
+      async function saveMusicSettings() {
+        await saveSection("/admin/music-settings", {
+          global_default_url: document.getElementById('ms_global_url').value,
+          home_music_url: document.getElementById('ms_home_url').value,
+          about_music_url: document.getElementById('ms_about_url').value,
+          programs_music_url: document.getElementById('ms_programs_url').value,
+          gallery_music_url: document.getElementById('ms_gallery_url').value,
+          contact_music_url: document.getElementById('ms_contact_url').value,
+          thankyou_music_url: document.getElementById('ms_thankyou_url').value
+        });
+      }
 """
     if "function renderContactInfo()" not in content:
         # Insert before initAll()
@@ -364,6 +490,7 @@ def patch_admin_html():
         renderGalleryPage();
         renderContactPage();
         renderThankyouPage();
+        renderMusicSettings();
 """
         pattern4 = r'(renderMeteorHighlights\(\);\n      \})'
         content = re.sub(pattern4, r'renderMeteorHighlights();\n' + populate_insert + r'      }', content)

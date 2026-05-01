@@ -124,6 +124,7 @@ async def update_mentor(data: MentorUpdate, current_admin: AdminUser = Depends(g
 
 class ProgramItem(BaseModel):
     id: Optional[str] = None
+    visible: Optional[bool] = True
     title_en: str
     title_bn: str
     desc_en: str
@@ -152,6 +153,7 @@ async def update_programs(data: ProgramsUpdate, current_admin: AdminUser = Depen
         pt["programs"] = [
             {
                 "id": p.id or f"p{i + 1}",
+                "visible": p.visible if p.visible is not None else True,
                 "title_en": p.title_en,
                 "title_bn": p.title_bn,
                 "desc_en": p.desc_en,
@@ -169,6 +171,7 @@ async def update_programs(data: ProgramsUpdate, current_admin: AdminUser = Depen
 
 class ApproachPoint(BaseModel):
     id: Optional[str] = None
+    visible: Optional[bool] = True
     icon: Optional[str] = "ri-checkbox-circle-fill"
     en: str
     bn: str
@@ -194,6 +197,7 @@ async def update_teaching_approach(data: TeachingApproachUpdate, current_admin: 
         ta["points"] = [
             {
                 "id": p.id or f"t{i + 1}",
+                "visible": p.visible if p.visible is not None else True,
                 "icon": p.icon or "ri-checkbox-circle-fill",
                 "en": p.en,
                 "bn": p.bn,
@@ -208,6 +212,7 @@ async def update_teaching_approach(data: TeachingApproachUpdate, current_admin: 
 
 class TestimonialItem(BaseModel):
     id: Optional[str] = None
+    visible: Optional[bool] = True
     quote_en: str
     quote_bn: str
     author_en: str
@@ -236,6 +241,7 @@ async def update_testimonials(data: TestimonialsUpdate, current_admin: AdminUser
         t["list"] = [
             {
                 "id": item.id or f"test{i + 1}",
+                "visible": item.visible if item.visible is not None else True,
                 "quote_en": item.quote_en,
                 "quote_bn": item.quote_bn,
                 "author_en": item.author_en,
@@ -296,6 +302,7 @@ async def update_admissions_banner(data: AdmissionsBannerUpdate, current_admin: 
 
 class HighlightItem(BaseModel):
     id: Optional[str] = None
+    visible: Optional[bool] = True
     icon: Optional[str] = "⭐"
     label_en: str
     label_bn: str
@@ -317,6 +324,7 @@ async def update_meteor_highlights(data: MeteorHighlightsUpdate, current_admin: 
         mh["items"] = [
             {
                 "id": item.id or f"h{i + 1}",
+                "visible": item.visible if item.visible is not None else True,
                 "icon": item.icon or "⭐",
                 "label_en": item.label_en,
                 "label_bn": item.label_bn,
@@ -409,6 +417,7 @@ async def update_about_page(data: AboutPageUpdate, current_admin: AdminUser = De
 
 class GalleryItem(BaseModel):
     id: Optional[str] = None
+    visible: Optional[bool] = True
     image_url: str
 
 class GalleryPageUpdate(BaseModel):
@@ -436,7 +445,11 @@ async def update_gallery_page(data: GalleryPageUpdate, current_admin: AdminUser 
     if data.story_desc_bn is not None: gp.setdefault("story_desc", {})["bn"] = data.story_desc_bn
     if data.images is not None:
         gp["images"] = [
-            {"id": item.id or f"img{i+1}", "image_url": item.image_url}
+            {
+                "id": item.id or f"img{i+1}", 
+                "visible": item.visible if item.visible is not None else True,
+                "image_url": item.image_url
+            }
             for i, item in enumerate(data.images)
         ]
     save_section("gallery_page", gp)
@@ -481,3 +494,29 @@ async def update_thankyou_page(data: ThankyouPageUpdate, current_admin: AdminUse
     if data.message_bn is not None: tp.setdefault("message", {})["bn"] = data.message_bn
     save_section("thankyou_page", tp)
     return {"status": "ok", "section": "thankyou_page"}
+
+
+# ─── MUSIC SETTINGS ───────────────────────────────────────────────────────────
+
+class MusicSettingsUpdate(BaseModel):
+    global_default_url: Optional[str] = None
+    home_music_url: Optional[str] = None
+    about_music_url: Optional[str] = None
+    programs_music_url: Optional[str] = None
+    gallery_music_url: Optional[str] = None
+    contact_music_url: Optional[str] = None
+    thankyou_music_url: Optional[str] = None
+
+@router.put("/music-settings")
+async def update_music_settings(data: MusicSettingsUpdate, current_admin: AdminUser = Depends(get_current_admin)):
+    content = load_content()
+    ms = content.setdefault("music_settings", {})
+    if data.global_default_url is not None: ms["global_default_url"] = data.global_default_url
+    if data.home_music_url is not None: ms["home_music_url"] = data.home_music_url
+    if data.about_music_url is not None: ms["about_music_url"] = data.about_music_url
+    if data.programs_music_url is not None: ms["programs_music_url"] = data.programs_music_url
+    if data.gallery_music_url is not None: ms["gallery_music_url"] = data.gallery_music_url
+    if data.contact_music_url is not None: ms["contact_music_url"] = data.contact_music_url
+    if data.thankyou_music_url is not None: ms["thankyou_music_url"] = data.thankyou_music_url
+    save_section("music_settings", ms)
+    return {"status": "ok", "section": "music_settings"}

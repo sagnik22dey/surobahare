@@ -31,12 +31,34 @@ def save_content(data: Dict[str, Any]) -> None:
         db.close()
 
 
+def extract_urls(data: Any, endpoint: str) -> set:
+    urls = set()
+    if isinstance(data, dict):
+        for v in data.values():
+            urls.update(extract_urls(v, endpoint))
+    elif isinstance(data, list):
+        for item in data:
+            urls.update(extract_urls(item, endpoint))
+    elif isinstance(data, str) and data.startswith(endpoint):
+        urls.add(data)
+    return urls
+
 def save_section(key: str, value: Any) -> None:
     """Upsert a single content section by key."""
     db = _get_db()
     try:
         existing = db.query(SiteContent).filter(SiteContent.key == key).first()
         if existing:
+            try:
+                from bucket import _ENDPOINT, delete_file
+                old_urls = extract_urls(existing.value, _ENDPOINT)
+                new_urls = extract_urls(value, _ENDPOINT)
+                orphaned = old_urls - new_urls
+                for url in orphaned:
+                    delete_file(url)
+            except Exception as e:
+                print(f"Failed to cleanup orphaned files: {e}")
+                
             existing.value = value
         else:
             db.add(SiteContent(key=key, value=value))
