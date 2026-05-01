@@ -201,6 +201,7 @@ p {
   width: auto;
   object-fit: contain;
   flex-shrink: 0;
+  margin-left: 7vw;
 }
 
 .footer-brand {
