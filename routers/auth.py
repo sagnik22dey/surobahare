@@ -1,6 +1,6 @@
 import os
 import secrets
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, Form, HTTPException, Request, Response, status
@@ -22,7 +22,7 @@ SESSION_EXPIRY_DAYS = 7
 
 def create_session(db: Session, user_id: int) -> str:
     session_token = secrets.token_urlsafe(32)
-    expires_at = datetime.utcnow() + timedelta(days=SESSION_EXPIRY_DAYS)
+    expires_at = datetime.now(timezone.utc) + timedelta(days=SESSION_EXPIRY_DAYS)
     db_session = AdminSession(
         session_token=session_token,
         user_id=user_id,
@@ -42,7 +42,7 @@ def get_current_admin(request: Request, db: Session = Depends(get_db)) -> AdminU
         )
 
     db_session = db.query(AdminSession).filter(AdminSession.session_token == token).first()
-    if not db_session or db_session.expires_at < datetime.utcnow():
+    if not db_session or db_session.expires_at < datetime.now(timezone.utc):
         if db_session:
             db.delete(db_session)
             db.commit()
