@@ -200,7 +200,20 @@ p {
   height: 80px;
   width: auto;
   object-fit: contain;
-  margin-bottom: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.footer-brand p {
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .nav-links {
@@ -1141,8 +1154,6 @@ p {
   box-shadow: var(--shadow-sm);
 }
 
-
-
 /* --- Floating Music Button --- */
 .music-toggle-btn {
   position: fixed;
@@ -1161,7 +1172,9 @@ p {
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 1000;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
 }
 .music-toggle-btn:hover {
   transform: scale(1.1);
@@ -1217,7 +1230,9 @@ p {
   padding: var(--space-lg);
   box-shadow: var(--shadow-sm);
   position: relative;
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -1328,18 +1343,65 @@ p {
   animation: floatNote 8s ease-in-out infinite;
 }
 
-.thankyou-floating-notes span:nth-child(1) { top: 10%; left: 5%;  animation-delay: 0s;   font-size: 1.8rem; }
-.thankyou-floating-notes span:nth-child(2) { top: 20%; right: 8%; animation-delay: 1s;   font-size: 1.2rem; }
-.thankyou-floating-notes span:nth-child(3) { top: 55%; left: 3%;  animation-delay: 2s;   font-size: 1.4rem; }
-.thankyou-floating-notes span:nth-child(4) { top: 70%; right: 5%; animation-delay: 1.5s; font-size: 2rem;   }
-.thankyou-floating-notes span:nth-child(5) { top: 85%; left: 15%; animation-delay: 3s;   font-size: 1rem;   }
-.thankyou-floating-notes span:nth-child(6) { top: 30%; left: 92%; animation-delay: 0.5s; font-size: 1.5rem; }
-.thankyou-floating-notes span:nth-child(7) { top: 6%;  left: 50%; animation-delay: 2.5s; font-size: 1.1rem; }
-.thankyou-floating-notes span:nth-child(8) { top: 92%; left: 60%; animation-delay: 1.8s; font-size: 1.3rem; }
+.thankyou-floating-notes span:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+  font-size: 1.8rem;
+}
+.thankyou-floating-notes span:nth-child(2) {
+  top: 20%;
+  right: 8%;
+  animation-delay: 1s;
+  font-size: 1.2rem;
+}
+.thankyou-floating-notes span:nth-child(3) {
+  top: 55%;
+  left: 3%;
+  animation-delay: 2s;
+  font-size: 1.4rem;
+}
+.thankyou-floating-notes span:nth-child(4) {
+  top: 70%;
+  right: 5%;
+  animation-delay: 1.5s;
+  font-size: 2rem;
+}
+.thankyou-floating-notes span:nth-child(5) {
+  top: 85%;
+  left: 15%;
+  animation-delay: 3s;
+  font-size: 1rem;
+}
+.thankyou-floating-notes span:nth-child(6) {
+  top: 30%;
+  left: 92%;
+  animation-delay: 0.5s;
+  font-size: 1.5rem;
+}
+.thankyou-floating-notes span:nth-child(7) {
+  top: 6%;
+  left: 50%;
+  animation-delay: 2.5s;
+  font-size: 1.1rem;
+}
+.thankyou-floating-notes span:nth-child(8) {
+  top: 92%;
+  left: 60%;
+  animation-delay: 1.8s;
+  font-size: 1.3rem;
+}
 
 @keyframes floatNote {
-  0%, 100% { transform: translateY(0) rotate(-5deg); opacity: 0.12; }
-  50%       { transform: translateY(-18px) rotate(5deg); opacity: 0.2; }
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translateY(-18px) rotate(5deg);
+    opacity: 0.2;
+  }
 }
 
 .thankyou-card {
@@ -1356,8 +1418,14 @@ p {
 }
 
 @keyframes slideUpCard {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .thankyou-success-ring {
@@ -1384,14 +1452,28 @@ p {
 }
 
 @keyframes pulseRing {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.04); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
 }
 
 @keyframes expandRing {
-  0% { transform: scale(0.9); opacity: 0.4; }
-  50% { transform: scale(1.1); opacity: 0; }
-  100% { transform: scale(0.9); opacity: 0.4; }
+  0% {
+    transform: scale(0.9);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.4;
+  }
 }
 
 .thankyou-icon-wrap {
@@ -1525,9 +1607,15 @@ p {
     margin-bottom: var(--space-md);
   }
 
-  h1 { font-size: 2.2rem; }
-  h2 { font-size: 1.8rem; }
-  h3 { font-size: 1.3rem; }
+  h1 {
+    font-size: 2.2rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+  h3 {
+    font-size: 1.3rem;
+  }
 
   .testimonial-arrow {
     width: 34px;
@@ -1535,4 +1623,3 @@ p {
     font-size: 1.1rem;
   }
 }
-
