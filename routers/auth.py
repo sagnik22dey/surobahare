@@ -6,7 +6,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, Form, HTTPException, Request, Response, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from passlib.context import CryptContext
+import bcrypt
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -14,7 +14,7 @@ from models import AdminUser, AdminSession
 
 router = APIRouter(prefix="/admin", tags=["auth"])
 templates = Jinja2Templates(directory="templates")
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 SESSION_COOKIE_NAME = "admin_session"
 SESSION_EXPIRY_DAYS = 7
@@ -79,7 +79,7 @@ async def login(
     db: Session = Depends(get_db)
 ):
     user = db.query(AdminUser).filter(AdminUser.username == username).first()
-    if not user or not pwd_context.verify(password, user.password_hash):
+    if not user or not bcrypt.checkpw(password.encode('utf-8'), user.password_hash.encode('utf-8')):
         return templates.TemplateResponse(
             request, 
             "admin_login.html", 
@@ -139,7 +139,7 @@ async def forgot_password(
         )
 
     if method == "old_password":
-        if not old_password or not pwd_context.verify(old_password, user.password_hash):
+        if not old_password or not bcrypt.checkpw(old_password.encode('utf-8'), user.password_hash.encode('utf-8')):
             return templates.TemplateResponse(
                 request, 
                 "admin_forgot.html", 
@@ -160,7 +160,7 @@ async def forgot_password(
         )
 
     # Update password
-    user.password_hash = pwd_context.hash(new_password)
+    user.password_hash = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     db.commit()
 
     return templates.TemplateResponse(
