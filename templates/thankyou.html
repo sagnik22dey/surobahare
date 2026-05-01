@@ -2,8 +2,18 @@
 Academy{% endblock %} {% block content %}
 
 <section class="thankyou-section">
+  <div class="thankyou-floating-notes" aria-hidden="true">
+    <span>🎵</span><span>🎶</span><span>🎸</span><span>🎼</span><span>🎹</span><span>🎵</span><span>🎶</span><span>🎸</span>
+  </div>
+
   <div class="thankyou-card">
-    <div class="thankyou-icon">🎶</div>
+    <div class="thankyou-success-ring">
+      <div class="thankyou-icon-wrap">
+        <span class="thankyou-icon">🎶</span>
+      </div>
+    </div>
+
+    <div class="thankyou-stars">⭐⭐⭐⭐⭐</div>
 
     <h1
       data-en="{{ content.get('thankyou_page', {}).get('title', {}).get('en', 'Thank You!') }}"
@@ -12,15 +22,23 @@ Academy{% endblock %} {% block content %}
       {{ content.get('thankyou_page', {}).get('title', {}).get('en', 'Thank You!') }}
     </h1>
 
-    <p
-      style="font-size: 1.05rem; margin-bottom: 0.8rem"
+    <p class="thankyou-subtitle"
+      data-en="Your enrollment has been submitted successfully"
+      data-bn="আপনার ভর্তির আবেদন সফলভাবে জমা হয়েছে"
+    >
+      Your enrollment has been submitted successfully
+    </p>
+
+    <div class="thankyou-divider"></div>
+
+    <p class="thankyou-message"
       data-en="{{ content.get('thankyou_page', {}).get('message', {}).get('en', 'Your enrollment form has been successfully submitted. We will contact you soon with further details.') }}"
       data-bn="{{ content.get('thankyou_page', {}).get('message', {}).get('bn', 'আপনার ভর্তির ফর্ম সফলভাবে জমা দেওয়া হয়েছে। আমরা আরও বিশদ বিবরণ সহ শীঘ্রই আপনার সাথে যোগাযোগ করব।') }}"
     >
       {{ content.get('thankyou_page', {}).get('message', {}).get('en', 'Your enrollment form has been successfully submitted. We will contact you soon with further details.') }}
     </p>
 
-    <p
+    <p class="thankyou-message"
       data-en="Samayita Dey will reach out to you on WhatsApp within 24 hours to discuss the program, schedule, and next steps."
       data-bn="সমাইতা দে ২৪ ঘণ্টার মধ্যে প্রোগ্রাম, সময়সূচি এবং পরবর্তী পদক্ষেপ নিয়ে আলোচনার জন্য হোয়াটসঅ্যাপে আপনার সাথে যোগাযোগ করবেন।"
     >
@@ -28,31 +46,21 @@ Academy{% endblock %} {% block content %}
       the program, schedule, and next steps.
     </p>
 
-    <div
-      style="
-        background: var(--primary-light);
-        border-radius: var(--radius-md);
-        padding: 1.2rem;
-        margin: 1.6rem 0;
-        border-left: 4px solid var(--primary);
-      "
-    >
+    <div class="thankyou-welcome-box">
+      <div class="thankyou-welcome-icon">🎵</div>
       <p
-        style="font-size: 0.9rem; color: var(--secondary)"
-        data-en="🎵 Welcome to the Sur-O-Bahare family! We look forward to nurturing your child's musical journey."
-        data-bn="🎵 সুর-ও-বাহারে পরিবারে আপনাকে স্বাগতম! আমরা আপনার সন্তানের সঙ্গীত যাত্রা গড়ে তুলতে আগ্রহী।"
+        data-en="Welcome to the Sur-O-Bahare family! We look forward to nurturing your child's musical journey."
+        data-bn="সুর-ও-বাহারে পরিবারে আপনাকে স্বাগতম! আমরা আপনার সন্তানের সঙ্গীত যাত্রা গড়ে তুলতে আগ্রহী।"
       >
-        🎵 Welcome to the Sur-O-Bahare family! We look forward to nurturing your
+        Welcome to the Sur-O-Bahare family! We look forward to nurturing your
         child's musical journey.
       </p>
     </div>
 
     <div class="thankyou-actions">
-      <a href="/" class="btn btn-outline">
+      <a href="/" class="btn btn-primary">
         <i class="ri-home-line"></i>
-        <span data-en="Back to Home" data-bn="হোম পেজে ফিরুন"
-          >Back to Home</span
-        >
+        <span data-en="Back to Home" data-bn="হোম পেজে ফিরুন">Back to Home</span>
       </a>
       <a
         href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20just%20enrolled%20at%20Sur-O-Bahare%21"
@@ -61,9 +69,7 @@ Academy{% endblock %} {% block content %}
         class="btn btn-whatsapp"
       >
         <i class="ri-whatsapp-line"></i>
-        <span data-en="Join our WhatsApp" data-bn="আমাদের হোয়াটসঅ্যাপে যোগ দিন"
-          >Join our WhatsApp</span
-        >
+        <span data-en="Join our WhatsApp" data-bn="আমাদের হোয়াটসঅ্যাপে যোগ দিন">Join our WhatsApp</span>
       </a>
     </div>
   </div>

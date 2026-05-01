@@ -282,35 +282,53 @@ content.get("meteor_highlights", {}) %}
       </p>
     </div>
 
-    <div class="testimonials-grid">
-      {% for t in testimonials.get("list", []) %}
-      {% if t.get("visible", True) %}
-      <div class="testimonial-card fade-in">
-        {% if t.get('photo_url') %}
-        <img
-          src="{{ t.get('photo_url') }}"
-          alt="{{ t.get('author_en', '') }}"
-          class="testimonial-photo"
-        />
-        {% endif %}
-        <div class="testimonial-stars">
-          {% for i in range(t.get('rating', 5)) %}★{% endfor %}
+    <div class="testimonial-slider-wrapper fade-in">
+      <button class="testimonial-arrow testimonial-arrow-prev" id="testimonial-prev" aria-label="Previous testimonial">
+        <i class="ri-arrow-left-s-line"></i>
+      </button>
+
+      <div class="testimonial-slider-track-container">
+        <div class="testimonial-slider-track" id="testimonial-track">
+          {% for t in testimonials.get("list", []) %}
+          {% if t.get("visible", True) %}
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              {% if t.get('photo_url') %}
+              <img
+                src="{{ t.get('photo_url') }}"
+                alt="{{ t.get('author_en', '') }}"
+                class="testimonial-photo"
+              />
+              {% else %}
+              <div class="testimonial-avatar">{{ t.get('author_en', 'A')[0] }}</div>
+              {% endif %}
+              <div class="testimonial-stars">
+                {% for i in range(t.get('rating', 5)) %}★{% endfor %}
+              </div>
+              <p
+                data-en="{{ t.get('quote_en', '') }}"
+                data-bn="{{ t.get('quote_bn', '') }}"
+              >
+                "{{ t.get('quote_en', '') }}"
+              </p>
+              <cite
+                data-en="— {{ t.get('author_en', '') }}"
+                data-bn="— {{ t.get('author_bn', '') }}"
+                >— {{ t.get('author_en', '') }}</cite
+              >
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
         </div>
-        <p
-          data-en="{{ t.get('quote_en', '') }}"
-          data-bn="{{ t.get('quote_bn', '') }}"
-        >
-          "{{ t.get('quote_en', '') }}"
-        </p>
-        <cite
-          data-en="— {{ t.get('author_en', '') }}"
-          data-bn="— {{ t.get('author_bn', '') }}"
-          >— {{ t.get('author_en', '') }}</cite
-        >
       </div>
-      {% endif %}
-      {% endfor %}
+
+      <button class="testimonial-arrow testimonial-arrow-next" id="testimonial-next" aria-label="Next testimonial">
+        <i class="ri-arrow-right-s-line"></i>
+      </button>
     </div>
+
+    <div class="testimonial-dots" id="testimonial-dots"></div>
   </div>
 </section>
 
