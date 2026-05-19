@@ -39,7 +39,7 @@ def extract_urls(data: Any, endpoint: str) -> set:
     elif isinstance(data, list):
         for item in data:
             urls.update(extract_urls(item, endpoint))
-    elif isinstance(data, str) and data.startswith(endpoint):
+    elif isinstance(data, str) and data.startswith("/media/"):
         urls.add(data)
     return urls
 
@@ -51,8 +51,8 @@ def save_section(key: str, value: Any) -> None:
         if existing:
             try:
                 from bucket import _ENDPOINT, delete_file
-                old_urls = extract_urls(existing.value, _ENDPOINT)
-                new_urls = extract_urls(value, _ENDPOINT)
+                old_urls = extract_urls(existing.value, "/media/")
+                new_urls = extract_urls(value, "/media/")
                 orphaned = old_urls - new_urls
                 for url in orphaned:
                     delete_file(url)

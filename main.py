@@ -2,6 +2,7 @@ import json
 import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
+from fastapi.responses import StreamingResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from dotenv import load_dotenv
@@ -76,6 +77,23 @@ templates = Jinja2Templates(directory="templates")
 app.include_router(enrollment.router)
 app.include_router(auth.router)
 app.include_router(admin_content.router)
+
+
+@app.get("/media/{key:path}")
+async def media_proxy(key: str):
+    from bucket import _get_client, _BUCKET
+    client = _get_client()
+    try:
+        obj = client.get_object(Bucket=_BUCKET, Key=key)
+        content_type = obj["ContentType"]
+        body = obj["Body"]
+        return StreamingResponse(body, media_type=content_type)
+    except client.exceptions.NoSuchKey:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Media not found")
+    except Exception:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Media not found")
 
 
 def get_content():

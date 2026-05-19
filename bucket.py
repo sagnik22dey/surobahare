@@ -93,14 +93,22 @@ def upload_file(file_bytes: bytes, original_filename: str, content_type: str | N
         ACL="public-read",
     )
 
-    public_url = f"{_ENDPOINT}/{_BUCKET}/{key}"
-    return public_url
+    return f"/media/{key}"
 
 
 def delete_file(public_url: str) -> None:
-    """Deletes a file from the bucket given its public URL."""
-    if not public_url.startswith(_ENDPOINT):
-        return
-    key = public_url.replace(f"{_ENDPOINT}/{_BUCKET}/", "")
+    """Deletes a file from the bucket given its /media/ proxy URL or legacy S3 URL."""
+    if public_url.startswith("/media/"):
+        key = public_url[len("/media/"):]
+    else:
+        endpoint_host = _ENDPOINT.split("://", 1)[-1]
+        virtual_prefix = f"https://{_BUCKET}.{endpoint_host}/"
+        path_prefix = f"{_ENDPOINT}/{_BUCKET}/"
+        if public_url.startswith(virtual_prefix):
+            key = public_url[len(virtual_prefix):]
+        elif public_url.startswith(path_prefix):
+            key = public_url[len(path_prefix):]
+        else:
+            return
     client = _get_client()
     client.delete_object(Bucket=_BUCKET, Key=key)
