@@ -23,9 +23,9 @@ endblock %} {% block content %}
       <!-- Photo Column -->
       <div class="about-photo-col fade-in">
         <div class="about-image-wrapper">
-          <img src="{{ content.get('about_snapshot', {}).get('mentor_photo_url', 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop') }}" alt="{{ content.get('about_snapshot', {}).get('mentor_name', {}).get('en', 'Samayita Dey') }}">
-          <div class="mentor-avatar">🎤</div>
+          <img src="{{ content.get('about_snapshot', {}).get('mentor_photo_url', 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop') }}" alt="{{ content.get('about_snapshot', {}).get('mentor_name', {}).get('en', 'Samayita Dey') }}" loading="lazy">
         </div>
+        <div class="mentor-avatar">🎤</div>
         <p class="about-name" data-en="{{ content.get('about_snapshot', {}).get('mentor_name', {}).get('en', 'Samayita Dey') }}" data-bn="{{ content.get('about_snapshot', {}).get('mentor_name', {}).get('bn', 'সমাইতা দে') }}">
           {{ content.get('about_snapshot', {}).get('mentor_name', {}).get('en', 'Samayita Dey') }}
         </p>

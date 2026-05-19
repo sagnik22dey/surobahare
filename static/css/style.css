@@ -1598,6 +1598,186 @@ p {
   }
 }
 
+/* ── 24. PAGE HERO – RICHER LOOK (override base styles) ── */
+.page-hero {
+  background: linear-gradient(150deg, #fdf9f7 0%, var(--primary-light) 100%);
+  padding: var(--space-xl) var(--space-md);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 60%, rgba(141, 110, 99, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 88% 20%, rgba(141, 110, 99, 0.09) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.page-hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.page-hero h1 {
+  color: var(--secondary);
+  margin-bottom: var(--space-xs);
+  position: relative;
+}
+
+.page-hero p {
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  position: relative;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── 25. PROGRAMS FULL PAGE ── */
+.programs-full-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.program-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.program-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.program-card .card-img-wrapper {
+  height: 220px;
+  margin-bottom: var(--space-md);
+}
+
+.program-card h3 {
+  margin: 0 0 0.4rem;
+  color: var(--secondary);
+  font-size: 1.5rem;
+}
+
+.program-card .bn-name {
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.program-card > p:not(.bn-name) {
+  color: var(--text-muted);
+  font-size: 1rem;
+  flex: 1;
+}
+
+/* ── 26. ABOUT PAGE GRID ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.about-photo-col {
+  text-align: center;
+  position: sticky;
+  top: calc(var(--nav-height) + 2rem);
+}
+
+.about-photo-col .about-image-wrapper {
+  overflow: visible;
+  margin-bottom: 3.5rem;
+}
+
+.about-photo-col .about-image-wrapper img {
+  border-radius: var(--radius-lg);
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  box-shadow: var(--shadow-lg);
+}
+
+.about-name {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.about-role {
+  display: block;
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ── 27. GALLERY – HOVER OVERLAY ── */
+.gallery-item {
+  position: relative;
+  cursor: zoom-in;
+}
+
+.gallery-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 55%, rgba(62, 39, 35, 0.3));
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  border-radius: var(--radius-md);
+  pointer-events: none;
+}
+
+.gallery-item:hover::after {
+  opacity: 1;
+}
+
+/* ── 28. APPROACH ITEM – better icon area ── */
+.approach-item i {
+  min-width: 40px;
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  .about-photo-col {
+    position: static;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .programs-full-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .programs-full-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ── 24. 480px EXTRA POLISH ── */
 @media (max-width: 480px) {
   html {

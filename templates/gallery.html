@@ -37,29 +37,29 @@ Academy{% endblock %} {% block content %}
         {% for img in gallery_images %}
         {% if img.get("visible", True) %}
         <div class="gallery-item">
-          <img src="{{ img.image_url }}" alt="Gallery Image">
+          <img src="{{ img.image_url }}" alt="Gallery Image" loading="lazy">
         </div>
         {% endif %}
         {% endfor %}
       {% else %}
         <!-- Placeholder Images -->
         <div class="gallery-item">
-          <img src="/static/images/placeholders/gallery-1.jpg" alt="Performance" />
+          <img src="/static/images/placeholders/gallery-1.jpg" alt="Performance" loading="lazy" />
         </div>
         <div class="gallery-item">
-          <img src="/static/images/placeholders/gallery-2.jpg" alt="Practice Session" />
+          <img src="/static/images/placeholders/gallery-2.jpg" alt="Practice Session" loading="lazy" />
         </div>
         <div class="gallery-item">
-          <img src="/static/images/placeholders/gallery-3.jpg" alt="Group Singing" />
+          <img src="/static/images/placeholders/gallery-3.jpg" alt="Group Singing" loading="lazy" />
         </div>
         <div class="gallery-item">
-          <img src="/static/images/placeholders/gallery-4.jpg" alt="Annual Event" />
+          <img src="/static/images/placeholders/gallery-4.jpg" alt="Annual Event" loading="lazy" />
         </div>
         <div class="gallery-item">
-          <img src="/static/images/placeholders/gallery-5.jpg" alt="Student Portrait" />
+          <img src="/static/images/placeholders/gallery-5.jpg" alt="Student Portrait" loading="lazy" />
         </div>
         <div class="gallery-item">
-          <img src="/static/images/placeholders/gallery-6.jpg" alt="Awards Ceremony" />
+          <img src="/static/images/placeholders/gallery-6.jpg" alt="Awards Ceremony" loading="lazy" />
         </div>
       {% endif %}
     </div>

@@ -30,12 +30,12 @@ Academy{% endblock %} {% block content %}
     </div>
 
     <div class="programs-full-grid">
-      {% set programs_data = content.get('programs', {}) %}
+      {% set programs_data = content.get('programs_teaser', {}) %}
       {% for prog in programs_data.get('programs', []) %}
       {% if prog.get('visible', True) %}
       <div class="program-card fade-in">
         <div class="card-img-wrapper">
-          <img src="{{ prog.get('image_url', 'https://images.unsplash.com/photo-1528629297340-d1d466945dc5?q=80&w=800&auto=format&fit=crop') }}" alt="{{ prog.get('title_en', '') }}">
+          <img src="{{ prog.get('image_url', 'https://images.unsplash.com/photo-1528629297340-d1d466945dc5?q=80&w=800&auto=format&fit=crop') }}" alt="{{ prog.get('title_en', '') }}" loading="lazy">
         </div>
         <h3 data-en="{{ prog.get('title_en', '') }}" data-bn="{{ prog.get('title_bn', '') }}">
           {{ prog.get('title_en', '') }}

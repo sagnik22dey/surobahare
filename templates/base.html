@@ -162,7 +162,7 @@
       {% endif %}
 
       {% if music_url %}
-      <audio id="bg-audio" loop preload="auto">
+      <audio id="bg-audio" loop preload="none">
         <source src="{{ music_url }}" type="audio/mpeg">
       </audio>
       <button id="music-toggle-btn" class="music-toggle-btn" aria-label="Toggle Background Music">
