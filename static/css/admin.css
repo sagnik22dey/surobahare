@@ -201,6 +201,16 @@ body.admin-body {
   color: var(--adm-primary);
 }
 
+.adm-sidebar-group-label {
+  padding: 0.9rem 1.2rem 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--adm-muted);
+  margin-top: 0.4rem;
+}
+
 .adm-sidebar-overlay {
   display: none;
   position: fixed;

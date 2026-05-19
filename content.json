@@ -226,5 +226,63 @@
         "label_bn": "পারিবারিক পরিবেশ"
       }
     ]
+  },
+  "contact_info": {
+    "phone": "+91 79088 75949",
+    "email": "surobahare@gmail.com",
+    "address": {
+      "en": "Kolkata, West Bengal",
+      "bn": "কলকাতা, পশ্চিমবঙ্গ"
+    },
+    "whatsapp_number": "917908875949"
+  },
+  "footer_info": {
+    "tagline": {
+      "en": "Nurturing Voices, Building Confidence",
+      "bn": "কণ্ঠ গড়ি, আত্মবিশ্বাস তৈরি করি"
+    },
+    "copyright": {
+      "en": "© 2025 Sur-O-Bahare. All Rights Reserved.",
+      "bn": "© ২০২৫ সুর-ও-বাহারে। সমস্ত অধিকার সংরক্ষিত।"
+    }
+  },
+  "about_page": {
+    "hero_title": {
+      "en": "About The Mentor",
+      "bn": "মেন্টর সম্পর্কে"
+    },
+    "hero_subtitle": {
+      "en": "Learn about the journey, passion, and vision behind Sur-O-Bahare.",
+      "bn": "সুর-ও-বাহারে-এর পেছনের যাত্রা, আবেগ এবং দৃষ্টিভঙ্গি সম্পর্কে জানুন।"
+    },
+    "story_title": {
+      "en": "My Story",
+      "bn": "আমার গল্প"
+    },
+    "story_p1": {
+      "en": "With a deep passion for music and teaching, I guide students to discover their unique voice while building confidence and stage presence. My approach focuses not only on correct pitch and technique but also on making learning enjoyable and meaningful.",
+      "bn": "সঙ্গীত ও শিক্ষার প্রতি গভীর আবেগ নিয়ে আমি শিক্ষার্থীদের তাদের নিজস্ব কণ্ঠস্বর আবিষ্কার করতে সাহায্য করি এবং আত্মবিশ্বাস ও মঞ্চ উপস্থিতি গড়ে তুলি। আমার পদ্ধতি শুধু সঠিক পিচ ও কৌশলের উপর নয়, শেখাকে আনন্দময় ও অর্থবহ করার উপরেও মনোযোগ দেয়।"
+    },
+    "story_p2": {
+      "en": "Through Sur-O-Bahare, I aim to create a nurturing space where every child feels encouraged to express themselves through music — whether they are a complete beginner or have some experience already.",
+      "bn": "সুর-ও-বাহারের মাধ্যমে আমি একটি পরিচর্যামূলক পরিবেশ তৈরি করতে চাই যেখানে প্রতিটি শিশু সঙ্গীতের মাধ্যমে নিজেকে প্রকাশ করতে উৎসাহিত হয় — তারা সম্পূর্ণ নতুন শিক্ষার্থী হোক বা কিছুটা অভিজ্ঞতা থাকুক।"
+    },
+    "story_p3": {
+      "en": "I believe that every child has a unique musical gift waiting to be discovered. My role as a mentor is to patiently guide, encourage, and celebrate every small step they take on this beautiful journey.",
+      "bn": "আমি বিশ্বাস করি প্রতিটি শিশুর মধ্যে একটি অনন্য সঙ্গীত প্রতিভা রয়েছে যা আবিষ্কার হওয়ার অপেক্ষায়। একজন প্রশিক্ষক হিসেবে আমার ভূমিকা হল ধৈর্যসহকারে পথ দেখানো, উৎসাহিত করা এবং এই সুন্দর যাত্রায় তাদের প্রতিটি ছোট পদক্ষেপ উদযাপন করা।"
+    },
+    "cta_title": {
+      "en": "Ready to Begin the Musical Journey?",
+      "bn": "সঙ্গীত যাত্রা শুরু করতে প্রস্তুত?"
+    },
+    "cta_desc": {
+      "en": "Enroll your child today and give them the gift of music and confidence.",
+      "bn": "আজই আপনার সন্তানকে ভর্তি করুন এবং তাদের সঙ্গীত ও আত্মবিশ্বাসের উপহার দিন।"
+    },
+    "cta_btn_label": {
+      "en": "Enroll Today",
+      "bn": "আজই ভর্তি হন"
+    },
+    "cta_btn_link": "/contact"
   }
 }

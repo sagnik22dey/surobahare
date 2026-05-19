@@ -917,6 +917,13 @@
         val('ap_s_p2_bn', ap.story_p2?.bn);
         val('ap_s_p3_en', ap.story_p3?.en);
         val('ap_s_p3_bn', ap.story_p3?.bn);
+        val('ap_cta_title_en', ap.cta_title?.en);
+        val('ap_cta_title_bn', ap.cta_title?.bn);
+        val('ap_cta_desc_en', ap.cta_desc?.en);
+        val('ap_cta_desc_bn', ap.cta_desc?.bn);
+        val('ap_cta_btn_label_en', ap.cta_btn_label?.en);
+        val('ap_cta_btn_label_bn', ap.cta_btn_label?.bn);
+        val('ap_cta_btn_link', ap.cta_btn_link);
     }
 
     window.saveAboutPage = async function () {
@@ -936,6 +943,13 @@
                 story_p2_bn: document.getElementById('ap_s_p2_bn').value,
                 story_p3_en: document.getElementById('ap_s_p3_en').value,
                 story_p3_bn: document.getElementById('ap_s_p3_bn').value,
+                cta_title_en: document.getElementById('ap_cta_title_en').value,
+                cta_title_bn: document.getElementById('ap_cta_title_bn').value,
+                cta_desc_en: document.getElementById('ap_cta_desc_en').value,
+                cta_desc_bn: document.getElementById('ap_cta_desc_bn').value,
+                cta_btn_label_en: document.getElementById('ap_cta_btn_label_en').value,
+                cta_btn_label_bn: document.getElementById('ap_cta_btn_label_bn').value,
+                cta_btn_link: document.getElementById('ap_cta_btn_link').value,
             });
             showToast('About Page saved!', 'success');
         } catch (err) { showToast(err.message, 'error'); }

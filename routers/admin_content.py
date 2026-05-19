@@ -393,6 +393,13 @@ class AboutPageUpdate(BaseModel):
     story_p2_bn: Optional[str] = None
     story_p3_en: Optional[str] = None
     story_p3_bn: Optional[str] = None
+    cta_title_en: Optional[str] = None
+    cta_title_bn: Optional[str] = None
+    cta_desc_en: Optional[str] = None
+    cta_desc_bn: Optional[str] = None
+    cta_btn_label_en: Optional[str] = None
+    cta_btn_label_bn: Optional[str] = None
+    cta_btn_link: Optional[str] = None
 
 @router.put("/about-page")
 async def update_about_page(data: AboutPageUpdate, current_admin: AdminUser = Depends(get_current_admin)):
@@ -410,6 +417,13 @@ async def update_about_page(data: AboutPageUpdate, current_admin: AdminUser = De
     if data.story_p2_bn is not None: ap.setdefault("story_p2", {})["bn"] = data.story_p2_bn
     if data.story_p3_en is not None: ap.setdefault("story_p3", {})["en"] = data.story_p3_en
     if data.story_p3_bn is not None: ap.setdefault("story_p3", {})["bn"] = data.story_p3_bn
+    if data.cta_title_en is not None: ap.setdefault("cta_title", {})["en"] = data.cta_title_en
+    if data.cta_title_bn is not None: ap.setdefault("cta_title", {})["bn"] = data.cta_title_bn
+    if data.cta_desc_en is not None: ap.setdefault("cta_desc", {})["en"] = data.cta_desc_en
+    if data.cta_desc_bn is not None: ap.setdefault("cta_desc", {})["bn"] = data.cta_desc_bn
+    if data.cta_btn_label_en is not None: ap.setdefault("cta_btn_label", {})["en"] = data.cta_btn_label_en
+    if data.cta_btn_label_bn is not None: ap.setdefault("cta_btn_label", {})["bn"] = data.cta_btn_label_bn
+    if data.cta_btn_link is not None: ap["cta_btn_link"] = data.cta_btn_link
     save_section("about_page", ap)
     return {"status": "ok", "section": "about_page"}
 

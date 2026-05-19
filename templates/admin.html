@@ -54,20 +54,13 @@
       <aside class="adm-sidebar" id="admSidebar">
         <div class="adm-sidebar-header">Content Sections</div>
         <nav>
+          <div class="adm-sidebar-group-label">Home Page</div>
           <a href="#" class="adm-sidebar-link" data-section="hero">
             <i class="ri-image-2-line"></i> Hero / Banner
           </a>
           <a href="#" class="adm-sidebar-link" data-section="meteor">
             <i class="ri-sparkling-line"></i> Highlights Bar
           </a>
-          <a href="#" class="adm-sidebar-link" data-section="contact_info"><i class="ri-contacts-line"></i> Contact Info</a>
-          <a href="#" class="adm-sidebar-link" data-section="footer_info"><i class="ri-layout-bottom-line"></i> Footer</a>
-          <a href="#" class="adm-sidebar-link" data-section="about_page"><i class="ri-information-line"></i> About Page</a>
-          <a href="#" class="adm-sidebar-link" data-section="gallery_page"><i class="ri-image-line"></i> Gallery Page</a>
-          <a href="#" class="adm-sidebar-link" data-section="contact_page"><i class="ri-contacts-book-line"></i> Contact Page</a>
-          <a href="#" class="adm-sidebar-link" data-section="thankyou_page"><i class="ri-thumb-up-line"></i> Thank You Page</a>
-          <a href="#" class="adm-sidebar-link" data-section="music_settings"><i class="ri-music-2-line"></i> Music Settings</a>
-
           <a href="#" class="adm-sidebar-link" data-section="mentor">
             <i class="ri-user-star-line"></i> Meet Your Mentor
           </a>
@@ -83,6 +76,18 @@
           <a href="#" class="adm-sidebar-link" data-section="banner">
             <i class="ri-notification-badge-line"></i> Admissions Banner
           </a>
+
+          <div class="adm-sidebar-group-label">Pages</div>
+          <a href="#" class="adm-sidebar-link" data-section="about_page"><i class="ri-information-line"></i> About Page</a>
+          <a href="#" class="adm-sidebar-link" data-section="gallery_page"><i class="ri-image-line"></i> Gallery Page</a>
+          <a href="#" class="adm-sidebar-link" data-section="contact_page"><i class="ri-contacts-book-line"></i> Contact Page</a>
+          <a href="#" class="adm-sidebar-link" data-section="thankyou_page"><i class="ri-thumb-up-line"></i> Thank You Page</a>
+
+          <div class="adm-sidebar-group-label">Global</div>
+          <a href="#" class="adm-sidebar-link" data-section="contact_info"><i class="ri-contacts-line"></i> Contact Info</a>
+          <a href="#" class="adm-sidebar-link" data-section="footer_info"><i class="ri-layout-bottom-line"></i> Footer</a>
+          <a href="#" class="adm-sidebar-link" data-section="music_settings"><i class="ri-music-2-line"></i> Music Settings</a>
+
           <hr class="adm-divider" style="margin: 0.4rem 0.8rem" />
           <a
             href="/admin/enrollments"
@@ -124,6 +129,24 @@
           </button>
           <button class="adm-tab-btn" data-section="banner">
             <i class="ri-notification-badge-line"></i> Banner
+          </button>
+          <button class="adm-tab-btn" data-section="about_page">
+            <i class="ri-information-line"></i> About
+          </button>
+          <button class="adm-tab-btn" data-section="gallery_page">
+            <i class="ri-image-line"></i> Gallery
+          </button>
+          <button class="adm-tab-btn" data-section="contact_page">
+            <i class="ri-contacts-book-line"></i> Contact
+          </button>
+          <button class="adm-tab-btn" data-section="thankyou_page">
+            <i class="ri-thumb-up-line"></i> Thank You
+          </button>
+          <button class="adm-tab-btn" data-section="contact_info">
+            <i class="ri-contacts-line"></i> Contact Info
+          </button>
+          <button class="adm-tab-btn" data-section="footer_info">
+            <i class="ri-layout-bottom-line"></i> Footer
           </button>
           <button class="adm-tab-btn" data-section="music_settings">
             <i class="ri-music-2-line"></i> Music
@@ -1089,14 +1112,18 @@
             <h2><i class="ri-information-line"></i> About Page Content</h2>
           </div>
           <div class="adm-section-body">
+            <div class="adm-help" style="background:#efebe9;border-radius:8px;padding:0.8rem 1rem;margin-bottom:1.2rem;font-size:0.88rem;">
+              <i class="ri-information-line" style="color:var(--adm-primary)"></i>
+              <strong>Tip:</strong> Mentor name, photo, role and qualifications shown on this page are edited in the <strong>Meet Your Mentor</strong> section.
+            </div>
             <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.8rem; color: var(--adm-secondary);">Hero Section</p>
             <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Title (EN)</label><input type="text" class="adm-input" id="ap_h_title_en"></div>
-              <div class="adm-form-group"><label class="adm-label">Title (BN)</label><input type="text" class="adm-input" id="ap_h_title_bn"></div>
+              <div class="adm-form-group"><label class="adm-label">Title <span class="lang-tag">EN</span></label><input type="text" class="adm-input" id="ap_h_title_en" placeholder="About The Mentor"></div>
+              <div class="adm-form-group"><label class="adm-label">Title <span class="lang-tag bn">BN</span></label><input type="text" class="adm-input" id="ap_h_title_bn" placeholder="মেন্টর সম্পর্কে"></div>
             </div>
             <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Subtitle (EN)</label><textarea class="adm-input" id="ap_h_sub_en" rows="2"></textarea></div>
-              <div class="adm-form-group"><label class="adm-label">Subtitle (BN)</label><textarea class="adm-input" id="ap_h_sub_bn" rows="2"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Subtitle <span class="lang-tag">EN</span></label><textarea class="adm-input" id="ap_h_sub_en" rows="2" placeholder="Learn about the journey, passion, and vision..."></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Subtitle <span class="lang-tag bn">BN</span></label><textarea class="adm-input" id="ap_h_sub_bn" rows="2"></textarea></div>
             </div>
             <hr class="adm-divider" />
             <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.8rem; color: var(--adm-secondary);">My Story</p>
@@ -1115,6 +1142,24 @@
             <div class="adm-grid-2">
               <div class="adm-form-group"><label class="adm-label">Paragraph 3 (EN)</label><textarea class="adm-input" id="ap_s_p3_en" rows="4"></textarea></div>
               <div class="adm-form-group"><label class="adm-label">Paragraph 3 (BN)</label><textarea class="adm-input" id="ap_s_p3_bn" rows="4"></textarea></div>
+            </div>
+            <hr class="adm-divider" />
+            <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.8rem; color: var(--adm-secondary);">Call to Action Banner</p>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">CTA Title <span class="lang-tag">EN</span></label><input type="text" class="adm-input" id="ap_cta_title_en" placeholder="Ready to Begin the Musical Journey?"></div>
+              <div class="adm-form-group"><label class="adm-label">CTA Title <span class="lang-tag bn">BN</span></label><input type="text" class="adm-input" id="ap_cta_title_bn" placeholder="সঙ্গীত যাত্রা শুরু করতে প্রস্তুত?"></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">CTA Description <span class="lang-tag">EN</span></label><textarea class="adm-input" id="ap_cta_desc_en" rows="2" placeholder="Enroll your child today..."></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">CTA Description <span class="lang-tag bn">BN</span></label><textarea class="adm-input" id="ap_cta_desc_bn" rows="2"></textarea></div>
+            </div>
+            <div class="adm-grid-2">
+              <div class="adm-form-group"><label class="adm-label">Button Label <span class="lang-tag">EN</span></label><input type="text" class="adm-input" id="ap_cta_btn_label_en" placeholder="Enroll Today"></div>
+              <div class="adm-form-group"><label class="adm-label">Button Label <span class="lang-tag bn">BN</span></label><input type="text" class="adm-input" id="ap_cta_btn_label_bn" placeholder="আজই ভর্তি হন"></div>
+            </div>
+            <div class="adm-form-group">
+              <label class="adm-label">Button Link</label>
+              <input type="text" class="adm-input" id="ap_cta_btn_link" placeholder="/contact">
             </div>
             <div class="adm-save-row">
               <button class="adm-btn adm-btn-primary" onclick="saveAboutPage()">
@@ -1215,160 +1260,6 @@
         </div>
 
 
-        <!-- CONTACT INFO PANEL -->
-        <div id="contact_info" class="adm-panel">
-          <div class="adm-panel-header">
-            <h2>Contact Info (Global)</h2>
-            <button class="adm-btn adm-btn-primary" onclick="saveContactInfo()">Save Contact Info</button>
-          </div>
-          <div class="adm-card">
-            <div class="adm-form-group">
-              <label class="adm-label">Phone Number</label>
-              <input type="text" class="adm-input" id="ci_phone">
-            </div>
-            <div class="adm-form-group">
-              <label class="adm-label">Email Address</label>
-              <input type="text" class="adm-input" id="ci_email">
-            </div>
-            <div class="adm-form-group">
-              <label class="adm-label">Address (English)</label>
-              <input type="text" class="adm-input" id="ci_address_en">
-            </div>
-            <div class="adm-form-group">
-              <label class="adm-label">Address (Bengali)</label>
-              <input type="text" class="adm-input" id="ci_address_bn">
-            </div>
-            <div class="adm-form-group">
-              <label class="adm-label">WhatsApp Number (e.g., 917908875949)</label>
-              <input type="text" class="adm-input" id="ci_whatsapp_number">
-            </div>
-          </div>
-        </div>
-
-        <!-- FOOTER INFO PANEL -->
-        <div id="footer_info" class="adm-panel">
-          <div class="adm-panel-header">
-            <h2>Footer Content</h2>
-            <button class="adm-btn adm-btn-primary" onclick="saveFooterInfo()">Save Footer</button>
-          </div>
-          <div class="adm-card">
-            <div class="adm-form-group">
-              <label class="adm-label">Copyright Text (English)</label>
-              <input type="text" class="adm-input" id="fi_copy_en">
-            </div>
-            <div class="adm-form-group">
-              <label class="adm-label">Copyright Text (Bengali)</label>
-              <input type="text" class="adm-input" id="fi_copy_bn">
-            </div>
-          </div>
-        </div>
-
-        <!-- ABOUT PAGE PANEL -->
-        <div id="about_page" class="adm-panel">
-          <div class="adm-panel-header">
-            <h2>About Page Content</h2>
-            <button class="adm-btn adm-btn-primary" onclick="saveAboutPage()">Save About Page</button>
-          </div>
-          <div class="adm-card">
-            <h3>Hero Section</h3>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Title (EN)</label><input type="text" class="adm-input" id="ap_h_title_en"></div>
-              <div class="adm-form-group"><label class="adm-label">Title (BN)</label><input type="text" class="adm-input" id="ap_h_title_bn"></div>
-            </div>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Subtitle (EN)</label><textarea class="adm-input" id="ap_h_sub_en" rows="2"></textarea></div>
-              <div class="adm-form-group"><label class="adm-label">Subtitle (BN)</label><textarea class="adm-input" id="ap_h_sub_bn" rows="2"></textarea></div>
-            </div>
-            <hr>
-            <h3>My Story</h3>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Story Title (EN)</label><input type="text" class="adm-input" id="ap_s_title_en"></div>
-              <div class="adm-form-group"><label class="adm-label">Story Title (BN)</label><input type="text" class="adm-input" id="ap_s_title_bn"></div>
-            </div>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Paragraph 1 (EN)</label><textarea class="adm-input" id="ap_s_p1_en" rows="4"></textarea></div>
-              <div class="adm-form-group"><label class="adm-label">Paragraph 1 (BN)</label><textarea class="adm-input" id="ap_s_p1_bn" rows="4"></textarea></div>
-            </div>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Paragraph 2 (EN)</label><textarea class="adm-input" id="ap_s_p2_en" rows="4"></textarea></div>
-              <div class="adm-form-group"><label class="adm-label">Paragraph 2 (BN)</label><textarea class="adm-input" id="ap_s_p2_bn" rows="4"></textarea></div>
-            </div>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Paragraph 3 (EN)</label><textarea class="adm-input" id="ap_s_p3_en" rows="4"></textarea></div>
-              <div class="adm-form-group"><label class="adm-label">Paragraph 3 (BN)</label><textarea class="adm-input" id="ap_s_p3_bn" rows="4"></textarea></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- GALLERY PAGE PANEL -->
-        <div id="gallery_page" class="adm-panel">
-          <div class="adm-panel-header">
-            <h2>Gallery Page Content</h2>
-            <button class="adm-btn adm-btn-primary" onclick="saveGalleryPage()">Save Gallery Page</button>
-          </div>
-          <div class="adm-card">
-            <h3>Hero Section</h3>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Title (EN)</label><input type="text" class="adm-input" id="gp_h_title_en"></div>
-              <div class="adm-form-group"><label class="adm-label">Title (BN)</label><input type="text" class="adm-input" id="gp_h_title_bn"></div>
-            </div>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Subtitle (EN)</label><textarea class="adm-input" id="gp_h_sub_en" rows="2"></textarea></div>
-              <div class="adm-form-group"><label class="adm-label">Subtitle (BN)</label><textarea class="adm-input" id="gp_h_sub_bn" rows="2"></textarea></div>
-            </div>
-            <hr>
-            <h3>Story Info</h3>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Story Title (EN)</label><input type="text" class="adm-input" id="gp_s_title_en"></div>
-              <div class="adm-form-group"><label class="adm-label">Story Title (BN)</label><input type="text" class="adm-input" id="gp_s_title_bn"></div>
-            </div>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Description (EN)</label><textarea class="adm-input" id="gp_s_desc_en" rows="3"></textarea></div>
-              <div class="adm-form-group"><label class="adm-label">Description (BN)</label><textarea class="adm-input" id="gp_s_desc_bn" rows="3"></textarea></div>
-            </div>
-            <hr>
-            <h3>Images</h3>
-            <div id="gp_images_container"></div>
-            <button class="adm-btn adm-btn-secondary" onclick="addGalleryImage()" style="margin-top: 1rem">+ Add Image</button>
-          </div>
-        </div>
-
-        <!-- CONTACT PAGE PANEL -->
-        <div id="contact_page" class="adm-panel">
-          <div class="adm-panel-header">
-            <h2>Contact Page Content</h2>
-            <button class="adm-btn adm-btn-primary" onclick="saveContactPage()">Save Contact Page</button>
-          </div>
-          <div class="adm-card">
-            <h3>Hero Section</h3>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Title (EN)</label><input type="text" class="adm-input" id="cp_h_title_en"></div>
-              <div class="adm-form-group"><label class="adm-label">Title (BN)</label><input type="text" class="adm-input" id="cp_h_title_bn"></div>
-            </div>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Subtitle (EN)</label><textarea class="adm-input" id="cp_h_sub_en" rows="2"></textarea></div>
-              <div class="adm-form-group"><label class="adm-label">Subtitle (BN)</label><textarea class="adm-input" id="cp_h_sub_bn" rows="2"></textarea></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- THANKYOU PAGE PANEL -->
-        <div id="thankyou_page" class="adm-panel">
-          <div class="adm-panel-header">
-            <h2>Thank You Page Content</h2>
-            <button class="adm-btn adm-btn-primary" onclick="saveThankyouPage()">Save Thank You Page</button>
-          </div>
-          <div class="adm-card">
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Title (EN)</label><input type="text" class="adm-input" id="tp_title_en"></div>
-              <div class="adm-form-group"><label class="adm-label">Title (BN)</label><input type="text" class="adm-input" id="tp_title_bn"></div>
-            </div>
-            <div class="adm-grid-2">
-              <div class="adm-form-group"><label class="adm-label">Message (EN)</label><textarea class="adm-input" id="tp_msg_en" rows="3"></textarea></div>
-              <div class="adm-form-group"><label class="adm-label">Message (BN)</label><textarea class="adm-input" id="tp_msg_bn" rows="3"></textarea></div>
-            </div>
-          </div>
-        </div>
 
         <!-- MUSIC SETTINGS SECTION -->
         <div class="adm-section" id="section-music_settings">
