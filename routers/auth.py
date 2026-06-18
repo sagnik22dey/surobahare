@@ -62,11 +62,15 @@ def get_current_admin(request: Request, db: Session = Depends(get_db)) -> AdminU
 
 
 @router.get("/login", response_class=HTMLResponse)
-async def login_page(request: Request):
+async def login_page(request: Request, db: Session = Depends(get_db)):
     token = request.cookies.get(SESSION_COOKIE_NAME)
     if token:
-        # Check if valid
-        return RedirectResponse(url="/admin", status_code=status.HTTP_302_FOUND)
+        db_session = db.query(AdminSession).filter(AdminSession.session_token == token).first()
+        if db_session and db_session.expires_at > datetime.now(timezone.utc):
+            return RedirectResponse(url="/admin", status_code=status.HTTP_302_FOUND)
+        if db_session:
+            db.delete(db_session)
+            db.commit()
     return templates.TemplateResponse(request, "admin_login.html", {"error": None})
 
 
