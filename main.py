@@ -1,5 +1,7 @@
+import asyncio
 import json
 import os
+import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse, Response
@@ -12,8 +14,11 @@ from routers import enrollment
 from routers import admin_content
 from routers import auth
 from storage import load_content
+from whatsapp_queue import process_queue
 
 load_dotenv()
+
+logger = logging.getLogger("whatsapp_queue")
 
 
 def _seed_from_json():
@@ -61,12 +66,23 @@ def _seed_admin_user():
         db.close()
 
 
+async def _queue_worker():
+    while True:
+        try:
+            await asyncio.get_event_loop().run_in_executor(None, process_queue)
+        except Exception as e:
+            logger.error(f"Queue worker error: {e}")
+        await asyncio.sleep(60)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     _seed_from_json()
     _seed_admin_user()
+    task = asyncio.create_task(_queue_worker())
     yield
+    task.cancel()
 
 
 app = FastAPI(title="Sur-O-Bahare Music Academy", lifespan=lifespan)

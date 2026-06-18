@@ -1,17 +1,14 @@
 import os
-import secrets
-import httpx
 from typing import Optional
-from fastapi import APIRouter, Form, Request, Depends, HTTPException, status
+from fastapi import APIRouter, Form, Request, Depends
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
 from fastapi.templating import Jinja2Templates
 from storage import add_enrollment, get_all_enrollments
 from routers.auth import get_current_admin
 from models import AdminUser
+from whatsapp_queue import enqueue_whatsapp_message
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
 templates = Jinja2Templates(directory="templates")
 
 
@@ -37,23 +34,19 @@ async def submit_enrollment(
     add_enrollment(record)
 
     try:
-        whatsapp_number = os.getenv("ADMIN_WHATSAPP_NUMBER", "")
-        api_key = os.getenv("CALLMEBOT_API_KEY", "")
-        if whatsapp_number and api_key:
+        admin_number = os.getenv("ADMIN_WHATSAPP_NUMBER", "")
+        if admin_number:
             message = (
-                f"🎵 New Enrollment!\n"
-                f"Parent: {parent_name}\n"
-                f"Child: {child_name} (Age: {child_age})\n"
-                f"Mobile: {mobile}\n"
-                f"Location: {location}\n"
-                f"Program: {program_interest}"
+                f"🎓 *New Enrollment — Sur-O-Bahare*\n\n"
+                f"👤 Parent: {parent_name}\n"
+                f"👶 Child: {child_name} (Age: {child_age})\n"
+                f"📱 Mobile: {mobile}\n"
+                f"📍 Location: {location}\n"
+                f"🎶 Program: {program_interest}"
             )
-            url = (
-                f"https://api.callmebot.com/whatsapp.php"
-                f"?phone={whatsapp_number}&text={message}&apikey={api_key}"
-            )
-            async with httpx.AsyncClient() as client:
-                await client.get(url, timeout=5)
+            if heard_from:
+                message += f"\n📣 Heard from: {heard_from}"
+            enqueue_whatsapp_message(admin_number, message)
     except Exception:
         pass
 

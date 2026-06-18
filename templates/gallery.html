@@ -4,14 +4,14 @@ Academy{% endblock %} {% block content %}
 <!-- ===== PAGE HERO ===== -->
 <section class="page-hero">
   <div class="container">
-    <h1 data-en="{{ content.get('gallery_page', {}).get('hero_title', {}).get('en', 'Our Musical Journey') }}" data-bn="{{ content.get('gallery_page', {}).get('hero_title', {}).get('bn', 'আমাদের সঙ্গীত যাত্রা') }}">
-      {{ content.get('gallery_page', {}).get('hero_title', {}).get('en', 'Our Musical Journey') }}
+    <h1 data-en="{{ content.get('gallery_page', {}).get('hero_title', {}).get('en', '') or 'Our Musical Journey' }}" data-bn="{{ content.get('gallery_page', {}).get('hero_title', {}).get('bn', '') or 'আমাদের সঙ্গীত যাত্রা' }}">
+      {{ content.get('gallery_page', {}).get('hero_title', {}).get('en', '') or 'Our Musical Journey' }}
     </h1>
     <p
-      data-en="{{ content.get('gallery_page', {}).get('hero_subtitle', {}).get('en', 'Glimpses of performances, practice sessions, and joyful moments at Sur-O-Bahare.') }}"
-      data-bn="{{ content.get('gallery_page', {}).get('hero_subtitle', {}).get('bn', 'সুর-ও-বাহারে-এর পারফরম্যান্স, অনুশীলনের সেশন এবং আনন্দদায়ক মুহূর্তের ঝলক।') }}"
+      data-en="{{ content.get('gallery_page', {}).get('hero_subtitle', {}).get('en', '') or 'Glimpses of performances, practice sessions, and joyful moments at Sur-O-Bahare.' }}"
+      data-bn="{{ content.get('gallery_page', {}).get('hero_subtitle', {}).get('bn', '') or 'সুর-ও-বাহারে-এর পারফরম্যান্স, অনুশীলনের সেশন এবং আনন্দদায়ক মুহূর্তের ঝলক।' }}"
     >
-      {{ content.get('gallery_page', {}).get('hero_subtitle', {}).get('en', 'Glimpses of performances, practice sessions, and joyful moments at Sur-O-Bahare.') }}
+      {{ content.get('gallery_page', {}).get('hero_subtitle', {}).get('en', '') or 'Glimpses of performances, practice sessions, and joyful moments at Sur-O-Bahare.' }}
     </p>
   </div>
 </section>
@@ -20,14 +20,14 @@ Academy{% endblock %} {% block content %}
 <section class="section">
   <div class="container">
     <div class="section-header fade-in">
-      <h2 data-en="{{ content.get('gallery_page', {}).get('story_title', {}).get('en', 'Moments We Cherish') }}" data-bn="{{ content.get('gallery_page', {}).get('story_title', {}).get('bn', 'যে মুহূর্তগুলো আমরা লালন করি') }}">
-        {{ content.get('gallery_page', {}).get('story_title', {}).get('en', 'Moments We Cherish') }}
+      <h2 data-en="{{ content.get('gallery_page', {}).get('story_title', {}).get('en', '') or 'Moments We Cherish' }}" data-bn="{{ content.get('gallery_page', {}).get('story_title', {}).get('bn', '') or 'যে মুহূর্তগুলো আমরা লালন করি' }}">
+        {{ content.get('gallery_page', {}).get('story_title', {}).get('en', '') or 'Moments We Cherish' }}
       </h2>
       <p
-        data-en="{{ content.get('gallery_page', {}).get('story_desc', {}).get('en', 'Every picture tells a story of dedication, rhythm, and the pure joy of making music together.') }}"
-        data-bn="{{ content.get('gallery_page', {}).get('story_desc', {}).get('bn', 'প্রতিটি ছবি উৎসর্গ, তাল এবং একসাথে গান করার বিশুদ্ধ আনন্দের গল্প বলে।') }}"
+        data-en="{{ content.get('gallery_page', {}).get('story_desc', {}).get('en', '') or 'Every picture tells a story of dedication, rhythm, and the pure joy of making music together.' }}"
+        data-bn="{{ content.get('gallery_page', {}).get('story_desc', {}).get('bn', '') or 'প্রতিটি ছবি উৎসর্গ, তাল এবং একসাথে গান করার বিশুদ্ধ আনন্দের গল্প বলে।' }}"
       >
-        {{ content.get('gallery_page', {}).get('story_desc', {}).get('en', 'Every picture tells a story of dedication, rhythm, and the pure joy of making music together.') }}
+        {{ content.get('gallery_page', {}).get('story_desc', {}).get('en', '') or 'Every picture tells a story of dedication, rhythm, and the pure joy of making music together.' }}
       </p>
     </div>
 
