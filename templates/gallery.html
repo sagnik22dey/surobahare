@@ -101,24 +101,24 @@ Academy{% endblock %} {% block content %}
 <section class="cta-banner">
   <div class="container">
     <h2
-      data-en="Want to Be Part of Our Journey?"
-      data-bn="আমাদের যাত্রার অংশ হতে চান?"
+      data-en="{{ content.get('about_page', {}).get('cta_title', {}).get('en', 'Ready to Begin the Musical Journey?') }}"
+      data-bn="{{ content.get('about_page', {}).get('cta_title', {}).get('bn', 'সঙ্গীত যাত্রা শুরু করতে প্রস্তুত?') }}"
     >
-      Want to Be Part of Our Journey?
+      {{ content.get('about_page', {}).get('cta_title', {}).get('en', 'Ready to Begin the Musical Journey?') }}
     </h2>
     <p
-      data-en="Enroll today and let your child create beautiful musical memories at Sur-O-Bahare."
-      data-bn="আজই ভর্তি হন এবং আপনার সন্তানকে সুর-ও-বাহারে সুন্দর সঙ্গীত স্মৃতি তৈরি করতে দিন।"
+      data-en="{{ content.get('about_page', {}).get('cta_desc', {}).get('en', 'Enroll your child today and give them the gift of music and confidence.') }}"
+      data-bn="{{ content.get('about_page', {}).get('cta_desc', {}).get('bn', 'আজই আপনার সন্তানকে ভর্তি করুন এবং তাদের সঙ্গীত ও আত্মবিশ্বাসের উপহার দিন।') }}"
     >
-      Enroll today and let your child create beautiful musical memories at
-      Sur-O-Bahare.
+      {{ content.get('about_page', {}).get('cta_desc', {}).get('en', 'Enroll your child today and give them the gift of music and confidence.') }}
     </p>
     <div class="cta-banner-actions">
-      <a href="/contact" class="btn btn-secondary">
-        <i class="ri-mic-line"></i>
-        <span data-en="Enroll Now →" data-bn="এখনই ভর্তি হন →"
-          >Enroll Now →</span
-        >
+      <a href="{{ content.get('about_page', {}).get('cta_btn_link', '/contact') }}" class="btn btn-secondary">
+        <i class="ri-music-2-line"></i>
+        <span
+          data-en="{{ content.get('about_page', {}).get('cta_btn_label', {}).get('en', 'Enroll Today') }} →"
+          data-bn="{{ content.get('about_page', {}).get('cta_btn_label', {}).get('bn', 'আজই ভর্তি হন') }} →"
+        >{{ content.get('about_page', {}).get('cta_btn_label', {}).get('en', 'Enroll Today') }} →</span>
       </a>
     </div>
   </div>

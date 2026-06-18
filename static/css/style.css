@@ -690,11 +690,14 @@ p {
     transparent 60%
   );
   pointer-events: none;
+  z-index: 0;
 }
 
 .cta-banner h2 {
   color: var(--white);
   margin-bottom: var(--space-sm);
+  position: relative;
+  z-index: 1;
 }
 .cta-banner p {
   color: rgba(255, 255, 255, 0.8);
@@ -703,6 +706,8 @@ p {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .cta-banner-actions {
@@ -710,6 +715,8 @@ p {
   gap: var(--space-md);
   justify-content: center;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
 /* ── 12. TEACHING APPROACH ── */
@@ -752,6 +759,12 @@ p {
   color: var(--secondary);
   font-weight: 500;
   margin-top: 6px;
+}
+.approach-item p {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.6;
 }
 
 /* ── 13. GALLERY GRID ── */
@@ -1615,6 +1628,7 @@ p {
     radial-gradient(circle at 12% 60%, rgba(141, 110, 99, 0.07) 0%, transparent 45%),
     radial-gradient(circle at 88% 20%, rgba(141, 110, 99, 0.09) 0%, transparent 40%);
   pointer-events: none;
+  z-index: 0;
 }
 
 .page-hero::after {
@@ -1625,6 +1639,7 @@ p {
   right: 10%;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  z-index: 0;
 }
 
 .page-hero h1 {

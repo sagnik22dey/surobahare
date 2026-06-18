@@ -333,7 +333,7 @@
     });
 
     /* ─── PROGRAMS ──────────────────────────────────────────── */
-    let programsList = [];
+    window.programsList = [];
 
     function populatePrograms() {
         const pt = content.programs_teaser || {};
@@ -494,7 +494,7 @@
     });
 
     /* ─── TEACHING APPROACH ─────────────────────────────────── */
-    let approachList = [];
+    window.approachList = [];
 
     function populateApproach() {
         const ta = content.teaching_approach || {};
@@ -582,7 +582,7 @@
     });
 
     /* ─── TESTIMONIALS ──────────────────────────────────────── */
-    let testimonialsList = [];
+    window.testimonialsList = [];
 
     function populateTestimonials() {
         const t = content.testimonials || {};
@@ -743,7 +743,7 @@
     });
 
     /* ─── METEOR HIGHLIGHTS ─────────────────────────────────── */
-    let meteorList = [];
+    window.meteorList = [];
 
     function populateMeteor() {
         const m = content.meteor_highlights || {};
@@ -959,7 +959,7 @@
     /* ═══════════════════════════════════════════════════════════
        GALLERY PAGE
     ═══════════════════════════════════════════════════════════ */
-    let galleryImagesList = [];
+    window.galleryImagesList = [];
 
     function populateGalleryPage() {
         const gp = content.gallery_page || {};

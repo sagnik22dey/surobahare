@@ -246,6 +246,45 @@
       "bn": "© ২০২৫ সুর-ও-বাহারে। সমস্ত অধিকার সংরক্ষিত।"
     }
   },
+  "gallery_page": {
+    "hero_title": {
+      "en": "Gallery",
+      "bn": "গ্যালারি"
+    },
+    "hero_subtitle": {
+      "en": "Moments of music, joy, and learning captured at Sur-O-Bahare.",
+      "bn": "সুর-ও-বাহারে-এ সঙ্গীত, আনন্দ ও শেখার মুহূর্ত ক্যাপচার করা হয়েছে।"
+    },
+    "story_title": {
+      "en": "Our Musical Moments",
+      "bn": "আমাদের সঙ্গীত মুহূর্ত"
+    },
+    "story_desc": {
+      "en": "Every class, every performance, every smile tells a story. Browse through our collection of memorable moments from sessions, recitals, and events.",
+      "bn": "প্রতিটি ক্লাস, প্রতিটি পারফরমেন্স, প্রতিটি হাসি একটি গল্প বলে। সেশন, রিসাইটাল এবং ইভেন্টগুলির স্মরণীয় মুহূর্তগুলির আমাদের সংগ্রহ দেখুন।"
+    },
+    "images": []
+  },
+  "contact_page": {
+    "hero_title": {
+      "en": "Get in Touch",
+      "bn": "যোগাযোগ করুন"
+    },
+    "hero_subtitle": {
+      "en": "Have questions? We would love to hear from you.",
+      "bn": "প্রশ্ন আছে? আমরা আপনার কাছ থেকে শুনতে চাই।"
+    }
+  },
+  "thankyou_page": {
+    "title": {
+      "en": "Thank You!",
+      "bn": "ধন্যবাদ!"
+    },
+    "message": {
+      "en": "Your enrollment request has been submitted successfully. We will contact you soon.",
+      "bn": "আপনার ভর্তি অনুরোধ সফলভাবে জমা দেওয়া হয়েছে। আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।"
+    }
+  },
   "about_page": {
     "hero_title": {
       "en": "About The Mentor",
