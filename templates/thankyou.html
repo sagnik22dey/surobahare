@@ -63,7 +63,7 @@ Academy{% endblock %} {% block content %}
         <span data-en="Back to Home" data-bn="হোম পেজে ফিরুন">Back to Home</span>
       </a>
       <a
-        href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20just%20enrolled%20at%20Sur-O-Bahare%21"
+        href="https://wa.me/{{ content.get('contact_info', {}).get('whatsapp_number', '917908875949') }}?text=Hi%2C%20I%20just%20enrolled%20at%20Sur-O-Bahare%21"
         target="_blank"
         rel="noopener"
         class="btn btn-whatsapp"

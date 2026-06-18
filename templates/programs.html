@@ -85,7 +85,7 @@ Academy{% endblock %} {% block content %}
         >
       </a>
       <a
-        href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20programs%20at%20Sur-O-Bahare"
+        href="https://wa.me/{{ content.get('contact_info', {}).get('whatsapp_number', '917908875949') }}?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20programs%20at%20Sur-O-Bahare"
         target="_blank"
         rel="noopener"
         class="btn btn-whatsapp"

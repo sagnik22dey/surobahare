@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, Form, Request, Depends
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
-from storage import add_enrollment, get_all_enrollments
+from storage import add_enrollment, get_all_enrollments, delete_enrollment
 from routers.auth import get_current_admin
 from models import AdminUser
 from whatsapp_queue import enqueue_whatsapp_message
@@ -64,3 +64,15 @@ async def admin_enrollments(
         "admin_enrollments.html",
         {"enrollments": enrollments},
     )
+
+
+@router.delete("/admin/enrollments/{enrollment_id}")
+async def api_delete_enrollment(
+    enrollment_id: int,
+    current_admin: AdminUser = Depends(get_current_admin),
+):
+    deleted = delete_enrollment(enrollment_id)
+    if not deleted:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Enrollment not found")
+    return {"status": "ok", "deleted_id": enrollment_id}

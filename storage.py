@@ -85,6 +85,19 @@ def add_enrollment(record: Dict[str, Any]) -> None:
         db.close()
 
 
+def delete_enrollment(enrollment_id: int) -> bool:
+    db = _get_db()
+    try:
+        row = db.query(Enrollment).filter(Enrollment.id == enrollment_id).first()
+        if not row:
+            return False
+        db.delete(row)
+        db.commit()
+        return True
+    finally:
+        db.close()
+
+
 def get_all_enrollments() -> List[Dict[str, Any]]:
     db = _get_db()
     try:
