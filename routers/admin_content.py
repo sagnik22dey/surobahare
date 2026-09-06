@@ -12,6 +12,24 @@ templates = Jinja2Templates(directory="templates")
 
 MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
 
+import re
+_VALID_LINK_RE = re.compile(
+    r'^(?:'
+    r'(?:/[a-zA-Z0-9_\-]*(?:/[a-zA-Z0-9_\-]+)*)'  # internal path like /, /contact, /about#anchor
+    r'(?:#[a-zA-Z0-9_\-]+)?'
+    r'|'
+    r'https?://[^\s]+'
+    r')$'
+)
+
+def _validate_link(value: str, field_name: str = "link") -> str:
+    if not value or _VALID_LINK_RE.match(value.strip()):
+        return value
+    raise HTTPException(
+        status_code=400,
+        detail=f"Invalid {field_name}: must be a path like '/contact' or a full URL like 'https://example.com'"
+    )
+
 
 # ─── Admin Dashboard Page ─────────────────────────────────────────────────────
 
@@ -78,10 +96,10 @@ async def update_hero(data: HeroUpdate, current_admin: AdminUser = Depends(get_c
     if data.bg_image_url is not None: h["bg_image_url"] = data.bg_image_url
     if data.cta_primary_label_en is not None: h["cta_primary_label_en"] = data.cta_primary_label_en
     if data.cta_primary_label_bn is not None: h["cta_primary_label_bn"] = data.cta_primary_label_bn
-    if data.cta_primary_link is not None: h["cta_primary_link"] = data.cta_primary_link
+    if data.cta_primary_link is not None: h["cta_primary_link"] = _validate_link(data.cta_primary_link, "Primary CTA link")
     if data.cta_secondary_label_en is not None: h["cta_secondary_label_en"] = data.cta_secondary_label_en
     if data.cta_secondary_label_bn is not None: h["cta_secondary_label_bn"] = data.cta_secondary_label_bn
-    if data.cta_secondary_link is not None: h["cta_secondary_link"] = data.cta_secondary_link
+    if data.cta_secondary_link is not None: h["cta_secondary_link"] = _validate_link(data.cta_secondary_link, "Secondary CTA link")
     save_section("hero", h)
     return {"status": "ok", "section": "hero"}
 
@@ -116,7 +134,7 @@ async def update_mentor(data: MentorUpdate, current_admin: AdminUser = Depends(g
     if data.bio_bn is not None: m.setdefault("mentor_bio", {})["bn"] = data.bio_bn
     if data.photo_url is not None: m["mentor_photo_url"] = data.photo_url
     if data.qualifications is not None: m["mentor_qualifications"] = data.qualifications
-    if data.link is not None: m["mentor_link"] = data.link
+    if data.link is not None: m["mentor_link"] = _validate_link(data.link, "Mentor link")
     save_section("about_snapshot", m)
     return {"status": "ok", "section": "about_snapshot"}
 
@@ -290,7 +308,7 @@ async def update_admissions_banner(data: AdmissionsBannerUpdate, current_admin: 
     if data.seat_count is not None: ab["seat_count"] = data.seat_count
     if data.enroll_btn_label_en is not None: ab["enroll_btn_label_en"] = data.enroll_btn_label_en
     if data.enroll_btn_label_bn is not None: ab["enroll_btn_label_bn"] = data.enroll_btn_label_bn
-    if data.enroll_btn_link is not None: ab["enroll_btn_link"] = data.enroll_btn_link
+    if data.enroll_btn_link is not None: ab["enroll_btn_link"] = _validate_link(data.enroll_btn_link, "Enroll button link")
     if data.whatsapp_number is not None: ab["whatsapp_number"] = data.whatsapp_number
     if data.whatsapp_message is not None: ab["whatsapp_message"] = data.whatsapp_message
     if data.whatsapp_btn_label_en is not None: ab["whatsapp_btn_label_en"] = data.whatsapp_btn_label_en
@@ -423,7 +441,7 @@ async def update_about_page(data: AboutPageUpdate, current_admin: AdminUser = De
     if data.cta_desc_bn is not None: ap.setdefault("cta_desc", {})["bn"] = data.cta_desc_bn
     if data.cta_btn_label_en is not None: ap.setdefault("cta_btn_label", {})["en"] = data.cta_btn_label_en
     if data.cta_btn_label_bn is not None: ap.setdefault("cta_btn_label", {})["bn"] = data.cta_btn_label_bn
-    if data.cta_btn_link is not None: ap["cta_btn_link"] = data.cta_btn_link
+    if data.cta_btn_link is not None: ap["cta_btn_link"] = _validate_link(data.cta_btn_link, "CTA button link")
     save_section("about_page", ap)
     return {"status": "ok", "section": "about_page"}
 
