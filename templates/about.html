@@ -1,17 +1,45 @@
 {% extends "base.html" %} {% block title %}About — Sur-O-Bahare Music Academy{%
 endblock %} {% block content %}
 
+{% set ap = content.get('about_page', {}) %}
+{% set snap = content.get('about_snapshot', {}) %}
+{% set ap_hero_title_en = ap.get('hero_title', {}).get('en') or 'About The Mentor' %}
+{% set ap_hero_title_bn = ap.get('hero_title', {}).get('bn') or 'মেন্টর সম্পর্কে' %}
+{% set ap_hero_sub_en = ap.get('hero_subtitle', {}).get('en') or 'Learn about the journey, passion, and vision behind Sur-O-Bahare.' %}
+{% set ap_hero_sub_bn = ap.get('hero_subtitle', {}).get('bn') or 'সুর-ও-বাহারে-এর পেছনের যাত্রা, আবেগ এবং দৃষ্টিভঙ্গি সম্পর্কে জানুন।' %}
+{% set ap_name_en = snap.get('mentor_name', {}).get('en') or 'Samayita Dey' %}
+{% set ap_name_bn = snap.get('mentor_name', {}).get('bn') or 'সমাইতা দে' %}
+{% set ap_role_en = snap.get('mentor_role', {}).get('en') or 'Vocal Music Mentor & Founder' %}
+{% set ap_role_bn = snap.get('mentor_role', {}).get('bn') or 'কণ্ঠসঙ্গীত প্রশিক্ষক ও প্রতিষ্ঠাতা' %}
+{% set ap_photo = snap.get('mentor_photo_url') or 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop' %}
+{% set ap_story_title_en = ap.get('story_title', {}).get('en') or 'My Story' %}
+{% set ap_story_title_bn = ap.get('story_title', {}).get('bn') or 'আমার গল্প' %}
+{% set ap_p1_en = ap.get('story_p1', {}).get('en') or 'With a deep passion for music and teaching, I guide students to discover their unique voice while building confidence and stage presence. My approach focuses not only on correct pitch and technique but also on making learning enjoyable and meaningful.' %}
+{% set ap_p1_bn = ap.get('story_p1', {}).get('bn') or 'সঙ্গীত ও শিক্ষার প্রতি গভীর আবেগ নিয়ে আমি শিক্ষার্থীদের তাদের নিজস্ব কণ্ঠস্বর আবিষ্কার করতে সাহায্য করি এবং আত্মবিশ্বাস ও মঞ্চ উপস্থিতি গড়ে তুলি।' %}
+{% set ap_p2_en = ap.get('story_p2', {}).get('en') or 'Through Sur-O-Bahare, I aim to create a nurturing space where every child feels encouraged to express themselves through music — whether they are a complete beginner or have some experience already.' %}
+{% set ap_p2_bn = ap.get('story_p2', {}).get('bn') or 'সুর-ও-বাহারের মাধ্যমে আমি একটি পরিচর্যামূলক পরিবেশ তৈরি করতে চাই যেখানে প্রতিটি শিশু সঙ্গীতের মাধ্যমে নিজেকে প্রকাশ করতে উৎসাহিত হয়।' %}
+{% set ap_p3_en = ap.get('story_p3', {}).get('en') or 'I believe that every child has a unique musical gift waiting to be discovered. My role as a mentor is to patiently guide, encourage, and celebrate every small step they take on this beautiful journey.' %}
+{% set ap_p3_bn = ap.get('story_p3', {}).get('bn') or 'আমি বিশ্বাস করি প্রতিটি শিশুর মধ্যে একটি অনন্য সঙ্গীত প্রতিভা রয়েছে যা আবিষ্কার হওয়ার অপেক্ষায়।' %}
+{% set ap_cta_title_en = ap.get('cta_title', {}).get('en') or 'Ready to Begin the Musical Journey?' %}
+{% set ap_cta_title_bn = ap.get('cta_title', {}).get('bn') or 'সঙ্গীত যাত্রা শুরু করতে প্রস্তুত?' %}
+{% set ap_cta_desc_en = ap.get('cta_desc', {}).get('en') or 'Enroll your child today and give them the gift of music and confidence.' %}
+{% set ap_cta_desc_bn = ap.get('cta_desc', {}).get('bn') or 'আজই আপনার সন্তানকে ভর্তি করুন এবং তাদের সঙ্গীত ও আত্মবিশ্বাসের উপহার দিন।' %}
+{% set ap_cta_btn_en = ap.get('cta_btn_label', {}).get('en') or 'Enroll Today' %}
+{% set ap_cta_btn_bn = ap.get('cta_btn_label', {}).get('bn') or 'আজই ভর্তি হন' %}
+{% set ap_cta_link = ap.get('cta_btn_link') or '/contact' %}
+
 <!-- ===== PAGE HERO ===== -->
 <section class="page-hero">
   <div class="container">
-    <h1 data-en="{{ content.get('about_page', {}).get('hero_title', {}).get('en', 'About The Mentor') }}" data-bn="{{ content.get('about_page', {}).get('hero_title', {}).get('bn', 'মেন্টর সম্পর্কে') }}">
-      {{ content.get('about_page', {}).get('hero_title', {}).get('en', 'About The Mentor') }}
+    <span class="eyebrow centered" data-en="Our Story" data-bn="আমাদের গল্প">Our Story</span>
+    <h1 data-en="{{ ap_hero_title_en }}" data-bn="{{ ap_hero_title_bn }}">
+      {{ ap_hero_title_en }}
     </h1>
     <p
-      data-en="{{ content.get('about_page', {}).get('hero_subtitle', {}).get('en', 'Learn about the journey, passion, and vision behind Sur-O-Bahare.') }}"
-      data-bn="{{ content.get('about_page', {}).get('hero_subtitle', {}).get('bn', 'সুর-ও-বাহারে-এর পেছনের যাত্রা, আবেগ এবং দৃষ্টিভঙ্গি সম্পর্কে জানুন।') }}"
+      data-en="{{ ap_hero_sub_en }}"
+      data-bn="{{ ap_hero_sub_bn }}"
     >
-      {{ content.get('about_page', {}).get('hero_subtitle', {}).get('en', 'Learn about the journey, passion, and vision behind Sur-O-Bahare.') }}
+      {{ ap_hero_sub_en }}
     </p>
   </div>
 </section>
@@ -23,24 +51,24 @@ endblock %} {% block content %}
       <!-- Photo Column -->
       <div class="about-photo-col fade-in">
         <div class="about-image-wrapper">
-          <img src="{{ content.get('about_snapshot', {}).get('mentor_photo_url', 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop') }}" alt="{{ content.get('about_snapshot', {}).get('mentor_name', {}).get('en', 'Samayita Dey') }}" loading="lazy">
+          <img src="{{ ap_photo }}" alt="{{ ap_name_en }}" loading="lazy">
         </div>
-        <p class="about-name" data-en="{{ content.get('about_snapshot', {}).get('mentor_name', {}).get('en', 'Samayita Dey') }}" data-bn="{{ content.get('about_snapshot', {}).get('mentor_name', {}).get('bn', 'সমাইতা দে') }}">
-          {{ content.get('about_snapshot', {}).get('mentor_name', {}).get('en', 'Samayita Dey') }}
+        <p class="about-name" data-en="{{ ap_name_en }}" data-bn="{{ ap_name_bn }}">
+          {{ ap_name_en }}
         </p>
         <p
           class="about-role"
-          data-en="{{ content.get('about_snapshot', {}).get('mentor_role', {}).get('en', 'Vocal Music Mentor &amp; Founder') }}"
-          data-bn="{{ content.get('about_snapshot', {}).get('mentor_role', {}).get('bn', 'কণ্ঠসঙ্গীত প্রশিক্ষক ও প্রতিষ্ঠাতা') }}"
+          data-en="{{ ap_role_en }}"
+          data-bn="{{ ap_role_bn }}"
         >
-          {{ content.get('about_snapshot', {}).get('mentor_role', {}).get('en', 'Vocal Music Mentor &amp; Founder') }}
+          {{ ap_role_en }}
         </p>
 
         <div style="margin-top: 1.6rem">
-          <a href="{{ content.get('about_page', {}).get('cta_btn_link', '/contact') }}" class="btn btn-primary">
+          <a href="{{ ap_cta_link }}" class="btn btn-primary">
             <i class="ri-music-2-line"></i>
-            <span data-en="{{ content.get('about_page', {}).get('cta_btn_label', {}).get('en', 'Enroll Today') }}" data-bn="{{ content.get('about_page', {}).get('cta_btn_label', {}).get('bn', 'আজই ভর্তি হন') }}"
-              >{{ content.get('about_page', {}).get('cta_btn_label', {}).get('en', 'Enroll Today') }}</span
+            <span data-en="{{ ap_cta_btn_en }}" data-bn="{{ ap_cta_btn_bn }}"
+              >{{ ap_cta_btn_en }}</span
             >
           </a>
         </div>
@@ -48,38 +76,30 @@ endblock %} {% block content %}
 
       <!-- Bio Column -->
       <div class="fade-in">
-        <h2 data-en="{{ content.get('about_page', {}).get('story_title', {}).get('en', 'My Story') }}" data-bn="{{ content.get('about_page', {}).get('story_title', {}).get('bn', 'আমার গল্প') }}">{{ content.get('about_page', {}).get('story_title', {}).get('en', 'My Story') }}</h2>
-        <div
-          style="
-            height: 3px;
-            width: 50px;
-            background: var(--primary);
-            border-radius: 999px;
-            margin: 0.8rem 0 1.6rem;
-          "
-        ></div>
+        <h2 data-en="{{ ap_story_title_en }}" data-bn="{{ ap_story_title_bn }}">{{ ap_story_title_en }}</h2>
+        <div class="story-rule"></div>
 
         <p
           style="margin-bottom: 1.2rem"
-          data-en="{{ content.get('about_page', {}).get('story_p1', {}).get('en', 'With a deep passion for music and teaching, I guide students to discover their unique voice while building confidence and stage presence. My approach focuses not only on correct pitch and technique but also on making learning enjoyable and meaningful.') }}"
-          data-bn="{{ content.get('about_page', {}).get('story_p1', {}).get('bn', 'সঙ্গীত ও শিক্ষার প্রতি গভীর আবেগ নিয়ে আমি শিক্ষার্থীদের তাদের নিজস্ব কণ্ঠস্বর আবিষ্কার করতে সাহায্য করি এবং আত্মবিশ্বাস ও মঞ্চ উপস্থিতি গড়ে তুলি। আমার পদ্ধতি শুধু সঠিক পিচ ও কৌশলের উপর নয়, শেখাকে আনন্দময় ও অর্থবহ করার উপরেও মনোযোগ দেয়।') }}"
+          data-en="{{ ap_p1_en }}"
+          data-bn="{{ ap_p1_bn }}"
         >
-          {{ content.get('about_page', {}).get('story_p1', {}).get('en', 'With a deep passion for music and teaching, I guide students to discover their unique voice while building confidence and stage presence. My approach focuses not only on correct pitch and technique but also on making learning enjoyable and meaningful.') }}
+          {{ ap_p1_en }}
         </p>
 
         <p
           style="margin-bottom: 1.2rem"
-          data-en="{{ content.get('about_page', {}).get('story_p2', {}).get('en', 'Through Sur-O-Bahare, I aim to create a nurturing space where every child feels encouraged to express themselves through music — whether they are a complete beginner or have some experience already.') }}"
-          data-bn="{{ content.get('about_page', {}).get('story_p2', {}).get('bn', 'সুর-ও-বাহারের মাধ্যমে আমি একটি পরিচর্যামূলক পরিবেশ তৈরি করতে চাই যেখানে প্রতিটি শিশু সঙ্গীতের মাধ্যমে নিজেকে প্রকাশ করতে উৎসাহিত হয় — তারা সম্পূর্ণ নতুন শিক্ষার্থী হোক বা কিছুটা অভিজ্ঞতা থাকুক।') }}"
+          data-en="{{ ap_p2_en }}"
+          data-bn="{{ ap_p2_bn }}"
         >
-          {{ content.get('about_page', {}).get('story_p2', {}).get('en', 'Through Sur-O-Bahare, I aim to create a nurturing space where every child feels encouraged to express themselves through music — whether they are a complete beginner or have some experience already.') }}
+          {{ ap_p2_en }}
         </p>
 
         <p
-          data-en="{{ content.get('about_page', {}).get('story_p3', {}).get('en', 'I believe that every child has a unique musical gift waiting to be discovered. My role as a mentor is to patiently guide, encourage, and celebrate every small step they take on this beautiful journey.') }}"
-          data-bn="{{ content.get('about_page', {}).get('story_p3', {}).get('bn', 'আমি বিশ্বাস করি প্রতিটি শিশুর মধ্যে একটি অনন্য সঙ্গীত প্রতিভা রয়েছে যা আবিষ্কার হওয়ার অপেক্ষায়। একজন প্রশিক্ষক হিসেবে আমার ভূমিকা হল ধৈর্যসহকারে পথ দেখানো, উৎসাহিত করা এবং এই সুন্দর যাত্রায় তাদের প্রতিটি ছোট পদক্ষেপ উদযাপন করা।') }}"
+          data-en="{{ ap_p3_en }}"
+          data-bn="{{ ap_p3_bn }}"
         >
-          {{ content.get('about_page', {}).get('story_p3', {}).get('en', 'I believe that every child has a unique musical gift waiting to be discovered. My role as a mentor is to patiently guide, encourage, and celebrate every small step they take on this beautiful journey.') }}
+          {{ ap_p3_en }}
         </p>
       </div>
     </div>
@@ -90,14 +110,14 @@ endblock %} {% block content %}
 <section class="section" style="background: var(--primary-light)">
   <div class="container">
     <div class="section-header fade-in">
-      <h2 data-en="{{ content.get('teaching_approach', {}).get('title', {}).get('en', 'Teaching Approach') }}" data-bn="{{ content.get('teaching_approach', {}).get('title', {}).get('bn', 'শিক্ষণ পদ্ধতি') }}">
-        {{ content.get('teaching_approach', {}).get('title', {}).get('en', 'Teaching Approach') }}
+      <h2 data-en="{{ content.get('teaching_approach', {}).get('title', {}).get('en') or 'Teaching Approach' }}" data-bn="{{ content.get('teaching_approach', {}).get('title', {}).get('bn') or 'শিক্ষণ পদ্ধতি' }}">
+        {{ content.get('teaching_approach', {}).get('title', {}).get('en') or 'Teaching Approach' }}
       </h2>
       <p
-        data-en="{{ content.get('teaching_approach', {}).get('subtitle', {}).get('en', 'Five pillars that define every Sur-O-Bahare session') }}"
-        data-bn="{{ content.get('teaching_approach', {}).get('subtitle', {}).get('bn', 'পাঁচটি মূলনীতি যা প্রতিটি সুর-ও-বাহারে সেশনকে সংজ্ঞায়িত করে') }}"
+        data-en="{{ content.get('teaching_approach', {}).get('subtitle', {}).get('en') or 'Five pillars that define every Sur-O-Bahare session' }}"
+        data-bn="{{ content.get('teaching_approach', {}).get('subtitle', {}).get('bn') or 'পাঁচটি মূলনীতি যা প্রতিটি সুর-ও-বাহারে সেশনকে সংজ্ঞায়িত করে' }}"
       >
-        {{ content.get('teaching_approach', {}).get('subtitle', {}).get('en', 'Five pillars that define every Sur-O-Bahare session') }}
+        {{ content.get('teaching_approach', {}).get('subtitle', {}).get('en') or 'Five pillars that define every Sur-O-Bahare session' }}
       </p>
     </div>
 
@@ -160,25 +180,26 @@ endblock %} {% block content %}
 <!-- ===== CTA ===== -->
 <section class="cta-banner">
   <div class="container">
+    <span class="eyebrow centered" data-en="Begin Today" data-bn="আজই শুরু করুন">Begin Today</span>
     <h2
-      data-en="{{ content.get('about_page', {}).get('cta_title', {}).get('en', 'Ready to Begin the Musical Journey?') }}"
-      data-bn="{{ content.get('about_page', {}).get('cta_title', {}).get('bn', 'সঙ্গীত যাত্রা শুরু করতে প্রস্তুত?') }}"
+      data-en="{{ ap_cta_title_en }}"
+      data-bn="{{ ap_cta_title_bn }}"
     >
-      {{ content.get('about_page', {}).get('cta_title', {}).get('en', 'Ready to Begin the Musical Journey?') }}
+      {{ ap_cta_title_en }}
     </h2>
     <p
-      data-en="{{ content.get('about_page', {}).get('cta_desc', {}).get('en', 'Enroll your child today and give them the gift of music and confidence.') }}"
-      data-bn="{{ content.get('about_page', {}).get('cta_desc', {}).get('bn', 'আজই আপনার সন্তানকে ভর্তি করুন এবং তাদের সঙ্গীত ও আত্মবিশ্বাসের উপহার দিন।') }}"
+      data-en="{{ ap_cta_desc_en }}"
+      data-bn="{{ ap_cta_desc_bn }}"
     >
-      {{ content.get('about_page', {}).get('cta_desc', {}).get('en', 'Enroll your child today and give them the gift of music and confidence.') }}
+      {{ ap_cta_desc_en }}
     </p>
     <div class="cta-banner-actions">
-      <a href="{{ content.get('about_page', {}).get('cta_btn_link', '/contact') }}" class="btn btn-secondary">
+      <a href="{{ ap_cta_link }}" class="btn btn-secondary">
         <i class="ri-music-2-line"></i>
         <span
-          data-en="{{ content.get('about_page', {}).get('cta_btn_label', {}).get('en', 'Enroll Today') }} →"
-          data-bn="{{ content.get('about_page', {}).get('cta_btn_label', {}).get('bn', 'আজই ভর্তি হন') }} →"
-        >{{ content.get('about_page', {}).get('cta_btn_label', {}).get('en', 'Enroll Today') }} →</span>
+          data-en="{{ ap_cta_btn_en }} →"
+          data-bn="{{ ap_cta_btn_bn }} →"
+        >{{ ap_cta_btn_en }} →</span>
       </a>
     </div>
   </div>

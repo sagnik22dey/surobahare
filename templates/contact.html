@@ -4,14 +4,15 @@ Academy{% endblock %} {% block content %}
 <!-- ===== PAGE HERO ===== -->
 <section class="page-hero">
   <div class="container">
-    <h1 data-en="{{ content.get('contact_page', {}).get('hero_title', {}).get('en', 'Enroll Your Child') }}" data-bn="{{ content.get('contact_page', {}).get('hero_title', {}).get('bn', 'আপনার সন্তানকে ভর্তি করুন') }}">
-      {{ content.get('contact_page', {}).get('hero_title', {}).get('en', 'Enroll Your Child') }}
+    <span class="eyebrow centered" data-en="Admissions" data-bn="ভর্তি">Admissions</span>
+    <h1 data-en="{{ content.get('contact_page', {}).get('hero_title', {}).get('en') or 'Enroll Your Child' }}" data-bn="{{ content.get('contact_page', {}).get('hero_title', {}).get('bn') or 'আপনার সন্তানকে ভর্তি করুন' }}">
+      {{ content.get('contact_page', {}).get('hero_title', {}).get('en') or 'Enroll Your Child' }}
     </h1>
     <p
-      data-en="{{ content.get('contact_page', {}).get('hero_subtitle', {}).get('en', 'Fill in the form below and we''ll get in touch with you shortly') }}"
-      data-bn="{{ content.get('contact_page', {}).get('hero_subtitle', {}).get('bn', 'নিচের ফর্মটি পূরণ করুন এবং আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব') }}"
+      data-en="{{ content.get('contact_page', {}).get('hero_subtitle', {}).get('en') or 'Fill in the form below and we’ll get in touch with you shortly' }}"
+      data-bn="{{ content.get('contact_page', {}).get('hero_subtitle', {}).get('bn') or 'নিচের ফর্মটি পূরণ করুন এবং আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব' }}"
     >
-      {{ content.get('contact_page', {}).get('hero_subtitle', {}).get('en', 'Fill in the form below and we''ll get in touch with you shortly') }}
+      {{ content.get('contact_page', {}).get('hero_subtitle', {}).get('en') or 'Fill in the form below and we’ll get in touch with you shortly' }}
     </p>
   </div>
 </section>
@@ -376,27 +377,14 @@ Academy{% endblock %} {% block content %}
         </div>
 
         <!-- Quick note -->
-        <div
-          style="
-            background: var(--primary-light);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 1.4rem;
-            margin-top: 1.6rem;
-          "
-        >
-          <p style="font-size: 0.9rem; color: var(--secondary)">
-            <i class="ri-information-line" style="color: var(--primary)"></i>
+        <div class="contact-note">
+          <p style="margin-bottom: 0.5rem">
+            <i class="ri-information-line" style="color: var(--gold-600)"></i>
             <strong data-en="What happens next?" data-bn="পরবর্তী কী হবে?">
               What happens next?</strong
             >
           </p>
           <p
-            style="
-              font-size: 0.85rem;
-              color: var(--text-muted);
-              margin-top: 0.5rem;
-            "
             data-en="After submitting, Samayita Dey will reach out to you on WhatsApp within 24 hours to discuss the program, schedule, and fees."
             data-bn="জমা দেওয়ার পরে, সমাইতা দে ২৪ ঘণ্টার মধ্যে প্রোগ্রাম, সময়সূচি এবং ফি নিয়ে আলোচনার জন্য হোয়াটসঅ্যাপে আপনার সাথে যোগাযোগ করবেন।"
           >

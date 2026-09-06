@@ -10,6 +10,8 @@
 (function () {
     'use strict';
 
+    document.documentElement.classList.add('js-reveal');
+
     /* ── 1. LANGUAGE TOGGLE ── */
     const html = document.documentElement;
     const langToggle = document.getElementById('lang-toggle');
@@ -292,6 +294,39 @@
         buildDots();
         updateArrows();
         if (slides.length > getSlidesPerView()) startAuto();
+    }
+
+    /* ── 8. GALLERY LIGHTBOX ── */
+    const galleryItems = document.querySelectorAll('.gallery-item[data-lightbox]');
+    if (galleryItems.length) {
+        const lightbox = document.createElement('div');
+        lightbox.className = 'lightbox';
+        lightbox.innerHTML = '<button class="lightbox-close" aria-label="Close">&times;</button><img alt="Gallery image enlarged">';
+        document.body.appendChild(lightbox);
+        const lbImg = lightbox.querySelector('img');
+
+        function openLightbox(src) {
+            lbImg.src = src;
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => openLightbox(item.getAttribute('data-lightbox')));
+        });
+
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-close')) closeLightbox();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+        });
     }
 
 })();

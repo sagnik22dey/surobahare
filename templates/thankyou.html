@@ -16,10 +16,10 @@ Academy{% endblock %} {% block content %}
     <div class="thankyou-stars">⭐⭐⭐⭐⭐</div>
 
     <h1
-      data-en="{{ content.get('thankyou_page', {}).get('title', {}).get('en', 'Thank You!') }}"
-      data-bn="{{ content.get('thankyou_page', {}).get('title', {}).get('bn', 'ধন্যবাদ!') }}"
+      data-en="{{ content.get('thankyou_page', {}).get('title', {}).get('en') or 'Thank You!' }}"
+      data-bn="{{ content.get('thankyou_page', {}).get('title', {}).get('bn') or 'ধন্যবাদ!' }}"
     >
-      {{ content.get('thankyou_page', {}).get('title', {}).get('en', 'Thank You!') }}
+      {{ content.get('thankyou_page', {}).get('title', {}).get('en') or 'Thank You!' }}
     </h1>
 
     <p class="thankyou-subtitle"
@@ -32,10 +32,10 @@ Academy{% endblock %} {% block content %}
     <div class="thankyou-divider"></div>
 
     <p class="thankyou-message"
-      data-en="{{ content.get('thankyou_page', {}).get('message', {}).get('en', 'Your enrollment form has been successfully submitted. We will contact you soon with further details.') }}"
-      data-bn="{{ content.get('thankyou_page', {}).get('message', {}).get('bn', 'আপনার ভর্তির ফর্ম সফলভাবে জমা দেওয়া হয়েছে। আমরা আরও বিশদ বিবরণ সহ শীঘ্রই আপনার সাথে যোগাযোগ করব।') }}"
+      data-en="{{ content.get('thankyou_page', {}).get('message', {}).get('en') or 'Your enrollment form has been successfully submitted. We will contact you soon with further details.' }}"
+      data-bn="{{ content.get('thankyou_page', {}).get('message', {}).get('bn') or 'আপনার ভর্তির ফর্ম সফলভাবে জমা দেওয়া হয়েছে। আমরা আরও বিশদ বিবরণ সহ শীঘ্রই আপনার সাথে যোগাযোগ করব।' }}"
     >
-      {{ content.get('thankyou_page', {}).get('message', {}).get('en', 'Your enrollment form has been successfully submitted. We will contact you soon with further details.') }}
+      {{ content.get('thankyou_page', {}).get('message', {}).get('en') or 'Your enrollment form has been successfully submitted. We will contact you soon with further details.' }}
     </p>
 
     <p class="thankyou-message"

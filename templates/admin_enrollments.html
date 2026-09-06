@@ -1,451 +1,900 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Enrollment Records | Sur-O-Bahare Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
-    <style>
-      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-      :root{
-        --pri:#8d6e63;--pri-dk:#5d4037;--sec:#3e2723;
-        --bg:#faf8f5;--sf:#fff;--brd:rgba(93,64,55,.12);
-        --ok:#2e7d32;--ok-bg:#e8f5e9;--danger:#c62828;--danger-bg:#ffebee;
-        --warn:#e65100;--warn-bg:#fff3e0;--muted:#8d8070;
-        --r:12px;--r-sm:8px;--sh:0 2px 12px rgba(93,64,55,.1);
-      }
-      body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--sec);line-height:1.6;overflow-x:hidden}
-      a{color:inherit;text-decoration:none}
-
-      .topbar{background:var(--sec);color:#fff;padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-      .topbar h1{font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
-      .topbar-actions{display:flex;align-items:center;gap:.8rem}
-      .topbar-actions a{color:rgba(255,255,255,.75);font-size:.85rem;transition:color .2s}
-      .topbar-actions a:hover{color:#fff}
-
-      .container{max-width:1200px;margin:0 auto;padding:1.5rem 1rem}
-
-      .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
-      .stat-card{background:var(--sf);border-radius:var(--r);padding:1.1rem 1.2rem;box-shadow:var(--sh);border-top:3px solid var(--pri);text-align:center}
-      .stat-card.today{border-top-color:#2e7d32}
-      .stat-card.week{border-top-color:#1565c0}
-      .stat-card.month{border-top-color:#6a1b9a}
-      .stat-num{font-size:1.9rem;font-weight:700;color:var(--sec)}
-      .stat-label{font-size:.78rem;color:var(--muted);margin-top:2px}
-
-      .panel{background:var(--sf);border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--brd);margin-bottom:1.5rem;overflow:hidden}
-      .panel-head{padding:1rem 1.2rem;background:#efebe9;border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
-      .panel-head h2{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
-      .panel-head h2 i{color:var(--pri)}
-      .panel-body{padding:1.2rem}
-
-      .toolbar{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-      .toolbar input[type="text"]{padding:.55rem .9rem;border:1.5px solid var(--brd);border-radius:var(--r-sm);font-size:.85rem;font-family:inherit;color:var(--sec);background:var(--bg);min-width:200px;transition:border-color .2s}
-      .toolbar input[type="text"]:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(141,110,99,.12)}
-      .pill{display:inline-flex;align-items:center;gap:.3rem;padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:600}
-      .pill-orange{background:var(--warn-bg);color:var(--warn)}
-
-      .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-      table.enroll-table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:800px}
-      table.enroll-table thead{background:#efebe9}
-      table.enroll-table th{padding:.7rem .8rem;text-align:left;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);white-space:nowrap;border-bottom:2px solid var(--brd)}
-      table.enroll-table td{padding:.65rem .8rem;border-bottom:1px solid var(--brd);vertical-align:middle}
-      table.enroll-table tbody tr{transition:background .15s}
-      table.enroll-table tbody tr:hover{background:#fdf8f4}
-      .mobile-link{color:var(--ok);font-weight:600;display:inline-flex;align-items:center;gap:.3rem}
-      .mobile-link:hover{text-decoration:underline}
-      .prog-badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:.75rem;font-weight:600;background:#e8f8f5;color:var(--pri-dk);white-space:nowrap}
-      .heard-badge{font-size:.78rem;color:var(--muted)}
-      .date-cell{white-space:nowrap;color:var(--muted);font-size:.82rem}
-      .date-cell .time{display:block;font-size:.72rem;color:#aaa;margin-top:1px}
-
-      .btn-del{background:transparent;border:1.5px solid var(--danger);color:var(--danger);border-radius:var(--r-sm);padding:5px 10px;cursor:pointer;font-size:.78rem;font-weight:600;font-family:inherit;display:inline-flex;align-items:center;gap:.3rem;transition:all .2s}
-      .btn-del:hover{background:var(--danger);color:#fff}
-
-      .empty-state{text-align:center;padding:3rem 1.5rem;color:var(--muted)}
-      .empty-state i{font-size:3rem;color:#ccc;display:block;margin-bottom:.8rem}
-      .empty-state p{font-size:.9rem;margin:.2rem 0}
-
-      .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-      .cal-header{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:center;padding:4px 0}
-      .cal-day{position:relative;text-align:center;padding:8px 4px;border-radius:var(--r-sm);font-size:.82rem;cursor:default;transition:background .15s;min-height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-      .cal-day.empty{cursor:default}
-      .cal-day:not(.empty):hover{background:#efebe9}
-      .cal-day.today{background:#fff3e0;font-weight:700}
-      .cal-day.has-enroll{background:var(--ok-bg)}
-      .cal-day.selected{background:#e3f2fd;outline:2px solid #1565c0}
-      .cal-day .day-num{font-weight:600;line-height:1}
-      .cal-day .day-count{font-size:.6rem;font-weight:700;color:var(--ok);line-height:1;margin-top:2px}
-      .cal-day.today .day-count{color:var(--warn)}
-      .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
-      .cal-nav-btn{background:var(--bg);border:1.5px solid var(--brd);border-radius:var(--r-sm);padding:4px 10px;cursor:pointer;font-size:.85rem;font-family:inherit;color:var(--sec);transition:all .2s}
-      .cal-nav-btn:hover{border-color:var(--pri);background:#efebe9}
-      .cal-month-label{font-weight:700;font-size:.95rem;color:var(--sec)}
-      .cal-legend{display:flex;gap:1rem;margin-top:.6rem;font-size:.72rem;color:var(--muted);flex-wrap:wrap}
-      .cal-legend span{display:flex;align-items:center;gap:4px}
-      .cal-legend .dot{width:10px;height:10px;border-radius:3px}
-      .cal-legend .dot.today-dot{background:#fff3e0;border:1px solid var(--warn)}
-      .cal-legend .dot.enroll-dot{background:var(--ok-bg);border:1px solid var(--ok)}
-      .cal-legend .dot.sel-dot{background:#e3f2fd;border:1px solid #1565c0}
-
-      .confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center}
-      .confirm-overlay.show{display:flex}
-      .confirm-box{background:var(--sf);border-radius:var(--r);padding:1.5rem;max-width:380px;width:90%;box-shadow:0 12px 40px rgba(0,0,0,.2);text-align:center}
-      .confirm-box h3{font-size:1rem;margin-bottom:.5rem;color:var(--danger)}
-      .confirm-box p{font-size:.88rem;color:var(--muted);margin-bottom:1.2rem}
-      .confirm-actions{display:flex;gap:.6rem;justify-content:center}
-      .confirm-actions button{padding:.55rem 1.2rem;border-radius:var(--r-sm);font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
-      .btn-cancel{background:var(--bg);color:var(--sec);border:1.5px solid var(--brd) !important}
-      .btn-cancel:hover{background:#efebe9}
-      .btn-confirm-del{background:var(--danger);color:#fff}
-      .btn-confirm-del:hover{background:#b71c1c}
-
-      .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--ok);color:#fff;padding:.7rem 1.2rem;border-radius:var(--r-sm);font-size:.85rem;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:300;transform:translateY(100px);opacity:0;transition:all .3s ease}
-      .toast.show{transform:translateY(0);opacity:1}
-      .toast.error{background:var(--danger)}
-
-      @media(max-width:900px){
-        .stats-row{grid-template-columns:repeat(2,1fr)}
-        .container{padding:1rem .6rem}
-        .panel-body{padding:.8rem}
-        .cal-grid{gap:2px}
-      }
-      @media(max-width:520px){
-        .stats-row{grid-template-columns:1fr 1fr}
-        .stat-num{font-size:1.5rem}
-        .topbar{padding:.7rem .8rem}
-        .topbar h1{font-size:.95rem}
-      }
-    </style>
-  </head>
-  <body>
-    <div class="topbar">
-      <h1><i class="ri-dashboard-3-line"></i> Sur-O-Bahare — Admin Panel</h1>
-      <div class="topbar-actions">
-        <a href="/"><i class="ri-arrow-left-line"></i> Back to Site</a>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-num" id="statTotal">{{ enrollments | length }}</div>
-          <div class="stat-label">Total Enrollments</div>
-        </div>
-        <div class="stat-card today">
-          <div class="stat-num" id="statToday">0</div>
-          <div class="stat-label">Today</div>
-        </div>
-        <div class="stat-card week">
-          <div class="stat-num" id="statWeek">0</div>
-          <div class="stat-label">This Week</div>
-        </div>
-        <div class="stat-card month">
-          <div class="stat-num" id="statMonth">0</div>
-          <div class="stat-label">This Month</div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-body" style="padding:1rem">
-          <div class="cal-nav">
-            <button class="cal-nav-btn" id="calPrev"><i class="ri-arrow-left-s-line"></i></button>
-            <span class="cal-month-label" id="calLabel"></span>
-            <button class="cal-nav-btn" id="calNext"><i class="ri-arrow-right-s-line"></i></button>
-          </div>
-          <div class="cal-grid" id="calGrid"></div>
-          <div class="cal-legend">
-            <span><span class="dot today-dot"></span> Today</span>
-            <span><span class="dot enroll-dot"></span> Has Enrollments</span>
-            <span><span class="dot sel-dot"></span> Selected</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <h2><i class="ri-table-line"></i> Enrollment Records</h2>
-          <div class="toolbar">
-            <input type="text" id="searchInput" placeholder="Search by name, mobile, location..." />
-            <span class="pill pill-orange" id="filterBadge" style="display:none"></span>
-            <button class="btn-del" id="clearFilter" style="display:none;border-color:var(--muted);color:var(--muted)">
-              <i class="ri-close-line"></i> Clear
-            </button>
-          </div>
-        </div>
-        <div class="panel-body" style="padding:0">
-          <div class="table-wrap">
-            <table class="enroll-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Date</th>
-                  <th>Parent</th>
-                  <th>Child</th>
-                  <th>Age</th>
-                  <th>Mobile</th>
-                  <th>Location</th>
-                  <th>Program</th>
-                  <th>Heard From</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="enrollBody">
-              </tbody>
-            </table>
-          </div>
-          <div class="empty-state" id="emptyState" style="display:none">
-            <i class="ri-inbox-line"></i>
-            <p>No enrollments found.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="confirm-overlay" id="confirmOverlay">
-      <div class="confirm-box">
-        <h3><i class="ri-delete-bin-line"></i> Delete Enrollment?</h3>
-        <p>This will permanently remove this enrollment record. This action cannot be undone.</p>
-        <div class="confirm-actions">
-          <button class="btn-cancel" id="confirmCancel">Cancel</button>
-          <button class="btn-confirm-del" id="confirmDelete">Delete</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="toast" id="toast"></div>
-
-    <script>
-    (function(){
-      var RAW = {{ enrollments | tojson }};
-      var enrollments = RAW.map(function(e){
-        var d = e.created_at ? new Date(e.created_at) : null;
-        return Object.assign({}, e, {_date: d, _dateStr: e.created_at ? e.created_at.slice(0,10) : ''});
-      });
-
-      var calYear, calMonth, selectedDate = null;
-      var deleteTarget = null;
-      var now = new Date();
-      calYear = now.getFullYear();
-      calMonth = now.getMonth();
-
-      function pad(n){return n<10?'0'+n:''+n}
-      function fmtDate(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
-      function startOfWeek(d){var r=new Date(d);var day=r.getDay();r.setDate(r.getDate()-day);r.setHours(0,0,0,0);return r}
-      function endOfWeek(d){var r=startOfWeek(d);r.setDate(r.getDate()+6);r.setHours(23,59,59,999);return r}
-      function startOfMonth(d){return new Date(d.getFullYear(),d.getMonth(),1)}
-      function endOfMonth(d){return new Date(d.getFullYear(),d.getMonth()+1,0)}
-
-      var dayCounts = {};
-      enrollments.forEach(function(e){
-        if(e._dateStr){dayCounts[e._dateStr]=(dayCounts[e._dateStr]||0)+1}
-      });
-
-      function updateStats(){
-        var todayStr = fmtDate(new Date());
-        var sw = startOfWeek(new Date());
-        var ew = endOfWeek(new Date());
-        var sm = startOfMonth(new Date());
-        var em = endOfMonth(new Date());
-        var t=0,w=0,m=0;
-        enrollments.forEach(function(e){
-          if(!e._date)return;
-          if(e._dateStr===todayStr)t++;
-          if(e._date>=sw&&e._date<=ew)w++;
-          if(e._date>=sm&&e._date<=em)m++;
-        });
-        document.getElementById('statToday').textContent=t;
-        document.getElementById('statWeek').textContent=w;
-        document.getElementById('statMonth').textContent=m;
-      }
-
-      function renderCalendar(){
-        var grid = document.getElementById('calGrid');
-        var label = document.getElementById('calLabel');
-        var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-        label.textContent=months[calMonth]+' '+calYear;
-
-        var html='';
-        var heads=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-        heads.forEach(function(h){html+='<div class="cal-header">'+h+'</div>'});
-
-        var first=new Date(calYear,calMonth,1);
-        var last=new Date(calYear,calMonth+1,0);
-        var startDay=first.getDay();
-        var todayStr=fmtDate(new Date());
-
-        for(var i=0;i<startDay;i++){
-          html+='<div class="cal-day empty"></div>';
-        }
-        for(var d=1;d<=last.getDate();d++){
-          var ds=calYear+'-'+pad(calMonth+1)+'-'+pad(d);
-          var cls='cal-day';
-          if(ds===todayStr)cls+=' today';
-          if(dayCounts[ds])cls+=' has-enroll';
-          if(selectedDate&&ds===selectedDate)cls+=' selected';
-          html+='<div class="'+cls+'" data-date="'+ds+'">';
-          html+='<span class="day-num">'+d+'</span>';
-          if(dayCounts[ds])html+='<span class="day-count">'+dayCounts[ds]+'</span>';
-          html+='</div>';
-        }
-        grid.innerHTML=html;
-
-        grid.querySelectorAll('.cal-day:not(.empty)').forEach(function(el){
-          el.addEventListener('click',function(){
-            var ds=this.getAttribute('data-date');
-            if(selectedDate===ds){selectedDate=null}else{selectedDate=ds}
-            renderCalendar();
-            renderTable();
-            updateFilterUI();
-          });
-        });
-      }
-
-      document.getElementById('calPrev').addEventListener('click',function(){
-        calMonth--;if(calMonth<0){calMonth=11;calYear--}
-        renderCalendar();
-      });
-      document.getElementById('calNext').addEventListener('click',function(){
-        calMonth++;if(calMonth>11){calMonth=0;calYear++}
-        renderCalendar();
-      });
-
-      function matchesSearch(e,q){
-        if(!q)return true;
-        q=q.toLowerCase();
-        return(e.parent_name||'').toLowerCase().indexOf(q)>-1||
-              (e.child_name||'').toLowerCase().indexOf(q)>-1||
-              (e.mobile||'').indexOf(q)>-1||
-              (e.location||'').toLowerCase().indexOf(q)>-1||
-              (e.program_interest||'').toLowerCase().indexOf(q)>-1;
-      }
-
-      function updateFilterUI(){
-        var badge=document.getElementById('filterBadge');
-        var clearBtn=document.getElementById('clearFilter');
-        var hasFilter=selectedDate||document.getElementById('searchInput').value;
-        if(hasFilter){
-          badge.style.display='inline-flex';
-          clearBtn.style.display='inline-flex';
-          var parts=[];
-          if(selectedDate)parts.push(selectedDate);
-          if(document.getElementById('searchInput').value)parts.push('Search: '+document.getElementById('searchInput').value);
-          badge.textContent=parts.join(' | ');
-        }else{
-          badge.style.display='none';
-          clearBtn.style.display='none';
-        }
-      }
-
-      document.getElementById('clearFilter').addEventListener('click',function(){
-        selectedDate=null;
-        document.getElementById('searchInput').value='';
-        renderCalendar();
-        renderTable();
-        updateFilterUI();
-      });
-
-      var searchTimer;
-      document.getElementById('searchInput').addEventListener('input',function(){
-        clearTimeout(searchTimer);
-        var self=this;
-        searchTimer=setTimeout(function(){
-          renderTable();
-          updateFilterUI();
-        },200);
-      });
-
-      function renderTable(){
-        var q=document.getElementById('searchInput').value;
-        var filtered=enrollments.filter(function(e){
-          if(selectedDate&&e._dateStr!==selectedDate)return false;
-          if(!matchesSearch(e,q))return false;
-          return true;
-        });
-        var tbody=document.getElementById('enrollBody');
-        var empty=document.getElementById('emptyState');
-        if(!filtered.length){
-          tbody.innerHTML='';
-          empty.style.display='block';
-          return;
-        }
-        empty.style.display='none';
-        var html='';
-        filtered.forEach(function(e){
-          var dateDisp='',timeDisp='';
-          if(e._date){
-            dateDisp=e._dateStr;
-            timeDisp=pad(e._date.getHours())+':'+pad(e._date.getMinutes());
-          }
-          html+='<tr data-id="'+e.id+'">';
-          html+='<td style="font-weight:600;color:var(--muted)">'+e.id+'</td>';
-          html+='<td class="date-cell">'+dateDisp+'<span class="time">'+timeDisp+'</span></td>';
-          html+='<td><strong>'+esc(e.parent_name)+'</strong></td>';
-          html+='<td>'+esc(e.child_name)+'</td>';
-          html+='<td>'+e.child_age+'</td>';
-          html+='<td><a class="mobile-link" href="https://wa.me/91'+esc(e.mobile)+'" target="_blank"><i class="ri-whatsapp-line"></i> '+esc(e.mobile)+'</a></td>';
-          html+='<td>'+esc(e.location)+'</td>';
-          html+='<td><span class="prog-badge">'+esc(e.program_interest)+'</span></td>';
-          html+='<td><span class="heard-badge">'+esc(e.heard_from||'—')+'</span></td>';
-          html+='<td><button class="btn-del" data-id="'+e.id+'" data-name="'+esc(e.parent_name)+'"><i class="ri-delete-bin-line"></i></button></td>';
-          html+='</tr>';
-        });
-        tbody.innerHTML=html;
-        tbody.querySelectorAll('.btn-del').forEach(function(btn){
-          btn.addEventListener('click',function(){
-            deleteTarget={id:this.getAttribute('data-id'),name:this.getAttribute('data-name')};
-            document.querySelector('.confirm-box p').textContent='Delete enrollment for "'+deleteTarget.name+'" (ID: '+deleteTarget.id+')?';
-            document.getElementById('confirmOverlay').classList.add('show');
-          });
-        });
-      }
-
-      function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
-
-      document.getElementById('confirmCancel').addEventListener('click',function(){
-        document.getElementById('confirmOverlay').classList.remove('show');
-        deleteTarget=null;
-      });
-      document.getElementById('confirmOverlay').addEventListener('click',function(e){
-        if(e.target===this){this.classList.remove('show');deleteTarget=null}
-      });
-
-      document.getElementById('confirmDelete').addEventListener('click',function(){
-        if(!deleteTarget)return;
-        var btn=this;btn.disabled=true;btn.textContent='Deleting...';
-        fetch('/admin/enrollments/'+deleteTarget.id,{method:'DELETE',credentials:'same-origin'})
-          .then(function(r){if(!r.ok)throw new Error('Failed');return r.json()})
-          .then(function(){
-            var idx=enrollments.findIndex(function(e){return e.id==deleteTarget.id});
-            if(idx>-1){
-              var removed=enrollments.splice(idx,1)[0];
-              if(removed._dateStr){
-                dayCounts[removed._dateStr]--;
-                if(dayCounts[removed._dateStr]<=0)delete dayCounts[removed._dateStr];
-              }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Enrollment Records | Sur-O-Bahare Admin</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+            rel="stylesheet"
+        />
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
             }
-            document.getElementById('statTotal').textContent=enrollments.length;
-            updateStats();
-            renderCalendar();
-            renderTable();
-            showToast('Enrollment #'+deleteTarget.id+' deleted');
-          })
-          .catch(function(){showToast('Failed to delete. Try again.',true)})
-          .finally(function(){btn.disabled=false;btn.textContent='Delete';document.getElementById('confirmOverlay').classList.remove('show');deleteTarget=null});
-      });
+            :root {
+                --pri: #8d6e63;
+                --pri-dk: #5d4037;
+                --sec: #3e2723;
+                --bg: #faf8f5;
+                --sf: #fff;
+                --brd: rgba(93, 64, 55, 0.12);
+                --ok: #2e7d32;
+                --ok-bg: #e8f5e9;
+                --danger: #c62828;
+                --danger-bg: #ffebee;
+                --warn: #e65100;
+                --warn-bg: #fff3e0;
+                --muted: #8d8070;
+                --r: 12px;
+                --r-sm: 8px;
+                --sh: 0 2px 12px rgba(93, 64, 55, 0.1);
+            }
+            body {
+                font-family: "Outfit", sans-serif;
+                background: var(--bg);
+                color: var(--sec);
+                line-height: 1.6;
+                overflow-x: hidden;
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
 
-      function showToast(msg,isErr){
-        var t=document.getElementById('toast');
-        t.textContent=msg;
-        t.className='toast'+(isErr?' error':'')+' show';
-        setTimeout(function(){t.classList.remove('show')},3000);
-      }
+            .topbar {
+                background: var(--sec);
+                color: #fff;
+                padding: 0.9rem 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+            .topbar h1 {
+                font-size: 1.1rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .topbar-actions {
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            .topbar-actions a {
+                color: rgba(255, 255, 255, 0.75);
+                font-size: 0.85rem;
+                transition: color 0.2s;
+            }
+            .topbar-actions a:hover {
+                color: #fff;
+            }
 
-      updateStats();
-      renderCalendar();
-      renderTable();
-    })();
-    </script>
-  </body>
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 1.5rem 1rem;
+            }
+
+            .stats-row {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            .stat-card {
+                background: var(--sf);
+                border-radius: var(--r);
+                padding: 1.1rem 1.2rem;
+                box-shadow: var(--sh);
+                border-top: 3px solid var(--pri);
+                text-align: center;
+            }
+            .stat-card.today {
+                border-top-color: #2e7d32;
+            }
+            .stat-card.week {
+                border-top-color: #1565c0;
+            }
+            .stat-card.month {
+                border-top-color: #6a1b9a;
+            }
+            .stat-num {
+                font-size: 1.9rem;
+                font-weight: 700;
+                color: var(--sec);
+            }
+            .stat-label {
+                font-size: 0.78rem;
+                color: var(--muted);
+                margin-top: 2px;
+            }
+
+            .panel {
+                background: var(--sf);
+                border-radius: var(--r);
+                box-shadow: var(--sh);
+                border: 1px solid var(--brd);
+                margin-bottom: 1.5rem;
+                overflow: hidden;
+            }
+            .panel-head {
+                padding: 1rem 1.2rem;
+                background: #efebe9;
+                border-bottom: 1px solid var(--brd);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 0.6rem;
+            }
+            .panel-head h2 {
+                font-size: 1rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .panel-head h2 i {
+                color: var(--pri);
+            }
+            .panel-body {
+                padding: 1.2rem;
+            }
+
+            .toolbar {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                flex-wrap: wrap;
+            }
+            .toolbar input[type="text"] {
+                padding: 0.55rem 0.9rem;
+                border: 1.5px solid var(--brd);
+                border-radius: var(--r-sm);
+                font-size: 0.85rem;
+                font-family: inherit;
+                color: var(--sec);
+                background: var(--bg);
+                min-width: 200px;
+                transition: border-color 0.2s;
+            }
+            .toolbar input[type="text"]:focus {
+                outline: none;
+                border-color: var(--pri);
+                box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.12);
+            }
+            .pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+                padding: 4px 10px;
+                border-radius: 999px;
+                font-size: 0.72rem;
+                font-weight: 600;
+            }
+            .pill-orange {
+                background: var(--warn-bg);
+                color: var(--warn);
+            }
+
+            .table-wrap {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            table.enroll-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.88rem;
+                min-width: 800px;
+            }
+            table.enroll-table thead {
+                background: #efebe9;
+            }
+            table.enroll-table th {
+                padding: 0.7rem 0.8rem;
+                text-align: left;
+                font-weight: 600;
+                font-size: 0.78rem;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: var(--muted);
+                white-space: nowrap;
+                border-bottom: 2px solid var(--brd);
+            }
+            table.enroll-table td {
+                padding: 0.65rem 0.8rem;
+                border-bottom: 1px solid var(--brd);
+                vertical-align: middle;
+            }
+            table.enroll-table tbody tr {
+                transition: background 0.15s;
+            }
+            table.enroll-table tbody tr:hover {
+                background: #fdf8f4;
+            }
+            .mobile-link {
+                color: var(--ok);
+                font-weight: 600;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+            .mobile-link:hover {
+                text-decoration: underline;
+            }
+            .prog-badge {
+                display: inline-block;
+                padding: 3px 8px;
+                border-radius: 999px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                background: #e8f8f5;
+                color: var(--pri-dk);
+                white-space: nowrap;
+            }
+            .heard-badge {
+                font-size: 0.78rem;
+                color: var(--muted);
+            }
+            .date-cell {
+                white-space: nowrap;
+                color: var(--muted);
+                font-size: 0.82rem;
+            }
+            .date-cell .time {
+                display: block;
+                font-size: 0.72rem;
+                color: #aaa;
+                margin-top: 1px;
+            }
+
+            .btn-del {
+                background: transparent;
+                border: 1.5px solid var(--danger);
+                color: var(--danger);
+                border-radius: var(--r-sm);
+                padding: 5px 10px;
+                cursor: pointer;
+                font-size: 0.78rem;
+                font-weight: 600;
+                font-family: inherit;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+                transition: all 0.2s;
+            }
+            .btn-del:hover {
+                background: var(--danger);
+                color: #fff;
+            }
+
+            .empty-state {
+                text-align: center;
+                padding: 3rem 1.5rem;
+                color: var(--muted);
+            }
+            .empty-state i {
+                font-size: 3rem;
+                color: #ccc;
+                display: block;
+                margin-bottom: 0.8rem;
+            }
+            .empty-state p {
+                font-size: 0.9rem;
+                margin: 0.2rem 0;
+            }
+
+            .cal-grid {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 3px;
+            }
+            .cal-header {
+                font-size: 0.7rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--muted);
+                text-align: center;
+                padding: 4px 0;
+            }
+            .cal-day {
+                position: relative;
+                text-align: center;
+                padding: 8px 4px;
+                border-radius: var(--r-sm);
+                font-size: 0.82rem;
+                cursor: default;
+                transition: background 0.15s;
+                min-height: 36px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            .cal-day.empty {
+                cursor: default;
+            }
+            .cal-day:not(.empty):hover {
+                background: #efebe9;
+            }
+            .cal-day.today {
+                background: #fff3e0;
+                font-weight: 700;
+            }
+            .cal-day.has-enroll {
+                background: var(--ok-bg);
+            }
+            .cal-day.selected {
+                background: #e3f2fd;
+                outline: 2px solid #1565c0;
+            }
+            .cal-day .day-num {
+                font-weight: 600;
+                line-height: 1;
+            }
+            .cal-day .day-count {
+                font-size: 0.6rem;
+                font-weight: 700;
+                color: var(--ok);
+                line-height: 1;
+                margin-top: 2px;
+            }
+            .cal-day.today .day-count {
+                color: var(--warn);
+            }
+            .cal-nav {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 0.6rem;
+            }
+            .cal-nav-btn {
+                background: var(--bg);
+                border: 1.5px solid var(--brd);
+                border-radius: var(--r-sm);
+                padding: 4px 10px;
+                cursor: pointer;
+                font-size: 0.85rem;
+                font-family: inherit;
+                color: var(--sec);
+                transition: all 0.2s;
+            }
+            .cal-nav-btn:hover {
+                border-color: var(--pri);
+                background: #efebe9;
+            }
+            .cal-month-label {
+                font-weight: 700;
+                font-size: 0.95rem;
+                color: var(--sec);
+            }
+            .cal-legend {
+                display: flex;
+                gap: 1rem;
+                margin-top: 0.6rem;
+                font-size: 0.72rem;
+                color: var(--muted);
+                flex-wrap: wrap;
+            }
+            .cal-legend span {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .cal-legend .dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 3px;
+            }
+            .cal-legend .dot.today-dot {
+                background: #fff3e0;
+                border: 1px solid var(--warn);
+            }
+            .cal-legend .dot.enroll-dot {
+                background: var(--ok-bg);
+                border: 1px solid var(--ok);
+            }
+            .cal-legend .dot.sel-dot {
+                background: #e3f2fd;
+                border: 1px solid #1565c0;
+            }
+
+            .confirm-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.45);
+                z-index: 200;
+                align-items: center;
+                justify-content: center;
+            }
+            .confirm-overlay.show {
+                display: flex;
+            }
+            .confirm-box {
+                background: var(--sf);
+                border-radius: var(--r);
+                padding: 1.5rem;
+                max-width: 380px;
+                width: 90%;
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+                text-align: center;
+            }
+            .confirm-box h3 {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+                color: var(--danger);
+            }
+            .confirm-box p {
+                font-size: 0.88rem;
+                color: var(--muted);
+                margin-bottom: 1.2rem;
+            }
+            .confirm-actions {
+                display: flex;
+                gap: 0.6rem;
+                justify-content: center;
+            }
+            .confirm-actions button {
+                padding: 0.55rem 1.2rem;
+                border-radius: var(--r-sm);
+                font-family: inherit;
+                font-size: 0.88rem;
+                font-weight: 600;
+                cursor: pointer;
+                border: none;
+                transition: all 0.2s;
+            }
+            .btn-cancel {
+                background: var(--bg);
+                color: var(--sec);
+                border: 1.5px solid var(--brd) !important;
+            }
+            .btn-cancel:hover {
+                background: #efebe9;
+            }
+            .btn-confirm-del {
+                background: var(--danger);
+                color: #fff;
+            }
+            .btn-confirm-del:hover {
+                background: #b71c1c;
+            }
+
+            .toast {
+                position: fixed;
+                bottom: 1.5rem;
+                right: 1.5rem;
+                background: var(--ok);
+                color: #fff;
+                padding: 0.7rem 1.2rem;
+                border-radius: var(--r-sm);
+                font-size: 0.85rem;
+                font-weight: 600;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+                z-index: 300;
+                transform: translateY(100px);
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+            .toast.show {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            .toast.error {
+                background: var(--danger);
+            }
+
+            @media (max-width: 900px) {
+                .stats-row {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .container {
+                    padding: 1rem 0.6rem;
+                }
+                .panel-body {
+                    padding: 0.8rem;
+                }
+                .cal-grid {
+                    gap: 2px;
+                }
+            }
+            @media (max-width: 520px) {
+                .stats-row {
+                    grid-template-columns: 1fr 1fr;
+                }
+                .stat-num {
+                    font-size: 1.5rem;
+                }
+                .topbar {
+                    padding: 0.7rem 0.8rem;
+                }
+                .topbar h1 {
+                    font-size: 0.95rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="topbar">
+            <h1>
+                <i class="ri-dashboard-3-line"></i> Sur-O-Bahare — Admin Panel
+            </h1>
+            <div class="topbar-actions">
+                <a href="/admin"
+                    ><i class="ri-arrow-left-line"></i> Back to Site</a
+                >
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-num" id="statTotal">
+                        {{ enrollments | length }}
+                    </div>
+                    <div class="stat-label">Total Enrollments</div>
+                </div>
+                <div class="stat-card today">
+                    <div class="stat-num" id="statToday">0</div>
+                    <div class="stat-label">Today</div>
+                </div>
+                <div class="stat-card week">
+                    <div class="stat-num" id="statWeek">0</div>
+                    <div class="stat-label">This Week</div>
+                </div>
+                <div class="stat-card month">
+                    <div class="stat-num" id="statMonth">0</div>
+                    <div class="stat-label">This Month</div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-body" style="padding: 1rem">
+                    <div class="cal-nav">
+                        <button class="cal-nav-btn" id="calPrev">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </button>
+                        <span class="cal-month-label" id="calLabel"></span>
+                        <button class="cal-nav-btn" id="calNext">
+                            <i class="ri-arrow-right-s-line"></i>
+                        </button>
+                    </div>
+                    <div class="cal-grid" id="calGrid"></div>
+                    <div class="cal-legend">
+                        <span><span class="dot today-dot"></span> Today</span>
+                        <span
+                            ><span class="dot enroll-dot"></span> Has
+                            Enrollments</span
+                        >
+                        <span><span class="dot sel-dot"></span> Selected</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-head">
+                    <h2><i class="ri-table-line"></i> Enrollment Records</h2>
+                    <div class="toolbar">
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search by name, mobile, location..."
+                        />
+                        <span
+                            class="pill pill-orange"
+                            id="filterBadge"
+                            style="display: none"
+                        ></span>
+                        <button
+                            class="btn-del"
+                            id="clearFilter"
+                            style="
+                                display: none;
+                                border-color: var(--muted);
+                                color: var(--muted);
+                            "
+                        >
+                            <i class="ri-close-line"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body" style="padding: 0">
+                    <div class="table-wrap">
+                        <table class="enroll-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th>Parent</th>
+                                    <th>Child</th>
+                                    <th>Age</th>
+                                    <th>Mobile</th>
+                                    <th>Location</th>
+                                    <th>Program</th>
+                                    <th>Heard From</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="enrollBody"></tbody>
+                        </table>
+                    </div>
+                    <div
+                        class="empty-state"
+                        id="emptyState"
+                        style="display: none"
+                    >
+                        <i class="ri-inbox-line"></i>
+                        <p>No enrollments found.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="confirm-overlay" id="confirmOverlay">
+            <div class="confirm-box">
+                <h3><i class="ri-delete-bin-line"></i> Delete Enrollment?</h3>
+                <p>
+                    This will permanently remove this enrollment record. This
+                    action cannot be undone.
+                </p>
+                <div class="confirm-actions">
+                    <button class="btn-cancel" id="confirmCancel">
+                        Cancel
+                    </button>
+                    <button class="btn-confirm-del" id="confirmDelete">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <script>
+            (function(){
+              var RAW = {{ enrollments | tojson }};
+              var enrollments = RAW.map(function(e){
+                var d = e.created_at ? new Date(e.created_at) : null;
+                return Object.assign({}, e, {_date: d, _dateStr: e.created_at ? e.created_at.slice(0,10) : ''});
+              });
+
+              var calYear, calMonth, selectedDate = null;
+              var deleteTarget = null;
+              var now = new Date();
+              calYear = now.getFullYear();
+              calMonth = now.getMonth();
+
+              function pad(n){return n<10?'0'+n:''+n}
+              function fmtDate(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+              function startOfWeek(d){var r=new Date(d);var day=r.getDay();r.setDate(r.getDate()-day);r.setHours(0,0,0,0);return r}
+              function endOfWeek(d){var r=startOfWeek(d);r.setDate(r.getDate()+6);r.setHours(23,59,59,999);return r}
+              function startOfMonth(d){return new Date(d.getFullYear(),d.getMonth(),1)}
+              function endOfMonth(d){return new Date(d.getFullYear(),d.getMonth()+1,0)}
+
+              var dayCounts = {};
+              enrollments.forEach(function(e){
+                if(e._dateStr){dayCounts[e._dateStr]=(dayCounts[e._dateStr]||0)+1}
+              });
+
+              function updateStats(){
+                var todayStr = fmtDate(new Date());
+                var sw = startOfWeek(new Date());
+                var ew = endOfWeek(new Date());
+                var sm = startOfMonth(new Date());
+                var em = endOfMonth(new Date());
+                var t=0,w=0,m=0;
+                enrollments.forEach(function(e){
+                  if(!e._date)return;
+                  if(e._dateStr===todayStr)t++;
+                  if(e._date>=sw&&e._date<=ew)w++;
+                  if(e._date>=sm&&e._date<=em)m++;
+                });
+                document.getElementById('statToday').textContent=t;
+                document.getElementById('statWeek').textContent=w;
+                document.getElementById('statMonth').textContent=m;
+              }
+
+              function renderCalendar(){
+                var grid = document.getElementById('calGrid');
+                var label = document.getElementById('calLabel');
+                var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+                label.textContent=months[calMonth]+' '+calYear;
+
+                var html='';
+                var heads=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                heads.forEach(function(h){html+='<div class="cal-header">'+h+'</div>'});
+
+                var first=new Date(calYear,calMonth,1);
+                var last=new Date(calYear,calMonth+1,0);
+                var startDay=first.getDay();
+                var todayStr=fmtDate(new Date());
+
+                for(var i=0;i<startDay;i++){
+                  html+='<div class="cal-day empty"></div>';
+                }
+                for(var d=1;d<=last.getDate();d++){
+                  var ds=calYear+'-'+pad(calMonth+1)+'-'+pad(d);
+                  var cls='cal-day';
+                  if(ds===todayStr)cls+=' today';
+                  if(dayCounts[ds])cls+=' has-enroll';
+                  if(selectedDate&&ds===selectedDate)cls+=' selected';
+                  html+='<div class="'+cls+'" data-date="'+ds+'">';
+                  html+='<span class="day-num">'+d+'</span>';
+                  if(dayCounts[ds])html+='<span class="day-count">'+dayCounts[ds]+'</span>';
+                  html+='</div>';
+                }
+                grid.innerHTML=html;
+
+                grid.querySelectorAll('.cal-day:not(.empty)').forEach(function(el){
+                  el.addEventListener('click',function(){
+                    var ds=this.getAttribute('data-date');
+                    if(selectedDate===ds){selectedDate=null}else{selectedDate=ds}
+                    renderCalendar();
+                    renderTable();
+                    updateFilterUI();
+                  });
+                });
+              }
+
+              document.getElementById('calPrev').addEventListener('click',function(){
+                calMonth--;if(calMonth<0){calMonth=11;calYear--}
+                renderCalendar();
+              });
+              document.getElementById('calNext').addEventListener('click',function(){
+                calMonth++;if(calMonth>11){calMonth=0;calYear++}
+                renderCalendar();
+              });
+
+              function matchesSearch(e,q){
+                if(!q)return true;
+                q=q.toLowerCase();
+                return(e.parent_name||'').toLowerCase().indexOf(q)>-1||
+                      (e.child_name||'').toLowerCase().indexOf(q)>-1||
+                      (e.mobile||'').indexOf(q)>-1||
+                      (e.location||'').toLowerCase().indexOf(q)>-1||
+                      (e.program_interest||'').toLowerCase().indexOf(q)>-1;
+              }
+
+              function updateFilterUI(){
+                var badge=document.getElementById('filterBadge');
+                var clearBtn=document.getElementById('clearFilter');
+                var hasFilter=selectedDate||document.getElementById('searchInput').value;
+                if(hasFilter){
+                  badge.style.display='inline-flex';
+                  clearBtn.style.display='inline-flex';
+                  var parts=[];
+                  if(selectedDate)parts.push(selectedDate);
+                  if(document.getElementById('searchInput').value)parts.push('Search: '+document.getElementById('searchInput').value);
+                  badge.textContent=parts.join(' | ');
+                }else{
+                  badge.style.display='none';
+                  clearBtn.style.display='none';
+                }
+              }
+
+              document.getElementById('clearFilter').addEventListener('click',function(){
+                selectedDate=null;
+                document.getElementById('searchInput').value='';
+                renderCalendar();
+                renderTable();
+                updateFilterUI();
+              });
+
+              var searchTimer;
+              document.getElementById('searchInput').addEventListener('input',function(){
+                clearTimeout(searchTimer);
+                var self=this;
+                searchTimer=setTimeout(function(){
+                  renderTable();
+                  updateFilterUI();
+                },200);
+              });
+
+              function renderTable(){
+                var q=document.getElementById('searchInput').value;
+                var filtered=enrollments.filter(function(e){
+                  if(selectedDate&&e._dateStr!==selectedDate)return false;
+                  if(!matchesSearch(e,q))return false;
+                  return true;
+                });
+                var tbody=document.getElementById('enrollBody');
+                var empty=document.getElementById('emptyState');
+                if(!filtered.length){
+                  tbody.innerHTML='';
+                  empty.style.display='block';
+                  return;
+                }
+                empty.style.display='none';
+                var html='';
+                filtered.forEach(function(e){
+                  var dateDisp='',timeDisp='';
+                  if(e._date){
+                    dateDisp=e._dateStr;
+                    timeDisp=pad(e._date.getHours())+':'+pad(e._date.getMinutes());
+                  }
+                  html+='<tr data-id="'+e.id+'">';
+                  html+='<td style="font-weight:600;color:var(--muted)">'+e.id+'</td>';
+                  html+='<td class="date-cell">'+dateDisp+'<span class="time">'+timeDisp+'</span></td>';
+                  html+='<td><strong>'+esc(e.parent_name)+'</strong></td>';
+                  html+='<td>'+esc(e.child_name)+'</td>';
+                  html+='<td>'+e.child_age+'</td>';
+                  html+='<td><a class="mobile-link" href="https://wa.me/91'+esc(e.mobile)+'" target="_blank"><i class="ri-whatsapp-line"></i> '+esc(e.mobile)+'</a></td>';
+                  html+='<td>'+esc(e.location)+'</td>';
+                  html+='<td><span class="prog-badge">'+esc(e.program_interest)+'</span></td>';
+                  html+='<td><span class="heard-badge">'+esc(e.heard_from||'—')+'</span></td>';
+                  html+='<td><button class="btn-del" data-id="'+e.id+'" data-name="'+esc(e.parent_name)+'"><i class="ri-delete-bin-line"></i></button></td>';
+                  html+='</tr>';
+                });
+                tbody.innerHTML=html;
+                tbody.querySelectorAll('.btn-del').forEach(function(btn){
+                  btn.addEventListener('click',function(){
+                    deleteTarget={id:this.getAttribute('data-id'),name:this.getAttribute('data-name')};
+                    document.querySelector('.confirm-box p').textContent='Delete enrollment for "'+deleteTarget.name+'" (ID: '+deleteTarget.id+')?';
+                    document.getElementById('confirmOverlay').classList.add('show');
+                  });
+                });
+              }
+
+              function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+
+              document.getElementById('confirmCancel').addEventListener('click',function(){
+                document.getElementById('confirmOverlay').classList.remove('show');
+                deleteTarget=null;
+              });
+              document.getElementById('confirmOverlay').addEventListener('click',function(e){
+                if(e.target===this){this.classList.remove('show');deleteTarget=null}
+              });
+
+              document.getElementById('confirmDelete').addEventListener('click',function(){
+                if(!deleteTarget)return;
+                var btn=this;btn.disabled=true;btn.textContent='Deleting...';
+                fetch('/admin/enrollments/'+deleteTarget.id,{method:'DELETE',credentials:'same-origin'})
+                  .then(function(r){if(!r.ok)throw new Error('Failed');return r.json()})
+                  .then(function(){
+                    var idx=enrollments.findIndex(function(e){return e.id==deleteTarget.id});
+                    if(idx>-1){
+                      var removed=enrollments.splice(idx,1)[0];
+                      if(removed._dateStr){
+                        dayCounts[removed._dateStr]--;
+                        if(dayCounts[removed._dateStr]<=0)delete dayCounts[removed._dateStr];
+                      }
+                    }
+                    document.getElementById('statTotal').textContent=enrollments.length;
+                    updateStats();
+                    renderCalendar();
+                    renderTable();
+                    showToast('Enrollment #'+deleteTarget.id+' deleted');
+                  })
+                  .catch(function(){showToast('Failed to delete. Try again.',true)})
+                  .finally(function(){btn.disabled=false;btn.textContent='Delete';document.getElementById('confirmOverlay').classList.remove('show');deleteTarget=null});
+              });
+
+              function showToast(msg,isErr){
+                var t=document.getElementById('toast');
+                t.textContent=msg;
+                t.className='toast'+(isErr?' error':'')+' show';
+                setTimeout(function(){t.classList.remove('show')},3000);
+              }
+
+              updateStats();
+              renderCalendar();
+              renderTable();
+            })();
+        </script>
+    </body>
 </html>

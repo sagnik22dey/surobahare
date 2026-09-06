@@ -4,6 +4,7 @@ Academy{% endblock %} {% block content %}
 <!-- ===== PAGE HERO ===== -->
 <section class="page-hero">
   <div class="container">
+    <span class="eyebrow centered" data-en="In Pictures" data-bn="ছবিতে">In Pictures</span>
     <h1 data-en="{{ content.get('gallery_page', {}).get('hero_title', {}).get('en', '') or 'Our Musical Journey' }}" data-bn="{{ content.get('gallery_page', {}).get('hero_title', {}).get('bn', '') or 'আমাদের সঙ্গীত যাত্রা' }}">
       {{ content.get('gallery_page', {}).get('hero_title', {}).get('en', '') or 'Our Musical Journey' }}
     </h1>
@@ -20,6 +21,7 @@ Academy{% endblock %} {% block content %}
 <section class="section">
   <div class="container">
     <div class="section-header fade-in">
+      <span class="eyebrow centered" data-en="Cherished Moments" data-bn="প্রিয় মুহূর্ত">Cherished Moments</span>
       <h2 data-en="{{ content.get('gallery_page', {}).get('story_title', {}).get('en', '') or 'Moments We Cherish' }}" data-bn="{{ content.get('gallery_page', {}).get('story_title', {}).get('bn', '') or 'যে মুহূর্তগুলো আমরা লালন করি' }}">
         {{ content.get('gallery_page', {}).get('story_title', {}).get('en', '') or 'Moments We Cherish' }}
       </h2>
@@ -36,51 +38,37 @@ Academy{% endblock %} {% block content %}
       {% if gallery_images %}
         {% for img in gallery_images %}
         {% if img.get("visible", True) %}
-        <div class="gallery-item">
-          <img src="{{ img.image_url }}" alt="Gallery Image" loading="lazy">
+        <div class="gallery-item" data-lightbox="{{ img.image_url }}">
+          <img src="{{ img.image_url }}" alt="Sur-O-Bahare gallery photo" loading="lazy">
         </div>
         {% endif %}
         {% endfor %}
       {% else %}
         <!-- Placeholder Images -->
-        <div class="gallery-item">
+        <div class="gallery-item" data-lightbox="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=1400&auto=format&fit=crop">
           <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=800&auto=format&fit=crop" alt="Performance" loading="lazy" />
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" data-lightbox="https://images.unsplash.com/photo-1528629297340-d1d466945dc5?q=80&w=1400&auto=format&fit=crop">
           <img src="https://images.unsplash.com/photo-1528629297340-d1d466945dc5?q=80&w=800&auto=format&fit=crop" alt="Practice Session" loading="lazy" />
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" data-lightbox="https://images.unsplash.com/photo-1460036521480-c4b50f6a6c11?q=80&w=1400&auto=format&fit=crop">
           <img src="https://images.unsplash.com/photo-1460036521480-c4b50f6a6c11?q=80&w=800&auto=format&fit=crop" alt="Group Singing" loading="lazy" />
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" data-lightbox="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1400&auto=format&fit=crop">
           <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=800&auto=format&fit=crop" alt="Annual Event" loading="lazy" />
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" data-lightbox="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=1400&auto=format&fit=crop">
           <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=800&auto=format&fit=crop" alt="Student Portrait" loading="lazy" />
         </div>
-        <div class="gallery-item">
+        <div class="gallery-item" data-lightbox="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1400&auto=format&fit=crop">
           <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop" alt="Awards Ceremony" loading="lazy" />
         </div>
       {% endif %}
     </div>
 
     <!-- Journey Description -->
-    <div
-      class="fade-in"
-      style="
-        text-align: center;
-        max-width: 680px;
-        margin: 3.2rem auto 0;
-        background: var(--white);
-        padding: 2.4rem;
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-sm);
-        border: 1px solid var(--border);
-      "
-    >
-      <span style="font-size: 2.5rem; display: block; margin-bottom: 1rem"
-        >🎶</span
-      >
+    <div class="gallery-note fade-in">
+      <span class="icon">🎶</span>
       <h3 data-en="Our Story in Pictures" data-bn="ছবিতে আমাদের গল্প">
         Our Story in Pictures
       </h3>
@@ -98,27 +86,34 @@ Academy{% endblock %} {% block content %}
 </section>
 
 <!-- ===== CTA BANNER ===== -->
+{% set g_cta_title_en = content.get('about_page', {}).get('cta_title', {}).get('en') or 'Ready to Begin the Musical Journey?' %}
+{% set g_cta_title_bn = content.get('about_page', {}).get('cta_title', {}).get('bn') or 'সঙ্গীত যাত্রা শুরু করতে প্রস্তুত?' %}
+{% set g_cta_desc_en = content.get('about_page', {}).get('cta_desc', {}).get('en') or 'From the first note to a confident stage performance — your child’s story could be the next one framed on this wall. Enroll today and give them the gift of music.' %}
+{% set g_cta_desc_bn = content.get('about_page', {}).get('cta_desc', {}).get('bn') or 'প্রথম সুর থেকে আত্মবিশ্বাসী মঞ্চ পরিবেশনা পর্যন্ত — আপনার সন্তানের গল্পই হতে পারে এই দেয়ালে বাঁধানো পরবর্তী গল্প। আজই ভর্তি করুন এবং তাদের সঙ্গীতের উপহার দিন।' %}
+{% set g_cta_btn_en = content.get('about_page', {}).get('cta_btn_label', {}).get('en') or 'Enroll Today' %}
+{% set g_cta_btn_bn = content.get('about_page', {}).get('cta_btn_label', {}).get('bn') or 'আজই ভর্তি হন' %}
 <section class="cta-banner">
   <div class="container">
-    <h2
-      data-en="{{ content.get('about_page', {}).get('cta_title', {}).get('en', 'Ready to Begin the Musical Journey?') }}"
-      data-bn="{{ content.get('about_page', {}).get('cta_title', {}).get('bn', 'সঙ্গীত যাত্রা শুরু করতে প্রস্তুত?') }}"
-    >
-      {{ content.get('about_page', {}).get('cta_title', {}).get('en', 'Ready to Begin the Musical Journey?') }}
+    <span class="eyebrow centered" data-en="Your Turn to Shine" data-bn="এবার আপনার পালা">Your Turn to Shine</span>
+    <h2 data-en="{{ g_cta_title_en }}" data-bn="{{ g_cta_title_bn }}">
+      {{ g_cta_title_en }}
     </h2>
-    <p
-      data-en="{{ content.get('about_page', {}).get('cta_desc', {}).get('en', 'Enroll your child today and give them the gift of music and confidence.') }}"
-      data-bn="{{ content.get('about_page', {}).get('cta_desc', {}).get('bn', 'আজই আপনার সন্তানকে ভর্তি করুন এবং তাদের সঙ্গীত ও আত্মবিশ্বাসের উপহার দিন।') }}"
-    >
-      {{ content.get('about_page', {}).get('cta_desc', {}).get('en', 'Enroll your child today and give them the gift of music and confidence.') }}
+    <p data-en="{{ g_cta_desc_en }}" data-bn="{{ g_cta_desc_bn }}">
+      {{ g_cta_desc_en }}
     </p>
     <div class="cta-banner-actions">
       <a href="{{ content.get('about_page', {}).get('cta_btn_link', '/contact') }}" class="btn btn-secondary">
         <i class="ri-music-2-line"></i>
-        <span
-          data-en="{{ content.get('about_page', {}).get('cta_btn_label', {}).get('en', 'Enroll Today') }} →"
-          data-bn="{{ content.get('about_page', {}).get('cta_btn_label', {}).get('bn', 'আজই ভর্তি হন') }} →"
-        >{{ content.get('about_page', {}).get('cta_btn_label', {}).get('en', 'Enroll Today') }} →</span>
+        <span data-en="{{ g_cta_btn_en }} →" data-bn="{{ g_cta_btn_bn }} →">{{ g_cta_btn_en }} →</span>
+      </a>
+      <a
+        href="https://wa.me/{{ content.get('contact_info', {}).get('whatsapp_number', '917908875949') }}?text=Hi%2C%20I%20saw%20your%20gallery%20and%20want%20to%20know%20more%20about%20Sur-O-Bahare"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-whatsapp"
+      >
+        <i class="ri-whatsapp-line"></i>
+        <span data-en="Chat on WhatsApp" data-bn="হোয়াটসঅ্যাপে চ্যাট করুন">Chat on WhatsApp</span>
       </a>
     </div>
   </div>
